@@ -172,6 +172,54 @@ body {
   justify-content: center;
 }
 
+/* ================= MOBILE LOGO ONE-LINE FIX ================= */
+
+.logo {
+  flex-wrap: nowrap;
+}
+
+.logo > span:last-child {
+  white-space: nowrap;
+}
+
+@media (max-width: 520px) {
+  .navbar {
+    gap: 12px;
+  }
+
+  .logo {
+    flex: 1;
+    min-width: 0;
+    max-width: none;
+    font-size: 14px;
+    line-height: 1;
+    letter-spacing: -0.4px;
+  }
+
+  .logo > span:last-child {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .logo-mark {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+  }
+
+  .menu-btn {
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+}
+
+@media (max-width: 390px) {
+  .logo {
+    font-size: 13px;
+  }
+}
+
 /* ================= HERO ================= */
 
 /* ================= HERO SECTION ================= */
@@ -376,6 +424,36 @@ body {
   font-size: 13px;
   line-height: 1.4;
   color: rgba(255, 255, 255, 0.82);
+}
+
+/* ================= COUNTDOWN DOT ALIGNMENT FIX ================= */
+
+.countdown-footer {
+  align-items: center;
+}
+
+.live-dot {
+  margin-top: 0;
+  align-self: center;
+}
+
+@media (max-width: 520px) {
+  .countdown-footer {
+    align-items: center;
+    border-radius: 22px;
+    min-height: 48px;
+  }
+
+  .countdown-footer p {
+    display: flex;
+    align-items: center;
+    min-height: 20px;
+  }
+
+  .live-dot {
+    align-self: center;
+    margin-top: 0;
+  }
 }
 
 /* ================= HERO UPDATE PANEL ================= */
@@ -732,6 +810,42 @@ body {
 
   .nav-actions {
     top: 398px;
+  }
+}
+
+/* ================= HERO UPDATE PANEL MOBILE FIX ================= */
+
+@media (max-width: 520px) {
+  .hero-update-panel {
+    margin-top: 22px;
+    padding: 12px;
+    border-radius: 28px;
+  }
+
+  .update-panel-text {
+    padding: 18px;
+    border-radius: 22px;
+  }
+
+  .update-links {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .update-links a {
+    min-height: 68px;
+    padding: 14px 16px;
+    border-radius: 22px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 14px;
+  }
+
+  .update-links a span {
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
   }
 }
 /* ================= PACKAGES SECTION ================= */

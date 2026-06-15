@@ -27,17 +27,13 @@ navItems.forEach((item) => {
 });
 
 
-// ================= HERO MANUAL COUNTDOWN =================
+// ================= HERO REAL-TIME COUNTDOWN =================
 
-// Change these values whenever you want to restart the countdown.
+// Change these two values whenever the next Umrah departure changes.
 const heroCountdownMonth = "July 2026";
 
-const heroCountdownStart = {
-  days: 120,
-  hours: 10,
-  minutes: 30,
-  seconds: 0,
-};
+// Use Sri Lanka time format: YYYY-MM-DDTHH:MM:SS+05:30
+const heroDepartureDate = "2026-07-14T08:00:00+05:30";
 
 const departureMonth = document.getElementById("departureMonth");
 const countdownDays = document.getElementById("countdownDays");
@@ -46,17 +42,15 @@ const countdownMinutes = document.getElementById("countdownMinutes");
 const countdownSeconds = document.getElementById("countdownSeconds");
 const countdownStatus = document.getElementById("countdownStatus");
 
-let totalCountdownSeconds =
-  heroCountdownStart.days * 24 * 60 * 60 +
-  heroCountdownStart.hours * 60 * 60 +
-  heroCountdownStart.minutes * 60 +
-  heroCountdownStart.seconds;
-
 if (departureMonth) {
   departureMonth.textContent = heroCountdownMonth;
 }
 
-function renderHeroCountdown() {
+function updateHeroCountdown() {
+  const now = new Date().getTime();
+  const departureTime = new Date(heroDepartureDate).getTime();
+  const timeLeft = departureTime - now;
+
   if (
     !countdownDays ||
     !countdownHours ||
@@ -66,7 +60,7 @@ function renderHeroCountdown() {
     return;
   }
 
-  if (totalCountdownSeconds <= 0) {
+  if (timeLeft <= 0) {
     countdownDays.textContent = "000";
     countdownHours.textContent = "00";
     countdownMinutes.textContent = "00";
@@ -74,16 +68,25 @@ function renderHeroCountdown() {
 
     if (countdownStatus) {
       countdownStatus.textContent =
-        "Countdown ended. Update the next departure details soon.";
+        "This departure has started. New group details coming soon.";
     }
 
     return;
   }
 
-  const days = Math.floor(totalCountdownSeconds / (24 * 60 * 60));
-  const hours = Math.floor((totalCountdownSeconds % (24 * 60 * 60)) / (60 * 60));
-  const minutes = Math.floor((totalCountdownSeconds % (60 * 60)) / 60);
-  const seconds = totalCountdownSeconds % 60;
+  const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+
+  const hours = Math.floor(
+    (timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+  );
+
+  const minutes = Math.floor(
+    (timeLeft % (1000 * 60 * 60)) / (1000 * 60)
+  );
+
+  const seconds = Math.floor(
+    (timeLeft % (1000 * 60)) / 1000
+  );
 
   countdownDays.textContent = String(days).padStart(3, "0");
   countdownHours.textContent = String(hours).padStart(2, "0");
@@ -97,12 +100,10 @@ function renderHeroCountdown() {
       countdownStatus.textContent = "Countdown active for the upcoming group.";
     }
   }
-
-  totalCountdownSeconds--;
 }
 
-renderHeroCountdown();
-setInterval(renderHeroCountdown, 1000);
+updateHeroCountdown();
+setInterval(updateHeroCountdown, 1000);
 
 // ================= JOURNEY SECTION INTERACTIONS =================
 
