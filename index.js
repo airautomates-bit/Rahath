@@ -391,7 +391,7 @@ const showLeadConfirmation = (packageType) => {
     });
 
     if (window.location.protocol === "https:" || window.location.protocol === "http:") {
-      const conversionURL = new URL("/thank-you.html", window.location.origin);
+      const conversionURL = new URL("/requested", window.location.origin);
       window.gtag("event", "page_view", {
         page_title: "Booking request prepared",
         page_location: conversionURL.href,
@@ -401,7 +401,7 @@ const showLeadConfirmation = (packageType) => {
   }
 
   if (window.location.protocol === "https:" || window.location.protocol === "http:") {
-    window.history.pushState({ leadConfirmation: true }, "", "/thank-you.html");
+    window.history.pushState({ leadConfirmation: true }, "", "/requested");
   }
 };
 
