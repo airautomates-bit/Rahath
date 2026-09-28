@@ -29,6 +29,8 @@ Before each production deployment:
 4. Test booking validation, mobile navigation, external links, and the WhatsApp handoff.
 5. Confirm that the custom domain redirects to HTTPS.
 
+Analytics conversion events must never include names, phone numbers, free-text messages, or other personally identifiable information. The current `generate_lead` event contains only the selected package and handoff method.
+
 ## Reporting
 
 Security issues should be reported privately to the site owner and must not include sensitive visitor information in public GitHub issues.

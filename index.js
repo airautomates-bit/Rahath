@@ -332,6 +332,10 @@ const callTimeInput = document.getElementById("callTime");
 const callDateInput = document.getElementById("callDate");
 const bookingToast = document.getElementById("bookingToast");
 const bookingSubmit = document.getElementById("bookingSubmit");
+const leadConfirmation = document.getElementById("leadConfirmation");
+const leadConfirmationDialog = document.getElementById("leadConfirmationDialog");
+const leadConfirmationClose = document.getElementById("leadConfirmationClose");
+const leadConfirmationDone = document.getElementById("leadConfirmationDone");
 
 const rahathWhatsAppNumber = "94725329242";
 const allowedPackages = new Set([
@@ -341,6 +345,7 @@ const allowedPackages = new Set([
 ]);
 const allowedCallTimes = new Set(["10:00 AM", "12:00 PM", "4:00 PM", "8:00 PM"]);
 let bookingSubmissionLocked = false;
+let confirmationPreviousFocus = null;
 
 const getLocalISODate = (date = new Date()) => {
   const localTime = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
@@ -359,6 +364,67 @@ const normalizeMessage = (value) =>
     .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, "")
     .trim()
     .slice(0, 500);
+
+const closeLeadConfirmation = () => {
+  if (!leadConfirmation) return;
+
+  leadConfirmation.hidden = true;
+  document.body.classList.remove("confirmation-open");
+
+  if (confirmationPreviousFocus instanceof HTMLElement) {
+    confirmationPreviousFocus.focus();
+  }
+};
+
+const showLeadConfirmation = (packageType) => {
+  if (leadConfirmation) {
+    confirmationPreviousFocus = document.activeElement;
+    leadConfirmation.hidden = false;
+    document.body.classList.add("confirmation-open");
+    leadConfirmationDialog?.focus();
+  }
+
+  if (typeof window.gtag === "function") {
+    window.gtag("event", "generate_lead", {
+      method: "WhatsApp",
+      package_name: packageType,
+    });
+
+    if (window.location.protocol === "https:" || window.location.protocol === "http:") {
+      const conversionURL = new URL("/thank-you.html", window.location.origin);
+      window.gtag("event", "page_view", {
+        page_title: "Booking request prepared",
+        page_location: conversionURL.href,
+        page_path: conversionURL.pathname,
+      });
+    }
+  }
+
+  if (window.location.protocol === "https:" || window.location.protocol === "http:") {
+    window.history.pushState({ leadConfirmation: true }, "", "/thank-you.html");
+  }
+};
+
+leadConfirmationClose?.addEventListener("click", closeLeadConfirmation);
+leadConfirmationDone?.addEventListener("click", closeLeadConfirmation);
+
+leadConfirmation?.addEventListener("click", (event) => {
+  if (event.target === leadConfirmation) {
+    closeLeadConfirmation();
+  }
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && leadConfirmation && !leadConfirmation.hidden) {
+    closeLeadConfirmation();
+  }
+});
+
+window.addEventListener("popstate", () => {
+  if (leadConfirmation && !leadConfirmation.hidden) {
+    closeLeadConfirmation();
+  }
+});
 
 if (callTimeInput) {
   callTimeInput.value = "10:00 AM";
@@ -453,6 +519,8 @@ if (bookingForm) {
     document.body.appendChild(whatsappLink);
     whatsappLink.click();
     whatsappLink.remove();
+
+    showLeadConfirmation(packageType);
 
     if (bookingToast) {
       bookingToast.classList.add("show");

@@ -4160,6 +4160,118 @@ body::after {
   box-shadow: none;
 }
 
+/* Lead confirmation overlay */
+body.confirmation-open {
+  overflow: hidden;
+}
+
+.confirmation-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  padding: 24px;
+  display: grid;
+  place-items: center;
+  background: rgba(3, 5, 10, 0.7);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.confirmation-overlay[hidden] {
+  display: none;
+}
+
+.confirmation-dialog {
+  width: min(100%, 510px);
+  padding: 42px;
+  position: relative;
+  border-radius: 30px;
+  background: #fff;
+  color: var(--ui-ink);
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.32);
+  outline: none;
+}
+
+.confirmation-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--ui-soft);
+  color: var(--ui-ink);
+  font: inherit;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.confirmation-icon {
+  width: 68px;
+  height: 68px;
+  margin: 0 auto 22px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--ui-gradient);
+  color: #fff;
+  font-size: 30px;
+  font-weight: 900;
+}
+
+.confirmation-kicker {
+  margin-bottom: 8px;
+  color: var(--ui-navy);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.confirmation-dialog h2 {
+  margin-bottom: 14px;
+  font-size: clamp(32px, 5vw, 48px);
+  line-height: 1;
+  letter-spacing: -1.8px;
+}
+
+.confirmation-dialog > p:not(.confirmation-kicker) {
+  max-width: 390px;
+  margin: 0 auto;
+  color: var(--ui-muted);
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+.confirmation-done {
+  width: 100%;
+  margin-top: 28px;
+  padding: 16px 22px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--ui-gradient);
+  color: #fff;
+  font: inherit;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.2);
+}
+
+@media (max-width: 560px) {
+  .confirmation-overlay {
+    padding: 16px;
+  }
+
+  .confirmation-dialog {
+    padding: 38px 24px 26px;
+    border-radius: 24px;
+  }
+}
+
 /* Footer — full Rahath gradient with reversed controls */
 .site-footer {
   background: var(--ui-gradient);
