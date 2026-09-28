@@ -14,6 +14,43 @@ body {
   color: #151515;
 }
 
+/* Progressive viewport-edge blur */
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  z-index: 40;
+  pointer-events: none;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+body::before {
+  top: 0;
+  background: linear-gradient(to bottom, rgba(247, 244, 238, 0.16), transparent);
+  mask-image: linear-gradient(to bottom, #000 0%, rgba(0, 0, 0, 0.72) 38%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, rgba(0, 0, 0, 0.72) 38%, transparent 100%);
+}
+
+body::after {
+  bottom: 0;
+  background: linear-gradient(to top, rgba(247, 244, 238, 0.16), transparent);
+  mask-image: linear-gradient(to top, #000 0%, rgba(0, 0, 0, 0.72) 38%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to top, #000 0%, rgba(0, 0, 0, 0.72) 38%, transparent 100%);
+}
+
+@media (max-width: 600px) {
+  body::before,
+  body::after {
+    height: 72px;
+    backdrop-filter: blur(9px);
+    -webkit-backdrop-filter: blur(9px);
+  }
+}
+
 /* ================= HEADER ================= */
 
 .site-header {
@@ -58,8 +95,8 @@ body {
   border-radius: 50%;
   display: grid;
   place-items: center;
-  background: #efe4ce;
-  color: #9b743d;
+  background: #f3f5f7;
+  color: #172238;
 }
 
 .nav-links {
@@ -79,7 +116,7 @@ body {
 
 .nav-links a:hover,
 .login-link:hover {
-  color: #b3833a;
+  color: #172238;
 }
 
 .nav-actions {
@@ -149,7 +186,7 @@ body {
 }
 
 .nav-links a.active {
-  color: #b3833a;
+  color: #172238;
   font-weight: 700;
 }
 
@@ -162,7 +199,7 @@ body {
 }
 
 .guide-link:hover {
-  color: #b3833a;
+  color: #172238;
 }
 
 .btn {
@@ -239,10 +276,10 @@ body {
   position: relative;
   background:
     linear-gradient(120deg, rgba(10, 10, 10, 0.76), rgba(10, 10, 10, 0.28)),
-    url("hero.png");
+    url("mainim.jpg");
   background-size: cover;
   background-position: center;
-  box-shadow: 0 40px 90px rgba(35, 25, 10, 0.18);
+  box-shadow: 0 40px 90px rgba(15, 23, 42, 0.18);
 }
 
 .hero-overlay {
@@ -289,7 +326,7 @@ body {
 }
 
 .hero-content h1 span {
-  color: #e7c27b;
+  color: #ffffff;
 }
 
 .hero-text {
@@ -308,7 +345,7 @@ body {
 }
 
 .btn-primary {
-  background: #e3b766;
+  background: #172238;
   color: #111;
   padding: 16px 26px;
   border-radius: 999px;
@@ -317,7 +354,7 @@ body {
 .btn-primary:hover {
   background: #f2cc85;
   transform: translateY(-3px);
-  box-shadow: 0 18px 35px rgba(227, 183, 102, 0.34);
+  box-shadow: 0 18px 35px rgba(23, 34, 56, 0.34);
 }
 
 .btn-glass {
@@ -375,14 +412,14 @@ body {
 .countdown-grid div {
   padding: 15px 10px;
   border-radius: 19px;
-  background: #f7f1e7;
+  background: #f3f5f7;
   text-align: center;
   transition: 0.25s ease;
 }
 
 .countdown-grid div:hover {
   transform: translateY(-4px);
-  background: #efe4ce;
+  background: #f3f5f7;
 }
 
 .countdown-grid strong {
@@ -415,8 +452,8 @@ body {
   width: 9px;
   height: 9px;
   border-radius: 50%;
-  background: #e3b766;
-  box-shadow: 0 0 0 6px rgba(227, 183, 102, 0.16);
+  background: #172238;
+  box-shadow: 0 0 0 6px rgba(23, 34, 56, 0.16);
   flex-shrink: 0;
 }
 
@@ -471,7 +508,7 @@ body {
   display: grid;
   grid-template-columns: 0.9fr 1.4fr;
   gap: 12px;
-  box-shadow: 0 24px 70px rgba(35, 25, 10, 0.13);
+  box-shadow: 0 24px 70px rgba(15, 23, 42, 0.13);
 }
 
 .update-panel-text {
@@ -483,7 +520,7 @@ body {
 
 .update-panel-text span {
   display: block;
-  color: #e3b766;
+  color: #172238;
   font-size: 12px;
   font-weight: 800;
   margin-bottom: 6px;
@@ -498,7 +535,7 @@ body {
 
 .update-links {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 10px;
 }
 
@@ -519,8 +556,8 @@ body {
 
 .update-links a:hover {
   transform: translateY(-5px);
-  background: #efe4ce;
-  box-shadow: 0 16px 34px rgba(35, 25, 10, 0.1);
+  background: #f3f5f7;
+  box-shadow: 0 16px 34px rgba(15, 23, 42, 0.1);
 }
 
 .update-links a span {
@@ -528,7 +565,7 @@ body {
   height: 34px;
   border-radius: 50%;
   background: #111;
-  color: #e3b766;
+  color: #172238;
   display: grid;
   place-items: center;
   font-size: 16px;
@@ -726,7 +763,7 @@ body {
   .nav-links a:hover,
   .nav-links a.active {
     background: #f1eadf;
-    color: #b3833a;
+    color: #172238;
   }
 
   .nav-actions {
@@ -853,8 +890,8 @@ body {
 .packages-section {
   padding: 105px 5vw;
   background:
-    radial-gradient(circle at 10% 10%, rgba(227, 183, 102, 0.18), transparent 28%),
-    radial-gradient(circle at 90% 20%, rgba(179, 131, 58, 0.12), transparent 30%),
+    radial-gradient(circle at 10% 10%, rgba(23, 34, 56, 0.18), transparent 28%),
+    radial-gradient(circle at 90% 20%, rgba(23, 34, 56, 0.12), transparent 30%),
     #f7f4ee;
   position: relative;
   overflow: hidden;
@@ -874,8 +911,8 @@ body {
   display: inline-flex;
   padding: 9px 15px;
   border-radius: 999px;
-  background: #efe4ce;
-  color: #9b743d;
+  background: #f3f5f7;
+  color: #172238;
   font-size: 13px;
   font-weight: 800;
   margin-bottom: 18px;
@@ -913,13 +950,13 @@ body {
   overflow: hidden;
   background: rgba(255, 255, 255, 0.76);
   border: 1px solid rgba(255, 255, 255, 0.95);
-  box-shadow: 0 28px 80px rgba(35, 25, 10, 0.12);
+  box-shadow: 0 28px 80px rgba(15, 23, 42, 0.12);
   transform-style: preserve-3d;
   transition: 0.3s ease;
 }
 
 .package-card:hover {
-  box-shadow: 0 38px 100px rgba(35, 25, 10, 0.18);
+  box-shadow: 0 38px 100px rgba(15, 23, 42, 0.18);
 }
 
 .package-glow {
@@ -929,7 +966,7 @@ body {
   right: -90px;
   top: -90px;
   border-radius: 50%;
-  background: rgba(227, 183, 102, 0.26);
+  background: rgba(23, 34, 56, 0.26);
   filter: blur(10px);
   transition: 0.4s ease;
 }
@@ -941,13 +978,13 @@ body {
 .standard-card {
   background:
     linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(250, 244, 234, 0.76)),
-    radial-gradient(circle at top right, rgba(227, 183, 102, 0.28), transparent 38%);
+    radial-gradient(circle at top right, rgba(23, 34, 56, 0.28), transparent 38%);
 }
 
 .premium-card {
   background:
     linear-gradient(145deg, rgba(24, 24, 24, 0.96), rgba(53, 42, 24, 0.92)),
-    radial-gradient(circle at top right, rgba(227, 183, 102, 0.45), transparent 42%);
+    radial-gradient(circle at top right, rgba(23, 34, 56, 0.45), transparent 42%);
   color: white;
 }
 
@@ -985,7 +1022,7 @@ body {
 }
 
 .package-stars {
-  color: #e3b766;
+  color: #172238;
   font-size: 20px;
   letter-spacing: 2px;
 }
@@ -1077,17 +1114,17 @@ body {
 
 .package-btn:hover {
   transform: translateY(-3px);
-  background: #b3833a;
-  box-shadow: 0 18px 36px rgba(179, 131, 58, 0.28);
+  background: #172238;
+  box-shadow: 0 18px 36px rgba(23, 34, 56, 0.28);
 }
 
 .premium-card .package-btn {
-  background: #e3b766;
+  background: #172238;
   color: #111;
 }
 
 .premium-card .package-btn:hover {
-  background: #f3cc80;
+  background: #243554;
 }
 
 /* Departure Card */
@@ -1126,13 +1163,13 @@ body {
 .departure-btn {
   padding: 18px 28px;
   border-radius: 999px;
-  background: #e3b766;
+  background: #172238;
   color: #111;
   white-space: nowrap;
 }
 
 .departure-btn:hover {
-  background: #f3cc80;
+  background: #243554;
   transform: translateY(-3px);
 }
 
@@ -1181,7 +1218,7 @@ body {
   border-radius: 28px;
   background: rgba(255, 255, 255, 0.72);
   border: 1px solid rgba(255, 255, 255, 0.9);
-  box-shadow: 0 18px 45px rgba(35, 25, 10, 0.07);
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.07);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -1191,7 +1228,7 @@ body {
 .included-item:hover {
   transform: translateY(-8px);
   background: #ffffff;
-  box-shadow: 0 24px 60px rgba(35, 25, 10, 0.12);
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.12);
 }
 
 .included-item img {
@@ -1302,7 +1339,7 @@ body {
 .journey-section {
   padding: 115px 5vw;
   background:
-    linear-gradient(180deg, #f7f4ee 0%, #f0eadf 100%);
+    linear-gradient(180deg, #f7f4ee 0%, #f3f5f7 100%);
   position: relative;
   overflow: hidden;
 }
@@ -1315,7 +1352,7 @@ body {
   border-radius: 50%;
   right: -180px;
   top: 90px;
-  background: rgba(227, 183, 102, 0.18);
+  background: rgba(23, 34, 56, 0.18);
   filter: blur(20px);
 }
 
@@ -1367,7 +1404,7 @@ body {
   border-radius: 30px;
   background: rgba(255, 255, 255, 0.58);
   border: 1px solid rgba(255, 255, 255, 0.82);
-  box-shadow: 0 18px 45px rgba(35, 25, 10, 0.06);
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.06);
   display: grid;
   grid-template-columns: 58px 1fr;
   gap: 18px;
@@ -1389,7 +1426,7 @@ body {
   height: 48px;
   border-radius: 50%;
   background: #111;
-  color: #e3b766;
+  color: #172238;
   display: grid;
   place-items: center;
   font-size: 14px;
@@ -1399,7 +1436,7 @@ body {
 
 .journey-step:hover span,
 .journey-step.active span {
-  background: #e3b766;
+  background: #172238;
   color: #111;
 }
 
@@ -1437,13 +1474,13 @@ body {
   right: 60px;
   top: 20px;
   background: #111;
-  box-shadow: 0 38px 95px rgba(35, 25, 10, 0.22);
+  box-shadow: 0 38px 95px rgba(15, 23, 42, 0.22);
   transition: 0.4s ease;
 }
 
 .journey-main-card:hover {
   transform: translateY(-10px) rotate(1deg);
-  box-shadow: 0 48px 115px rgba(35, 25, 10, 0.28);
+  box-shadow: 0 48px 115px rgba(15, 23, 42, 0.28);
 }
 
 .journey-main-card img {
@@ -1495,7 +1532,7 @@ body {
   position: absolute;
   z-index: 3;
   cursor: pointer;
-  box-shadow: 0 22px 55px rgba(35, 25, 10, 0.14);
+  box-shadow: 0 22px 55px rgba(15, 23, 42, 0.14);
   transition: 0.3s ease;
 }
 
@@ -1510,7 +1547,7 @@ body {
 .journey-thumb:hover,
 .journey-thumb.active {
   transform: translateY(-8px) rotate(-2deg);
-  background: #e3b766;
+  background: #172238;
 }
 
 .journey-thumb:nth-of-type(1) {
@@ -1566,7 +1603,7 @@ body {
 .journey-stamp span {
   display: block;
   font-size: 14px;
-  color: #e3b766;
+  color: #172238;
   font-weight: 900;
   letter-spacing: 2px;
 }
@@ -1695,7 +1732,7 @@ body {
 .guide-section {
   padding: 115px 5vw;
   background:
-    radial-gradient(circle at 15% 20%, rgba(227, 183, 102, 0.14), transparent 28%),
+    radial-gradient(circle at 15% 20%, rgba(23, 34, 56, 0.14), transparent 28%),
     radial-gradient(circle at 85% 80%, rgba(17, 17, 17, 0.07), transparent 30%),
     #f7f4ee;
   overflow: hidden;
@@ -1722,7 +1759,7 @@ body {
   width: 420px;
   height: 520px;
   border-radius: 999px;
-  background: #e3b766;
+  background: #172238;
   opacity: 0.18;
   filter: blur(4px);
   transform: rotate(-18deg);
@@ -1747,14 +1784,14 @@ body {
   overflow: hidden;
   position: relative;
   z-index: 2;
-  background: #efe4ce;
-  box-shadow: 0 38px 90px rgba(35, 25, 10, 0.18);
+  background: #f3f5f7;
+  box-shadow: 0 38px 90px rgba(15, 23, 42, 0.18);
   transition: 0.35s ease;
 }
 
 .guide-image-wrap:hover {
   transform: translateY(-10px) rotate(-1deg);
-  box-shadow: 0 48px 110px rgba(35, 25, 10, 0.24);
+  box-shadow: 0 48px 110px rgba(15, 23, 42, 0.24);
 }
 
 .guide-image {
@@ -1779,7 +1816,7 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.88);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
-  box-shadow: 0 22px 55px rgba(35, 25, 10, 0.13);
+  box-shadow: 0 22px 55px rgba(15, 23, 42, 0.13);
   animation: guideFloat 4s ease-in-out infinite;
 }
 
@@ -1837,7 +1874,7 @@ body {
   border-radius: 28px;
   background: rgba(255, 255, 255, 0.66);
   border: 1px solid rgba(255, 255, 255, 0.86);
-  box-shadow: 0 18px 45px rgba(35, 25, 10, 0.06);
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.06);
   display: grid;
   grid-template-columns: 58px 1fr;
   gap: 18px;
@@ -1848,7 +1885,7 @@ body {
 .guide-point:hover {
   transform: translateX(8px);
   background: white;
-  box-shadow: 0 24px 60px rgba(35, 25, 10, 0.1);
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.1);
 }
 
 .guide-point span {
@@ -1856,7 +1893,7 @@ body {
   height: 48px;
   border-radius: 50%;
   background: #111;
-  color: #e3b766;
+  color: #172238;
   display: grid;
   place-items: center;
   font-size: 14px;
@@ -1892,8 +1929,8 @@ body {
 
 .guide-btn:hover {
   transform: translateY(-3px);
-  background: #b3833a;
-  box-shadow: 0 18px 36px rgba(179, 131, 58, 0.26);
+  background: #172238;
+  box-shadow: 0 18px 36px rgba(23, 34, 56, 0.26);
 }
 
 .guide-cta p {
@@ -2002,7 +2039,7 @@ body {
 .testimonials-section {
   padding: 115px 5vw;
   background:
-    radial-gradient(circle at 12% 20%, rgba(227, 183, 102, 0.16), transparent 28%),
+    radial-gradient(circle at 12% 20%, rgba(23, 34, 56, 0.16), transparent 28%),
     radial-gradient(circle at 90% 70%, rgba(17, 17, 17, 0.08), transparent 32%),
     #f7f4ee;
   overflow: hidden;
@@ -2042,7 +2079,7 @@ body {
 }
 
 .testimonial-arrow:hover {
-  background: #b3833a;
+  background: #172238;
   transform: translateY(-4px);
 }
 
@@ -2061,11 +2098,11 @@ body {
   border-radius: 42px;
   background:
     linear-gradient(145deg, rgba(17, 17, 17, 0.96), rgba(47, 37, 21, 0.94)),
-    radial-gradient(circle at top right, rgba(227, 183, 102, 0.3), transparent 38%);
+    radial-gradient(circle at top right, rgba(23, 34, 56, 0.3), transparent 38%);
   color: white;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 34px 90px rgba(35, 25, 10, 0.18);
+  box-shadow: 0 34px 90px rgba(15, 23, 42, 0.18);
 }
 
 .testimonial-featured::before {
@@ -2076,7 +2113,7 @@ body {
   font-size: 210px;
   line-height: 1;
   font-weight: 900;
-  color: rgba(227, 183, 102, 0.12);
+  color: rgba(23, 34, 56, 0.12);
 }
 
 .testimonial-featured::after {
@@ -2087,7 +2124,7 @@ body {
   border-radius: 50%;
   left: -90px;
   bottom: -90px;
-  background: rgba(227, 183, 102, 0.14);
+  background: rgba(23, 34, 56, 0.14);
   filter: blur(8px);
 }
 
@@ -2109,7 +2146,7 @@ body {
   width: 62px;
   height: 62px;
   border-radius: 50%;
-  background: #e3b766;
+  background: #172238;
   color: #111;
   display: grid;
   place-items: center;
@@ -2130,7 +2167,7 @@ body {
 
 .featured-stars {
   margin-top: 50px;
-  color: #e3b766;
+  color: #172238;
   font-size: 28px;
   letter-spacing: 5px;
 }
@@ -2164,7 +2201,7 @@ body {
 }
 
 .featured-bottom strong {
-  color: #e3b766;
+  color: #172238;
   font-size: 14px;
 }
 
@@ -2183,7 +2220,7 @@ body {
   border-radius: 30px;
   background: rgba(255, 255, 255, 0.64);
   border: 1px solid rgba(255, 255, 255, 0.88);
-  box-shadow: 0 18px 45px rgba(35, 25, 10, 0.06);
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.06);
   display: grid;
   grid-template-columns: 54px 1fr;
   gap: 16px;
@@ -2196,11 +2233,11 @@ body {
 .testimonial-card.active {
   transform: translateX(-8px);
   background: white;
-  box-shadow: 0 28px 70px rgba(35, 25, 10, 0.13);
+  box-shadow: 0 28px 70px rgba(15, 23, 42, 0.13);
 }
 
 .testimonial-card.active {
-  border-color: rgba(227, 183, 102, 0.8);
+  border-color: rgba(23, 34, 56, 0.8);
 }
 
 .mini-initial {
@@ -2208,7 +2245,7 @@ body {
   height: 48px;
   border-radius: 50%;
   background: #111;
-  color: #e3b766;
+  color: #172238;
   display: grid;
   place-items: center;
   font-size: 18px;
@@ -2218,7 +2255,7 @@ body {
 
 .testimonial-card.active .mini-initial,
 .testimonial-card:hover .mini-initial {
-  background: #e3b766;
+  background: #172238;
   color: #111;
 }
 
@@ -2310,7 +2347,7 @@ body {
 .faq-section {
   padding: 115px 5vw;
   background:
-    radial-gradient(circle at 14% 18%, rgba(227, 183, 102, 0.16), transparent 28%),
+    radial-gradient(circle at 14% 18%, rgba(23, 34, 56, 0.16), transparent 28%),
     radial-gradient(circle at 86% 76%, rgba(17, 17, 17, 0.07), transparent 30%),
     #f7f4ee;
   position: relative;
@@ -2365,7 +2402,7 @@ body {
   background:
     linear-gradient(145deg, rgba(17, 17, 17, 0.96), rgba(47, 37, 21, 0.94));
   color: white;
-  box-shadow: 0 28px 80px rgba(35, 25, 10, 0.16);
+  box-shadow: 0 28px 80px rgba(15, 23, 42, 0.16);
   position: relative;
   overflow: hidden;
 }
@@ -2378,7 +2415,7 @@ body {
   right: -80px;
   top: -80px;
   border-radius: 50%;
-  background: rgba(227, 183, 102, 0.24);
+  background: rgba(23, 34, 56, 0.24);
   filter: blur(8px);
 }
 
@@ -2395,8 +2432,8 @@ body {
   margin-bottom: 14px;
   padding: 8px 13px;
   border-radius: 999px;
-  background: rgba(227, 183, 102, 0.16);
-  color: #e3b766;
+  background: rgba(23, 34, 56, 0.16);
+  color: #172238;
   font-size: 12px;
   font-weight: 800;
 }
@@ -2418,12 +2455,12 @@ body {
   width: 100%;
   padding: 16px 24px;
   border-radius: 999px;
-  background: #e3b766;
+  background: #172238;
   color: #111;
 }
 
 .faq-help-btn:hover {
-  background: #f3cc80;
+  background: #243554;
   transform: translateY(-3px);
 }
 
@@ -2434,7 +2471,7 @@ body {
   border-radius: 42px;
   background: rgba(255, 255, 255, 0.44);
   border: 1px solid rgba(255, 255, 255, 0.82);
-  box-shadow: 0 28px 80px rgba(35, 25, 10, 0.09);
+  box-shadow: 0 28px 80px rgba(15, 23, 42, 0.09);
 }
 
 .faq-tabs {
@@ -2443,7 +2480,7 @@ body {
   flex-wrap: wrap;
   padding: 8px;
   border-radius: 999px;
-  background: #f0eadf;
+  background: #f3f5f7;
   margin-bottom: 16px;
 }
 
@@ -2477,14 +2514,14 @@ body {
   border-radius: 28px;
   background: white;
   border: 1px solid rgba(17, 17, 17, 0.05);
-  box-shadow: 0 16px 42px rgba(35, 25, 10, 0.055);
+  box-shadow: 0 16px 42px rgba(15, 23, 42, 0.055);
   overflow: hidden;
   transition: 0.28s ease;
 }
 
 .faq-item:hover {
   transform: translateY(-3px);
-  box-shadow: 0 22px 55px rgba(35, 25, 10, 0.09);
+  box-shadow: 0 22px 55px rgba(15, 23, 42, 0.09);
 }
 
 .faq-item.hide {
@@ -2517,7 +2554,7 @@ body {
   height: 42px;
   min-width: 42px;
   border-radius: 50%;
-  background: #f0eadf;
+  background: #f3f5f7;
   color: #111;
   display: grid;
   place-items: center;
@@ -2526,7 +2563,7 @@ body {
 }
 
 .faq-item.active .faq-question strong {
-  background: #e3b766;
+  background: #172238;
   transform: rotate(45deg);
 }
 
@@ -2625,7 +2662,7 @@ body {
 .book-call-section {
   padding: 115px 5vw;
   background:
-    radial-gradient(circle at 16% 18%, rgba(227, 183, 102, 0.18), transparent 28%),
+    radial-gradient(circle at 16% 18%, rgba(23, 34, 56, 0.18), transparent 28%),
     radial-gradient(circle at 90% 75%, rgba(17, 17, 17, 0.08), transparent 34%),
     #f7f4ee;
   position: relative;
@@ -2666,14 +2703,14 @@ body {
   border-radius: 30px;
   background: rgba(255, 255, 255, 0.62);
   border: 1px solid rgba(255, 255, 255, 0.88);
-  box-shadow: 0 18px 45px rgba(35, 25, 10, 0.06);
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.06);
   transition: 0.28s ease;
 }
 
 .call-info-card:hover {
   transform: translateX(8px);
   background: white;
-  box-shadow: 0 24px 60px rgba(35, 25, 10, 0.1);
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.1);
 }
 
 .call-info-card span {
@@ -2681,7 +2718,7 @@ body {
   height: 44px;
   border-radius: 50%;
   background: #111;
-  color: #e3b766;
+  color: #172238;
   display: grid;
   place-items: center;
   font-size: 13px;
@@ -2729,13 +2766,13 @@ body {
 .direct-call-btn {
   padding: 15px 24px;
   border-radius: 999px;
-  background: #e3b766;
+  background: #172238;
   color: #111;
   white-space: nowrap;
 }
 
 .direct-call-btn:hover {
-  background: #f3cc80;
+  background: #243554;
   transform: translateY(-3px);
 }
 
@@ -2747,7 +2784,7 @@ body {
   background:
     linear-gradient(145deg, rgba(17, 17, 17, 0.96), rgba(47, 37, 21, 0.94));
   color: white;
-  box-shadow: 0 38px 100px rgba(35, 25, 10, 0.22);
+  box-shadow: 0 38px 100px rgba(15, 23, 42, 0.22);
   position: relative;
   overflow: hidden;
 }
@@ -2760,7 +2797,7 @@ body {
   border-radius: 50%;
   right: -130px;
   top: -130px;
-  background: rgba(227, 183, 102, 0.24);
+  background: rgba(23, 34, 56, 0.24);
   filter: blur(10px);
 }
 
@@ -2791,7 +2828,7 @@ body {
 }
 
 .form-card-header span {
-  color: #e3b766;
+  color: #172238;
   font-size: 13px;
   font-weight: 800;
 }
@@ -2881,9 +2918,9 @@ body {
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
-  border-color: rgba(227, 183, 102, 0.7);
+  border-color: rgba(23, 34, 56, 0.7);
   background: rgba(255, 255, 255, 0.13);
-  box-shadow: 0 0 0 5px rgba(227, 183, 102, 0.1);
+  box-shadow: 0 0 0 5px rgba(23, 34, 56, 0.1);
 }
 
 .time-slots {
@@ -2907,7 +2944,7 @@ body {
 
 .time-slot:hover,
 .time-slot.active {
-  background: #e3b766;
+  background: #172238;
   color: #111;
   transform: translateY(-2px);
 }
@@ -2917,15 +2954,15 @@ body {
   width: 100%;
   padding: 18px 24px;
   border-radius: 999px;
-  background: #e3b766;
+  background: #172238;
   color: #111;
   font-size: 15px;
 }
 
 .submit-booking-btn:hover {
-  background: #f3cc80;
+  background: #243554;
   transform: translateY(-3px);
-  box-shadow: 0 18px 40px rgba(227, 183, 102, 0.26);
+  box-shadow: 0 18px 40px rgba(23, 34, 56, 0.26);
 }
 
 .form-note {
@@ -3044,7 +3081,7 @@ body {
   border-radius: 50%;
   right: -160px;
   top: -160px;
-  background: rgba(227, 183, 102, 0.18);
+  background: rgba(23, 34, 56, 0.18);
   filter: blur(14px);
 }
 
@@ -3090,7 +3127,7 @@ body {
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: #e3b766;
+  background: #172238;
   color: #111;
   display: grid;
   place-items: center;
@@ -3144,7 +3181,7 @@ body {
 }
 
 .footer-socials a:hover {
-  background: #e3b766;
+  background: #172238;
   color: #111;
   transform: translateY(-5px);
 }
@@ -3157,7 +3194,7 @@ body {
 
 .footer-column h3 {
   font-size: 15px;
-  color: #e3b766;
+  color: #172238;
   margin-bottom: 20px;
   letter-spacing: -0.2px;
 }
@@ -3211,7 +3248,7 @@ body {
 }
 
 .back-to-top:hover {
-  background: #e3b766;
+  background: #172238;
   color: #111;
   transform: translateY(-4px);
 }
@@ -3249,5 +3286,1034 @@ body {
 
   .back-to-top {
     width: 100%;
+  }
+}
+
+/* =========================================================
+   RAHATH EDITORIAL UI — WHITE / MODULAR / IMAGE-LED
+   Inspired by the supplied references while retaining the
+   existing Rahath content, imagery and interactions.
+   ========================================================= */
+
+:root {
+  --ui-white: #ffffff;
+  --ui-ink: #080a0f;
+  --ui-navy: #172238;
+  --ui-muted: #667085;
+  --ui-soft: #f3f5f7;
+  --ui-line: #e7e9ee;
+  --ui-gradient: linear-gradient(125deg, #020409 0%, #111827 48%, #1d2a46 100%);
+  --ui-shadow: 0 22px 60px rgba(15, 23, 42, 0.08);
+}
+
+html,
+body {
+  background: var(--ui-white);
+  color: var(--ui-ink);
+  overflow-x: hidden;
+}
+
+body::before,
+body::after {
+  background: transparent;
+}
+
+/* Compact floating navigation */
+.site-header {
+  padding-top: 18px;
+}
+
+.navbar {
+  height: 62px;
+  padding: 0 16px 0 14px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(8, 10, 15, 0.08);
+  box-shadow: 0 14px 44px rgba(15, 23, 42, 0.1);
+}
+
+.logo {
+  gap: 8px;
+  font-size: 15px;
+}
+
+.logo-mark,
+.footer-logo-mark {
+  flex: 0 0 auto;
+  width: 28px;
+  height: 28px;
+  overflow: hidden;
+  border-radius: 8px;
+  color: transparent;
+  background-color: #10182a;
+  background-image: url("rahath-brand-mark.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 190%;
+  box-shadow: none;
+}
+
+.nav-links {
+  gap: 24px;
+}
+
+.nav-links a,
+.login-link {
+  color: #343943;
+  font-size: 13px;
+}
+
+.nav-links a.active,
+.nav-links a:hover,
+.login-link:hover {
+  color: var(--ui-ink);
+}
+
+/* Rahath gradient CTA language */
+.btn,
+.package-btn,
+.departure-btn,
+.guide-btn,
+.faq-help-btn,
+.direct-call-btn,
+.submit-booking-btn,
+.back-to-top {
+  background: var(--ui-gradient);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 12px 26px rgba(17, 24, 39, 0.16);
+}
+
+.btn:hover,
+.package-btn:hover,
+.premium-card .package-btn:hover,
+.departure-btn:hover,
+.guide-btn:hover,
+.faq-help-btn:hover,
+.direct-call-btn:hover,
+.submit-booking-btn:hover,
+.back-to-top:hover {
+  background: linear-gradient(125deg, #111827 0%, #243554 100%);
+  color: #fff;
+  transform: translateY(-3px);
+  box-shadow: 0 18px 36px rgba(17, 24, 39, 0.24);
+}
+
+/* Hero: image-led rounded showcase */
+.hero-section {
+  min-height: auto;
+  padding: 106px 5vw 52px;
+  background:
+    radial-gradient(ellipse at 78% 4%, rgba(35, 53, 87, 0.92) 0%, rgba(23, 34, 56, 0.54) 31%, transparent 67%),
+    linear-gradient(
+      to bottom,
+      #03050a 0%,
+      #10192b 24%,
+      rgba(16, 25, 43, 0.78) 46%,
+      rgba(16, 25, 43, 0.28) 70%,
+      rgba(255, 255, 255, 0.92) 91%,
+      #ffffff 100%
+    );
+}
+
+.hero-bg {
+  min-height: 650px;
+  border-radius: 34px;
+  box-shadow: var(--ui-shadow);
+}
+
+.hero-overlay {
+  background: linear-gradient(100deg, rgba(2, 4, 9, 0.78) 0%, rgba(2, 4, 9, 0.45) 52%, rgba(2, 4, 9, 0.16) 100%);
+}
+
+.hero-content h1 span,
+.eyebrow {
+  color: #fff;
+}
+
+.eyebrow {
+  background: rgba(255, 255, 255, 0.13);
+  border-color: rgba(255, 255, 255, 0.28);
+}
+
+.hero-countdown-card {
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.18);
+}
+
+.countdown-grid div {
+  background: var(--ui-soft);
+}
+
+.countdown-footer {
+  background: var(--ui-gradient);
+}
+
+.social-strip {
+  border: 1px solid var(--ui-line);
+  box-shadow: var(--ui-shadow);
+}
+
+.social-intro,
+.social-item-icon {
+  background: var(--ui-gradient);
+}
+
+/* Shared section rhythm */
+.packages-section,
+.journey-section,
+.guide-section,
+.testimonials-section,
+.faq-section,
+.book-call-section {
+  padding-top: 92px;
+  padding-bottom: 92px;
+  background: #fff;
+}
+
+.journey-section::before,
+.journey-section::after,
+.guide-visual::before,
+.guide-visual::after,
+.faq-section::before,
+.faq-help-card::before,
+.testimonial-featured::before,
+.testimonial-featured::after,
+.booking-form-card::before,
+.booking-form-card::after {
+  display: none;
+}
+
+.section-heading {
+  max-width: 760px;
+  margin-bottom: 52px;
+}
+
+.section-heading h2,
+.journey-content h2,
+.guide-content h2,
+.testimonials-heading h2,
+.faq-intro h2,
+.book-call-content h2 {
+  color: var(--ui-ink);
+  letter-spacing: -2.2px;
+}
+
+.section-heading p,
+.journey-text,
+.guide-text,
+.faq-text,
+.book-call-text {
+  color: var(--ui-muted);
+}
+
+/* Packages: two spacious editorial cards */
+.packages-grid {
+  gap: 18px;
+}
+
+.package-card,
+.premium-card,
+.standard-card {
+  border-radius: 30px;
+  border: 1px solid var(--ui-line);
+  background: #fff;
+  color: var(--ui-ink);
+  box-shadow: none;
+}
+
+.package-card:hover {
+  transform: translateY(-7px);
+  box-shadow: var(--ui-shadow);
+  border-color: #d7dae2;
+}
+
+.featured-package {
+  transform: none;
+  background: linear-gradient(145deg, #f2f5fa 0%, #ffffff 62%);
+  border-color: #cfd5e1;
+}
+
+.package-glow {
+  background: rgba(23, 34, 56, 0.06);
+}
+
+.package-badge,
+.premium-card .package-badge {
+  background: var(--ui-soft);
+  color: var(--ui-ink);
+  border: 1px solid var(--ui-line);
+}
+
+.package-stars {
+  color: var(--ui-navy);
+}
+
+.package-price small,
+.premium-card .package-price small,
+.package-description,
+.premium-card .package-description,
+.package-features span,
+.premium-card .package-features span {
+  color: var(--ui-muted);
+}
+
+.package-features div,
+.premium-card .package-features div {
+  background: var(--ui-soft);
+  border: 1px solid transparent;
+}
+
+.package-features div:hover,
+.premium-card .package-features div:hover {
+  background: #fff;
+  border-color: var(--ui-line);
+}
+
+.premium-card .package-btn,
+.package-btn {
+  background: var(--ui-gradient);
+  color: #fff;
+}
+
+.departure-card {
+  margin-top: 18px;
+  border-radius: 28px;
+  background: #f4f5f7;
+  color: var(--ui-ink);
+  border: 1px solid var(--ui-line);
+  box-shadow: none;
+}
+
+.departure-card div {
+  background: #fff;
+  border: 1px solid var(--ui-line);
+}
+
+.departure-card span {
+  color: var(--ui-muted);
+}
+
+.included-section {
+  margin-top: 18px;
+  padding: 34px;
+  border-radius: 30px;
+  background: var(--ui-soft);
+}
+
+.included-item {
+  min-height: 150px;
+  border-radius: 22px;
+  background: #fff;
+  border: 1px solid var(--ui-line);
+  box-shadow: none;
+}
+
+.included-item:hover {
+  box-shadow: 0 16px 34px rgba(15, 23, 42, 0.08);
+}
+
+/* Journey: editorial text + floating image collage */
+.journey-layout {
+  gap: 78px;
+}
+
+.journey-step {
+  border-radius: 24px;
+  background: #fff;
+  border: 1px solid var(--ui-line);
+  box-shadow: none;
+}
+
+.journey-step:hover,
+.journey-step.active {
+  background: var(--ui-soft);
+  color: var(--ui-ink);
+  box-shadow: none;
+  border-color: #cfd5df;
+}
+
+.journey-step span,
+.journey-step:hover span,
+.journey-step.active span,
+.guide-point span,
+.call-info-card span {
+  background: var(--ui-gradient);
+  color: #fff;
+}
+
+.journey-step p,
+.journey-step:hover p,
+.journey-step.active p {
+  color: var(--ui-muted);
+}
+
+.journey-main-card {
+  border-radius: 32px;
+  box-shadow: var(--ui-shadow);
+}
+
+.journey-image-label {
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.82);
+}
+
+.journey-thumb {
+  border-radius: 20px;
+  border: 5px solid #fff;
+  box-shadow: 0 18px 44px rgba(15, 23, 42, 0.14);
+}
+
+.journey-thumb img {
+  border-radius: 14px;
+}
+
+.journey-thumb:hover,
+.journey-thumb.active {
+  background: #fff;
+  border-color: #fff;
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.2);
+}
+
+/* Guide */
+.guide-layout {
+  gap: 82px;
+}
+
+.guide-image-wrap {
+  border-radius: 34px;
+  background: var(--ui-soft);
+  box-shadow: var(--ui-shadow);
+}
+
+.guide-floating-note {
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.82);
+  box-shadow: 0 18px 46px rgba(15, 23, 42, 0.14);
+}
+
+.guide-point,
+.call-info-card {
+  border-radius: 22px;
+  background: var(--ui-soft);
+  border: 1px solid transparent;
+  box-shadow: none;
+}
+
+.guide-point:hover,
+.call-info-card:hover {
+  background: #fff;
+  border-color: var(--ui-line);
+  box-shadow: var(--ui-shadow);
+}
+
+.guide-point p,
+.guide-cta p,
+.call-info-card p {
+  color: var(--ui-muted);
+}
+
+/* Testimonials: white cards, one stronger spotlight */
+.testimonial-arrow {
+  background: var(--ui-gradient);
+  color: #fff;
+}
+
+.testimonial-featured {
+  border-radius: 30px;
+  background: linear-gradient(145deg, #f1f4f8, #ffffff);
+  color: var(--ui-ink);
+  border: 1px solid var(--ui-line);
+  box-shadow: none;
+}
+
+.review-profile,
+.mini-initial,
+.testimonial-card.active .mini-initial,
+.testimonial-card:hover .mini-initial {
+  background: var(--ui-gradient);
+  color: #fff;
+}
+
+.featured-top p,
+.featured-review,
+.featured-bottom span,
+.featured-bottom strong {
+  color: var(--ui-muted);
+}
+
+.featured-stars {
+  color: var(--ui-navy);
+}
+
+.featured-bottom span {
+  background: #fff;
+  border: 1px solid var(--ui-line);
+}
+
+.testimonial-card {
+  border-radius: 24px;
+  background: #fff;
+  border: 1px solid var(--ui-line);
+  box-shadow: none;
+}
+
+.testimonial-card:hover,
+.testimonial-card.active {
+  background: var(--ui-soft);
+  box-shadow: none;
+}
+
+/* FAQ in a soft modular panel */
+.faq-layout {
+  gap: 60px;
+}
+
+.faq-help-card {
+  border-radius: 28px;
+  background: var(--ui-soft);
+  color: var(--ui-ink);
+  border: 1px solid var(--ui-line);
+  box-shadow: none;
+}
+
+.faq-help-card span {
+  background: #fff;
+  color: var(--ui-navy);
+  border: 1px solid var(--ui-line);
+}
+
+.faq-help-card p {
+  color: var(--ui-muted);
+}
+
+.faq-content {
+  border-radius: 30px;
+  background: var(--ui-soft);
+  border: 1px solid var(--ui-line);
+  box-shadow: none;
+}
+
+.faq-tabs {
+  background: #fff;
+  border: 1px solid var(--ui-line);
+}
+
+.faq-tab:hover,
+.faq-tab.active,
+.time-slot:hover,
+.time-slot.active {
+  background: var(--ui-gradient);
+  color: #fff;
+}
+
+.faq-item {
+  border-radius: 20px;
+  box-shadow: none;
+  border: 1px solid var(--ui-line);
+}
+
+.faq-question strong,
+.faq-item.active .faq-question strong {
+  background: var(--ui-gradient);
+  color: #fff;
+}
+
+/* Booking: clean white form and compact contrast cards */
+.call-direct-card {
+  border-radius: 26px;
+  background: var(--ui-soft);
+  color: var(--ui-ink);
+  border: 1px solid var(--ui-line);
+  box-shadow: none;
+}
+
+.call-direct-card span {
+  color: var(--ui-muted);
+}
+
+.booking-form-card {
+  border-radius: 30px;
+  background: #fff;
+  color: var(--ui-ink);
+  border: 1px solid var(--ui-line);
+  box-shadow: var(--ui-shadow);
+}
+
+.form-card-header span,
+.form-group label,
+.form-note {
+  color: var(--ui-muted);
+}
+
+.form-status {
+  background: var(--ui-soft);
+  color: var(--ui-ink);
+  border: 1px solid var(--ui-line);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  background: var(--ui-soft);
+  color: var(--ui-ink);
+  border: 1px solid transparent;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #98a0ad;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  background: #fff;
+  border-color: #b8c0cd;
+  box-shadow: 0 0 0 4px rgba(23, 34, 56, 0.08);
+}
+
+.time-slot {
+  background: var(--ui-soft);
+  color: var(--ui-ink);
+  border: 1px solid var(--ui-line);
+}
+
+.submit-booking-btn {
+  background: var(--ui-gradient);
+  color: #fff;
+}
+
+/* White footer, matching the reference layouts */
+.site-footer {
+  padding-top: 42px;
+  background: #fff;
+  color: var(--ui-ink);
+}
+
+.site-footer::before,
+.site-footer::after {
+  display: none;
+}
+
+.footer-main {
+  border-radius: 30px;
+  background: var(--ui-soft);
+  border: 1px solid var(--ui-line);
+}
+
+.footer-logo,
+.footer-logo strong,
+.footer-column h3,
+.footer-column a,
+.footer-column p,
+.footer-bottom p {
+  color: var(--ui-ink);
+}
+
+.footer-logo small,
+.footer-brand p,
+.footer-column p {
+  color: var(--ui-muted);
+}
+
+.footer-socials a {
+  background: #fff;
+  color: var(--ui-ink);
+  border: 1px solid var(--ui-line);
+}
+
+.footer-socials a:hover {
+  background: var(--ui-gradient);
+  color: #fff;
+}
+
+.footer-contact a:first-of-type,
+.footer-column a:hover {
+  color: var(--ui-navy);
+}
+
+.footer-bottom {
+  border-top-color: var(--ui-line);
+}
+
+@media (max-width: 900px) {
+  .packages-section,
+  .journey-section,
+  .guide-section,
+  .testimonials-section,
+  .faq-section,
+  .book-call-section {
+    padding-top: 72px;
+    padding-bottom: 72px;
+  }
+
+  .hero-bg {
+    min-height: 720px;
+  }
+
+  .journey-layout,
+  .guide-layout,
+  .faq-layout {
+    gap: 48px;
+  }
+}
+
+@media (max-width: 560px) {
+  .site-header {
+    padding-top: 12px;
+  }
+
+  .navbar {
+    height: 58px;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .logo span:last-child {
+    font-size: 13px;
+  }
+
+  .logo-mark {
+    width: 25px;
+    height: 25px;
+  }
+
+  .hero-section {
+    padding-top: 86px;
+  }
+
+  .hero-inner {
+    min-width: 0;
+    width: 100%;
+    grid-template-columns: minmax(0, 1fr) !important;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .hero-bg {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .hero-content,
+  .hero-countdown-card,
+  .countdown-grid {
+    min-width: 0;
+  }
+
+  .hero-content h1 {
+    max-width: 285px;
+    font-size: clamp(35px, 9.8vw, 39px);
+    line-height: 1;
+    letter-spacing: -1.8px;
+    overflow-wrap: anywhere;
+  }
+
+  .hero-text {
+    max-width: 290px;
+  }
+
+  .countdown-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .hero-bg,
+  .package-card,
+  .journey-main-card,
+  .guide-image-wrap,
+  .testimonial-featured,
+  .faq-content,
+  .booking-form-card,
+  .footer-main {
+    border-radius: 24px;
+  }
+
+  .included-section {
+    padding: 22px 16px;
+    border-radius: 24px;
+  }
+}
+
+/* Premium package — reversed for clear visual distinction */
+.premium-card,
+.featured-package.premium-card {
+  background: var(--ui-gradient);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.16);
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.2);
+}
+
+.premium-card .package-glow {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.premium-card .package-badge {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.premium-card .package-stars,
+.premium-card .package-price h3,
+.premium-card .package-features strong {
+  color: #fff;
+}
+
+.premium-card .package-price small,
+.premium-card .package-description,
+.premium-card .package-features span {
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.premium-card .package-features div {
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.premium-card .package-features div:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.premium-card .package-btn {
+  background: #fff;
+  color: var(--ui-navy);
+  border-color: #fff;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.22);
+}
+
+.premium-card .package-btn:hover {
+  background: #eef1f6;
+  color: var(--ui-ink);
+  box-shadow: 0 18px 38px rgba(0, 0, 0, 0.28);
+}
+
+/* Hero update strip — Rahath gradient and white icon language */
+.update-panel-text {
+  background: var(--ui-gradient);
+  color: #fff;
+}
+
+.update-panel-text span,
+.update-panel-text strong {
+  color: #fff;
+}
+
+.update-links a span {
+  background: var(--ui-gradient);
+  color: #fff;
+}
+
+/* Included benefits — gradient panel with white-on-gradient icons */
+.included-section {
+  background: var(--ui-gradient);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.16);
+}
+
+.included-header h3 {
+  color: #fff;
+}
+
+.included-item {
+  position: relative;
+  isolation: isolate;
+}
+
+.included-item::before {
+  content: "";
+  position: absolute;
+  top: 24px;
+  left: 22px;
+  width: 54px;
+  height: 54px;
+  z-index: 0;
+  border-radius: 50%;
+  background: var(--ui-gradient);
+}
+
+.included-item img {
+  position: relative;
+  z-index: 1;
+  filter: grayscale(1) contrast(1000%);
+  mix-blend-mode: screen;
+}
+
+/* Countdown labels — Rahath gradient text */
+.countdown-card-top span,
+.countdown-grid span {
+  background: var(--ui-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.submit-booking-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.62;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Footer — full Rahath gradient with reversed controls */
+.site-footer {
+  background: var(--ui-gradient);
+  color: #fff;
+}
+
+.footer-main {
+  background: rgba(255, 255, 255, 0.065);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
+}
+
+.footer-logo,
+.footer-logo strong,
+.footer-column h3,
+.footer-column a,
+.footer-column p,
+.footer-bottom p,
+.footer-contact a:first-of-type {
+  color: #fff;
+}
+
+.footer-logo small,
+.footer-brand p,
+.footer-column p {
+  color: rgba(255, 255, 255, 0.66);
+}
+
+.footer-column a:hover {
+  color: #fff;
+  opacity: 0.72;
+}
+
+.footer-socials a {
+  background: #fff;
+  color: var(--ui-navy);
+  border-color: #fff;
+}
+
+.footer-socials a:hover {
+  background: #eef1f6;
+  color: var(--ui-ink);
+}
+
+.footer-bottom {
+  border-top-color: rgba(255, 255, 255, 0.14);
+}
+
+.back-to-top,
+.back-to-top:hover {
+  background: #fff;
+  color: var(--ui-navy);
+  border-color: #fff;
+}
+
+.back-to-top:hover {
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.24);
+}
+
+/* Place booking links directly at the form, clear of the floating nav */
+#booking-form {
+  scroll-margin-top: 108px;
+}
+
+@media (max-width: 900px) {
+  #booking-form {
+    scroll-margin-top: 92px;
+  }
+}
+
+/* Hero headline accent */
+.hero-content h1,
+.hero-content h1 span {
+  color: #f1c62d;
+}
+
+.mobile-book-link {
+  display: none;
+}
+
+/* Extended Kaaba photograph inside the hero card; white page outside */
+.hero-section {
+  background: #fff;
+}
+
+.hero-bg {
+  background-image: url("hero-kaaba-centered-v2.png");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+/* Hero CTAs — reversed white treatment */
+.hero-buttons .btn-primary,
+.hero-buttons .btn-glass {
+  background: #fff;
+  color: var(--ui-navy);
+  border-color: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+}
+
+.hero-buttons .btn-primary:hover,
+.hero-buttons .btn-glass:hover {
+  background: #eef1f6;
+  color: var(--ui-ink);
+  border-color: #fff;
+}
+
+/* Hero utility cards — pure white */
+.hero-countdown-card,
+.hero-update-panel,
+.update-links a,
+.update-links a:hover {
+  background: #fff;
+}
+
+.countdown-grid div {
+  background: #fff;
+  border: 1px solid var(--ui-line);
+}
+
+/* Mobile navigation — one unified, non-overlapping dropdown */
+@media (max-width: 900px) {
+  .nav-links {
+    top: 86px;
+    padding: 14px;
+    gap: 5px;
+    max-height: calc(100vh - 104px);
+    overflow-y: auto;
+    background: #fff;
+    border: 1px solid var(--ui-line);
+  }
+
+  .nav-links a {
+    padding: 13px 15px;
+  }
+
+  .nav-actions {
+    display: none !important;
+  }
+
+  .nav-links .mobile-book-link {
+    display: block;
+    margin-top: 6px;
+    padding: 15px 18px;
+    text-align: center;
+    color: #fff;
+    background: var(--ui-gradient);
+    border-radius: 999px;
+  }
+
+  .nav-links .mobile-book-link:hover,
+  .nav-links .mobile-book-link.active {
+    color: #fff;
+    background: linear-gradient(125deg, #111827 0%, #243554 100%);
   }
 }

@@ -30,10 +30,10 @@ navItems.forEach((item) => {
 // ================= HERO REAL-TIME COUNTDOWN =================
 
 // Change these two values whenever the next Umrah departure changes.
-const heroCountdownMonth = "July 2026";
+const heroCountdownMonth = "October 2026";
 
 // Use Sri Lanka time format: YYYY-MM-DDTHH:MM:SS+05:30
-const heroDepartureDate = "2026-07-14T08:00:00+05:30";
+const heroDepartureDate = "2026-10-15T08:00:00+05:30";
 
 const departureMonth = document.getElementById("departureMonth");
 const countdownDays = document.getElementById("countdownDays");
@@ -331,16 +331,45 @@ const timeSlots = document.querySelectorAll(".time-slot");
 const callTimeInput = document.getElementById("callTime");
 const callDateInput = document.getElementById("callDate");
 const bookingToast = document.getElementById("bookingToast");
+const bookingSubmit = document.getElementById("bookingSubmit");
 
 const rahathWhatsAppNumber = "94725329242";
+const allowedPackages = new Set([
+  "Standard Package - LKR 385,000",
+  "Premium Package - LKR 600,000",
+  "Not sure yet",
+]);
+const allowedCallTimes = new Set(["10:00 AM", "12:00 PM", "4:00 PM", "8:00 PM"]);
+let bookingSubmissionLocked = false;
+
+const getLocalISODate = (date = new Date()) => {
+  const localTime = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+  return localTime.toISOString().slice(0, 10);
+};
+
+const normalizeSingleLine = (value, maxLength) =>
+  value
+    .replace(/[\u0000-\u001F\u007F]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, maxLength);
+
+const normalizeMessage = (value) =>
+  value
+    .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, "")
+    .trim()
+    .slice(0, 500);
 
 if (callTimeInput) {
   callTimeInput.value = "10:00 AM";
 }
 
 if (callDateInput) {
-  const today = new Date().toISOString().split("T")[0];
+  const today = getLocalISODate();
+  const latestDate = new Date();
+  latestDate.setFullYear(latestDate.getFullYear() + 1);
   callDateInput.setAttribute("min", today);
+  callDateInput.setAttribute("max", getLocalISODate(latestDate));
 }
 
 timeSlots.forEach((slot) => {
@@ -348,7 +377,10 @@ timeSlots.forEach((slot) => {
     timeSlots.forEach((button) => button.classList.remove("active"));
     slot.classList.add("active");
 
-    callTimeInput.value = slot.dataset.time;
+    const selectedTime = slot.dataset.time;
+    if (callTimeInput && allowedCallTimes.has(selectedTime)) {
+      callTimeInput.value = selectedTime;
+    }
   });
 });
 
@@ -356,28 +388,71 @@ if (bookingForm) {
   bookingForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    const fullName = document.getElementById("fullName").value.trim();
-    const phoneNumber = document.getElementById("phoneNumber").value.trim();
-    const packageType = document.getElementById("packageType").value;
-    const callDate = document.getElementById("callDate").value;
-    const callTime = document.getElementById("callTime").value;
-    const message = document.getElementById("message").value.trim();
-
-    if (!fullName || !phoneNumber || !packageType || !callDate || !callTime) {
-      alert("Please fill all required details before sending.");
+    if (bookingSubmissionLocked) {
       return;
     }
 
-    const whatsappMessage =
-      `Assalamu Alaikum, I would like to book a call for the July Umrah 2026 package.%0A%0A` +
-      `Name: ${fullName}%0A` +
-      `Phone: ${phoneNumber}%0A` +
-      `Interested Package: ${packageType}%0A` +
-      `Preferred Call Date: ${callDate}%0A` +
-      `Preferred Call Time: ${callTime}%0A` +
-      `Message: ${message || "No additional message"}`;
+    if (!bookingForm.checkValidity()) {
+      bookingForm.reportValidity();
+      return;
+    }
 
-    const whatsappURL = `https://wa.me/${rahathWhatsAppNumber}?text=${whatsappMessage}`;
+    const fullName = normalizeSingleLine(document.getElementById("fullName").value, 80);
+    const phoneNumber = normalizeSingleLine(document.getElementById("phoneNumber").value, 20);
+    const packageType = document.getElementById("packageType").value;
+    const callDate = document.getElementById("callDate").value;
+    const callTime = document.getElementById("callTime").value;
+    const message = normalizeMessage(document.getElementById("message").value);
+    const today = getLocalISODate();
+
+    if (fullName.length < 2) {
+      alert("Please enter a valid name.");
+      return;
+    }
+
+    if (!/^[0-9+() -]{7,20}$/.test(phoneNumber)) {
+      alert("Please enter a valid phone or WhatsApp number.");
+      return;
+    }
+
+    if (!allowedPackages.has(packageType) || !allowedCallTimes.has(callTime)) {
+      alert("Please choose a valid package and call time.");
+      return;
+    }
+
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(callDate) || callDate < today) {
+      alert("Please choose a valid future call date.");
+      return;
+    }
+
+    const whatsappMessage = [
+      "Assalamu Alaikum, I would like to book a call for the October Umrah 2026 package.",
+      "",
+      `Name: ${fullName}`,
+      `Phone: ${phoneNumber}`,
+      `Interested Package: ${packageType}`,
+      `Preferred Call Date: ${callDate}`,
+      `Preferred Call Time: ${callTime}`,
+      `Message: ${message || "No additional message"}`,
+    ].join("\n");
+
+    const whatsappURL = new URL(`https://wa.me/${rahathWhatsAppNumber}`);
+    whatsappURL.searchParams.set("text", whatsappMessage);
+
+    bookingSubmissionLocked = true;
+    if (bookingSubmit) {
+      bookingSubmit.disabled = true;
+      bookingSubmit.setAttribute("aria-disabled", "true");
+    }
+
+    const whatsappLink = document.createElement("a");
+    whatsappLink.href = whatsappURL.toString();
+    whatsappLink.target = "_blank";
+    whatsappLink.rel = "noopener noreferrer";
+    whatsappLink.hidden = true;
+    document.body.appendChild(whatsappLink);
+    whatsappLink.click();
+    whatsappLink.remove();
 
     if (bookingToast) {
       bookingToast.classList.add("show");
@@ -387,7 +462,6 @@ if (bookingForm) {
       }, 2800);
     }
 
-    window.open(whatsappURL, "_blank");
     bookingForm.reset();
 
     if (callTimeInput) {
@@ -398,6 +472,14 @@ if (bookingForm) {
     if (timeSlots[0]) {
       timeSlots[0].classList.add("active");
     }
+
+    setTimeout(() => {
+      bookingSubmissionLocked = false;
+      if (bookingSubmit) {
+        bookingSubmit.disabled = false;
+        bookingSubmit.removeAttribute("aria-disabled");
+      }
+    }, 2000);
   });
 }
 
