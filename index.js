@@ -30,10 +30,10 @@ navItems.forEach((item) => {
 // ================= HERO REAL-TIME COUNTDOWN =================
 
 // Change these two values whenever the next Umrah departure changes.
-const heroCountdownMonth = "October 2026";
+const heroCountdownMonth = "11 November 2026";
 
 // Use Sri Lanka time format: YYYY-MM-DDTHH:MM:SS+05:30
-const heroDepartureDate = "2026-10-15T08:00:00+05:30";
+const heroDepartureDate = "2026-11-11T08:00:00+05:30";
 
 const departureMonth = document.getElementById("departureMonth");
 const countdownDays = document.getElementById("countdownDays");
@@ -492,7 +492,7 @@ if (bookingForm) {
     }
 
     const whatsappMessage = [
-      "Assalamu Alaikum, I would like to book a call for the October Umrah 2026 package.",
+      "Assalamu Alaikum, I would like to book a call for the November Umrah 2026 package.",
       "",
       `Name: ${fullName}`,
       `Phone: ${phoneNumber}`,
