@@ -61,7 +61,7 @@ function updateHeroCountdown() {
   }
 
   if (timeLeft <= 0) {
-    countdownDays.textContent = "000";
+    countdownDays.textContent = "00";
     countdownHours.textContent = "00";
     countdownMinutes.textContent = "00";
     countdownSeconds.textContent = "00";
@@ -88,7 +88,7 @@ function updateHeroCountdown() {
     (timeLeft % (1000 * 60)) / 1000
   );
 
-  countdownDays.textContent = String(days).padStart(3, "0");
+  countdownDays.textContent = String(days).padStart(2, "0");
   countdownHours.textContent = String(hours).padStart(2, "0");
   countdownMinutes.textContent = String(minutes).padStart(2, "0");
   countdownSeconds.textContent = String(seconds).padStart(2, "0");
