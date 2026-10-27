@@ -1,60 +1,80 @@
 <!DOCTYPE html>
-<!-- saved from url=(0048)#journey -->
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  
+<!-- Built from src/ by build.mjs. Edit the files in src/, then run: node build.mjs -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="canonical" href="https://www.rahathtours.com/">
+  <link rel="icon" href="favicon.ico" sizes="48x48">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <meta name="facebook-domain-verification" content="rk0yd84xofks1vlsdlgqrr2g4luitp">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com; style-src 'self'; img-src 'self' data: https://*.google-analytics.com https://www.googletagmanager.com; font-src 'self' https://fonts.gstatic.com; connect-src https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://www.googletagmanager.com; object-src 'none'; base-uri 'none'; form-action 'self'; frame-src 'none'; media-src 'self'; worker-src 'none'; manifest-src 'self'; upgrade-insecure-requests; block-all-mixed-content; require-trusted-types-for 'script'">
   <title>Umrah Tours from Sri Lanka | Rahath Tours &amp; Travels</title>
   <meta name="description" content="Umrah group tours from Sri Lanka. Our next group leaves on 24 November 2026. Standard and Premium packages with a guide, hotels, transport and meals.">
-
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Rahath Tours &amp; Travels">
+  <meta property="og:title" content="Umrah Tours from Sri Lanka | Rahath Tours &amp; Travels">
+  <meta property="og:description" content="Umrah group tours from Sri Lanka. Our next group leaves on 24 November 2026. Standard and Premium packages with a guide, hotels, transport and meals.">
+  <meta property="og:url" content="https://www.rahathtours.com/">
+  <meta property="og:image" content="https://www.rahathtours.com/photos/og-home.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TravelAgency",
+      "name": "Rahath Tours & Travels",
+      "url": "https://www.rahathtours.com/",
+      "logo": "https://www.rahathtours.com/icon-192.png",
+      "image": "https://www.rahathtours.com/photos/og-home.jpg",
+      "telephone": "+94725329242",
+      "address": { "@type": "PostalAddress", "addressCountry": "LK" },
+      "areaServed": "LK",
+      "sameAs": ["https://www.facebook.com/rahathtours/", "https://www.instagram.com/rahathtourss/"]
+    }
+  </script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-LQ2QBYDJ7J" referrerpolicy="strict-origin-when-cross-origin"></script>
-  <script src="./analytics.js"></script>
-
-  <link rel="stylesheet" href="./index.css?v=20261027-copy2">
-
+  <script src="analytics.js"></script>
+  <link rel="stylesheet" href="index.css?v=20261027-hero22">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="./inter.css">
+  <link rel="stylesheet" href="inter.css">
 </head>
 
 <body>
 
-<!-- ================= HEADER ================= -->
-
 <header class="site-header">
-  <nav class="navbar">
-    <a href="#home" class="logo">
+  <nav class="navbar" aria-label="Main">
+    <a href="/" class="logo">
       <span class="logo-mark">◐</span>
       <span>Rahath Tours &amp; Travels</span>
     </a>
 
     <div class="nav-links" id="navLinks">
-      <a href="#home" class="active">Home</a>
-      <a href="#packages">Packages</a>
-      <a href="#journey">How it works</a>
-      <a href="#guide">Guide</a>
-      <a href="#testimonials">Reviews</a>
-      <a href="#faq">FAQ</a>
-      <a href="#booking-form" class="mobile-book-link">Book a Call</a>
+      <a href="/" class="active" aria-current="page">Home</a>
+      <a href="/packages">Packages</a>
+      <a href="/about">About</a>
+      <a href="/contact">Contact</a>
+      <a href="/contact#booking-form" class="mobile-book-link">Book a Call</a>
     </div>
 
     <div class="nav-actions">
-      <a href="#booking-form" class="btn btn-dark">Book a Call</a>
+      <a href="/contact#booking-form" class="btn btn-dark">Book a Call</a>
     </div>
 
-    <button class="menu-btn" id="menuBtn" aria-label="Open menu">
+    <button class="menu-btn" id="menuBtn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
       <span></span>
       <span></span>
     </button>
   </nav>
 </header>
 
-  <!-- ================= HERO SECTION ================= -->
-  <main>
- 
-    <!-- ================= HERO SECTION ================= -->
+<main>
+
+<!-- ================= HERO ================= -->
 <section class="hero-section" id="home">
 
   <div class="hero-bg">
@@ -76,7 +96,7 @@
         </p>
 
         <div class="hero-buttons">
-          <a href="#booking-form" class="btn btn-primary">Book a free call</a>
+          <a href="/contact#booking-form" class="btn btn-primary">Book a free call</a>
           <a href="#packages" class="btn btn-glass">See the packages</a>
         </div>
       </div>
@@ -109,6 +129,11 @@
           </div>
         </div>
 
+        <div class="countdown-next" id="countdownNext" hidden>
+          <p><strong>Our next group is being planned</strong> Book a free call to hear first.</p>
+          <a href="/contact#booking-form" class="countdown-next-btn">Book a call</a>
+        </div>
+
       </div>
 
     </div>
@@ -116,53 +141,41 @@
 
 </section>
 
-    <!-- ================= PACKAGES SECTION ================= -->
+<!-- ================= TRUST STRIP ================= -->
+<section class="trust-strip" aria-label="Why pilgrims choose Rahath">
+  <div class="trust-strip-inner">
+    <a class="trust-item" href="/about#testimonials">
+      <strong>5.0 <span aria-hidden="true">★</span></strong>
+      <span>21 Google reviews</span>
+    </a>
+    <div class="trust-item">
+      <strong>190+</strong>
+      <span>pilgrims served</span>
+    </div>
+    <div class="trust-item">
+      <strong>20+</strong>
+      <span>Umrah groups</span>
+    </div>
+    <a class="trust-item" href="/about#guide">
+      <strong>Arshad Athaur Rahman</strong>
+      <span data-after-departure="guides every group">guides the November group</span>
+    </a>
+  </div>
+</section>
+
+<!-- ================= PACKAGES ================= -->
 <section class="packages-section" id="packages">
   <div class="section-container">
-
-    <div class="packages-story">
-      <div class="packages-story-title">
-        <span class="editorial-kicker">About us</span>
-        <h2>We take Sri Lankan families and groups for Umrah</h2>
-      </div>
-
-      <figure class="packages-story-image">
-        <img src="./plan.jpg" alt="Rahath pilgrims preparing for Umrah" loading="lazy">
-      </figure>
-
-      <div class="packages-story-copy">
-        <span class="editorial-kicker">What we do</span>
-        <h3>We sort out the details for you</h3>
-        <p>Our team books the hotels, arranges transport and meals, and helps with your documents. That leaves your time in Makkah and Madinah free for worship.</p>
-        <a href="#journey">See how it works →</a>
-      </div>
-    </div>
-
-    <div class="impact-banner" role="region" aria-labelledby="impact-title">
-      <img src="./madinah-credibility-banner-v1.png" alt="The Prophet's Mosque in Madinah under a clear blue sky" loading="lazy">
-      <div class="impact-shade" aria-hidden="true"></div>
-      <div class="impact-content">
-        <div class="impact-copy">
-          <span class="impact-kicker">So far</span>
-          <h2 id="impact-title">Every group travels with a guide</h2>
-        </div>
-        <div class="impact-stats" aria-label="Rahath Umrah experience">
-          <div><strong>190+</strong><span>Pilgrims served</span></div>
-          <div><strong>20+</strong><span>Umrah groups</span></div>
-        </div>
-      </div>
-    </div>
-
     <div class="section-heading">
-      <span class="editorial-kicker">November 2026</span>
+      <span class="editorial-kicker">Packages</span>
       <h2>Our Umrah packages</h2>
-      <p>Both packages travel together, on the same dates, with the same guide. The difference is the hotel, the meals and some special Ziyarat visits.</p>
+      <p>Both packages travel together with the same guide. Pick the hotel and comfort level that suits you.</p>
     </div>
 
     <div class="packages-grid package-offers">
       <article class="package-card standard-card">
         <div class="package-media">
-          <img src="./photos/kaaba-through-haram-arches.webp" alt="The Kaaba seen through the carved arches of Masjid al-Haram at sunset" loading="lazy">
+          <img src="photos/kaaba-through-haram-arches.webp" alt="The Kaaba seen through the carved arches of Masjid al-Haram at sunset" loading="lazy">
           <span class="package-label">Standard Umrah</span>
         </div>
         <div class="package-body">
@@ -174,13 +187,13 @@
             <strong>LKR 385,000</strong>
             <small>per person</small>
           </div>
-          <a href="#booking-form" class="btn package-btn" data-package="Standard Package - LKR 385,000">Reserve Standard</a>
+          <a href="/contact?package=standard#booking-form" class="btn package-btn">Reserve Standard</a>
         </div>
       </article>
 
       <article class="package-card premium-card featured-package">
         <div class="package-media">
-          <img src="./premium-haram-view-v1.png" alt="Premium hotel room overlooking Masjid al-Haram and the Holy Kaaba" loading="lazy">
+          <img src="photos/premium-haram-view.webp" alt="Premium hotel room overlooking Masjid al-Haram and the Holy Kaaba" loading="lazy">
           <span class="package-label">Premium Umrah</span>
           <span class="package-tier-note">Premium Haram view</span>
         </div>
@@ -193,131 +206,60 @@
             <strong>LKR 600,000</strong>
             <small>per person</small>
           </div>
-          <a href="#booking-form" class="btn package-btn" data-package="Premium Package - LKR 600,000">Reserve Premium</a>
+          <a href="/contact?package=premium#booking-form" class="btn package-btn">Reserve Premium</a>
         </div>
       </article>
     </div>
 
-    <div class="departure-pass" role="group" aria-label="November 2026 group departure">
-      <div class="departure-pass-main">
-        <p class="departure-pass-kicker">November 2026 group</p>
-
-        <div class="departure-pass-route">
-          <strong>Sri Lanka</strong>
-          <span class="departure-pass-flight" aria-hidden="true">
-            <svg viewBox="0 0 24 24" focusable="false"><path fill="currentColor" d="M21.5 15.5v-2l-8-5V3.2a1.5 1.5 0 0 0-3 0v5.3l-8 5v2l8-2.5v5.4l-2 1.5v1.6l3.5-1 3.5 1v-1.6l-2-1.5V13l8 2.5Z"/></svg>
-          </span>
-          <strong>Makkah &amp; Madinah</strong>
-        </div>
-
-        <dl class="departure-pass-details">
-          <div><dt>Departure date</dt><dd>24 November 2026</dd></div>
-          <div><dt>Guided by</dt><dd>Arshad Athaur Rahman</dd></div>
-          <div><dt>Packages</dt><dd>Standard · Premium</dd></div>
-        </dl>
-      </div>
-
-      <div class="departure-pass-stub">
-        <span class="departure-pass-barcode" aria-hidden="true"></span>
-        <p>Ask us about a place in this group</p>
-        <a href="#booking-form" class="departure-pass-btn">Book a Call <span aria-hidden="true">→</span></a>
-      </div>
-    </div>
-
-    <div class="included-section">
-  <div class="included-header">
-    <h3>Included in both packages</h3>
-  </div>
-
-    <div class="included-grid">
-  <div class="included-item">
-    <img src="./multi.png" alt="Multilingual guide icon">
-    <p>Multilingual guides</p>
-  </div>
-
-  <div class="included-item">
-    <img src="./trans.png" alt="Transportation icon">
-    <p>All transport</p>
-  </div>
-
-  <div class="included-item">
-    <img src="./food.png" alt="Meals icon">
-    <p>Sri Lankan meals</p>
-  </div>
-
-  <div class="included-item">
-    <img src="./ziyarat.png" alt="Mosque icon">
-    <p>Ziyarat tours</p>
-  </div>
-
-  <div class="included-item">
-    <img src="./haram.png" alt="Location icon">
-    <p>Hotel close to the Haram</p>
-  </div>
-</div>
-    </div>
-
-    <section class="flight-options" aria-labelledby="flight-options-title">
-      <div class="flight-options-heading">
-        <span class="editorial-kicker">Airlines</span>
-        <h2 id="flight-options-title">Which airline will you fly with?</h2>
-        <p>We choose the airline for each group based on the travel dates and the seats available. These are the airlines we book with.</p>
-      </div>
-      <div class="flight-grid" aria-label="Airlines Rahath may arrange for the group itinerary">
-        <figure class="flight-card"><img class="logo-light-bg" src="./airline-logos/emirates-official.png" alt="Emirates"></figure>
-        <figure class="flight-card"><img class="logo-light-bg" src="./airline-logos/gulf-air-official.jpg" alt="Gulf Air" loading="lazy"></figure>
-        <figure class="flight-card"><img src="./airline-logos/etihad-official.png" alt="Etihad Airways" loading="lazy"></figure>
-        <figure class="flight-card"><img src="./airline-logos/srilankan-official.png" alt="SriLankan Airlines" loading="lazy"></figure>
-        <figure class="flight-card"><img class="logo-light-bg" src="./airline-logos/qatar-official.jpg" alt="Qatar Airways" loading="lazy"></figure>
-        <figure class="flight-card"><img src="./airline-logos/flydubai-official.png" alt="flydubai" loading="lazy"></figure>
-      </div>
-      <p class="flight-note">We confirm your airline once the group dates are set.</p>
-    </section>
-
+    <p class="section-more"><a href="/packages">See what is included, flights and dates <span aria-hidden="true">→</span></a></p>
   </div>
 </section>
 
-<!-- ================= MOMENTS GALLERY ================= -->
-<section class="experience-section" aria-labelledby="moments-title">
+<!-- ================= YOUR GUIDE ================= -->
+<section class="guide-teaser-section" aria-labelledby="guide-teaser-title">
   <div class="section-container">
-    <div class="moments-heading">
-      <div>
-        <span class="editorial-kicker">From our groups</span>
-        <h2 id="moments-title">Photos from our groups</h2>
-      </div>
-      <p>Taken by our pilgrims and team on recent trips.</p>
-    </div>
+    <div class="guide-teaser">
+      <figure class="guide-card guide-card-portrait guide-teaser-portrait">
+        <img src="photos/arshad-portrait.webp" alt="Arshad Athaur Rahman, Rahath Umrah guide" loading="lazy">
+        <figcaption>
+          <strong>Arshad Athaur Rahman</strong>
+          <span>Umrah guide and counsellor</span>
+        </figcaption>
+        <blockquote>“Arshad Moulavi’s deep knowledge of Islamic history brought profound meaning to our tours.”<cite>Mohamed Safran, Google review</cite></blockquote>
+      </figure>
 
-    <div class="moments-grid">
-      <figure class="moment moment-feature">
-        <img class="focus-lower" src="./photos/group-madinah-arches.webp" alt="Rahath Umrah Batch 18 standing together under striped arches" loading="lazy">
-        <figcaption>Rahath Umrah Batch 18</figcaption>
-      </figure>
-      <figure class="moment moment-video">
-        <video src="./photos/masjid-nabawi-interior.mp4" poster="./photos/masjid-nabawi-interior-poster.webp" muted loop playsinline preload="none" aria-label="Video inside Masjid an-Nabawi"></video>
-        <figcaption>Inside Masjid an-Nabawi</figcaption>
-      </figure>
-      <figure class="moment">
-        <img class="focus-top" src="./photos/makkah-clock-tower-night.webp" alt="The Makkah clock tower and minarets lit up at night" loading="lazy">
-        <figcaption>Makkah at night</figcaption>
-      </figure>
-      <figure class="moment">
-        <img src="./photos/masjid-al-haram-day.webp" alt="Pilgrims in front of the Kaaba during the day" loading="lazy">
-        <figcaption>Masjid al-Haram</figcaption>
-      </figure>
-      <figure class="moment moment-wide">
-        <img class="focus-upper" src="./photos/group-selfie-ziyarat.webp" alt="Rahath pilgrims smiling for a selfie between Ziyarat stops" loading="lazy">
-        <figcaption>Between Ziyarat stops</figcaption>
-      </figure>
-      <figure class="moment moment-wide">
-        <img class="focus-upper" src="./ziyarattours.jpg" alt="Rahath pilgrims on an evening Ziyarat visit" loading="lazy">
-        <figcaption>Evening Ziyarat</figcaption>
-      </figure>
+      <div class="guide-card guide-card-intro guide-teaser-copy">
+        <span class="guide-pill">Your Umrah guide</span>
+        <h2 id="guide-teaser-title">Meet Arshad Athaur Rahman, <span>the teacher who travels with your group</span></h2>
+        <p>He shows you how to do each part of Umrah, explains why we do it, and stays with you for the whole trip.</p>
+
+            <ul class="guide-card-facts">
+              <li>
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5v-15ZM4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/></svg>
+                Islamic teacher
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" d="M20 12a8 8 0 0 1-11.6 7.1L4 20l1-4.2A8 8 0 1 1 20 12Z"/></svg>
+                Counsellor
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" d="M12 21s-7-5.6-7-11a7 7 0 0 1 14 0c0 5.4-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
+                With you all trip
+              </li>
+            </ul>
+
+        <div class="guide-card-actions">
+          <a href="/contact#booking-form" class="guide-card-btn">Talk to our team</a>
+          <a href="/about#guide" class="guide-card-arrow" aria-label="More about Arshad">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M7 17 17 7M8 7h9v9"/></svg>
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ================= JOURNEY SECTION ================= -->
+<!-- ================= HOW IT WORKS ================= -->
 <section class="journey-section" id="journey">
   <div class="section-container">
     <div class="how-it-works-heading">
@@ -333,7 +275,7 @@
         <p>Pick a package and we confirm your place. We help with your documents and hold a briefing so you know what to do before you leave.</p>
       </article>
       <figure class="how-step how-step-image">
-        <img src="./hafiguide.jpg" alt="Rahath pilgrims receiving guidance before Umrah" loading="lazy">
+        <img src="photos/arshad-guiding.webp" alt="Rahath pilgrims receiving guidance before Umrah" loading="lazy">
       </figure>
       <article class="how-step how-step-text">
         <span>02</span>
@@ -341,86 +283,23 @@
         <p>You fly out together. We look after the hotels, buses and meals, so you don't have to.</p>
       </article>
       <figure class="how-step how-step-image">
-        <img src="./photos/makkah-coaches-clock-tower.webp" alt="Coaches on the road in Makkah with the clock tower ahead" loading="lazy">
+        <img src="photos/makkah-coaches-clock-tower.webp" alt="Coaches on the road in Makkah with the clock tower ahead" loading="lazy">
       </figure>
       <article class="how-step how-step-text how-step-featured">
         <span>03</span>
         <h3>Perform Umrah and Ziyarat</h3>
         <p>Your guide takes you through each ritual. You also visit important places in Makkah and Madinah and learn their history.</p>
-        <a href="#booking-form">Book a free call</a>
+        <a href="/contact#booking-form" class="how-step-link">Book a free call</a>
       </article>
       <figure class="how-step how-step-image">
-        <img src="./photos/kaaba-night.webp" alt="Pilgrims at the Kaaba at night" loading="lazy">
+        <img src="photos/kaaba-night.webp" alt="Pilgrims at the Kaaba at night" loading="lazy">
       </figure>
     </div>
   </div>
 </section>
 
-<!-- ================= GUIDE SECTION ================= -->
-<section class="guide-section" id="guide" aria-labelledby="guide-title">
-  <div class="section-container guide-showcase">
-    <header class="guide-showcase-head">
-      <span class="guide-pill">Your Umrah guide</span>
-      <h2 id="guide-title">Your guide is Arshad Athaur Rahman, <span>an Islamic teacher and counsellor</span> who shows you how to do each part of Umrah and why we do it</h2>
-    </header>
-
-    <div class="guide-cards">
-      <article class="guide-card guide-card-intro">
-        <span class="guide-card-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" d="M12 3a9 9 0 1 0 9 9M12 3v4M21 12h-4M15.5 8.5 10.5 10.5 8.5 15.5l5-2 2-5Z"/></svg>
-        </span>
-        <h3>Learn each ritual properly</h3>
-        <p>He covers Ihram, Miqat, Tawaf, Sa'i, duas and prayer in the Haram. First-timers and families get extra help.</p>
-
-        <ul class="guide-card-facts">
-          <li>
-            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5v-15ZM4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/></svg>
-            Islamic teacher
-          </li>
-          <li>
-            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" d="M20 12a8 8 0 0 1-11.6 7.1L4 20l1-4.2A8 8 0 1 1 20 12Z"/></svg>
-            Counsellor
-          </li>
-          <li>
-            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" d="M12 21s-7-5.6-7-11a7 7 0 0 1 14 0c0 5.4-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
-            With you all trip
-          </li>
-        </ul>
-
-        <div class="guide-card-actions">
-          <a href="#booking-form" class="guide-card-btn">Talk to our team</a>
-          <a href="#testimonials" class="guide-card-arrow" aria-label="Read what pilgrims say about Arshad">
-            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M7 17 17 7M8 7h9v9"/></svg>
-          </a>
-        </div>
-      </article>
-
-      <figure class="guide-card guide-card-portrait">
-        <img src="./hafi.png" alt="Arshad Athaur Rahman, Rahath Umrah guide" loading="lazy">
-        <figcaption>
-          <strong>Arshad Athaur Rahman</strong>
-          <span>Umrah guide and counsellor</span>
-        </figcaption>
-        <blockquote>“Sheikh Arshad’s leadership, knowledge and calm approach made the entire trip easy and meaningful.”<cite>Faizal Jifry, Google review</cite></blockquote>
-      </figure>
-
-      <article class="guide-card guide-card-moments">
-        <div class="guide-stack">
-          <img src="./photos/museum-visit.webp" alt="A Rahath group listening to a guide at a museum during Ziyarat" loading="lazy">
-          <img src="./photos/masjid-quba-group.webp" alt="Pilgrims gathered outside Masjid Quba" loading="lazy">
-          <img src="./photos/masjid-nabawi-arches.webp" alt="The arcades inside Masjid an-Nabawi" loading="lazy">
-        </div>
-        <div class="guide-card-moments-copy">
-          <h3>History where it happened</h3>
-          <p>On Ziyarat visits, he tells the story of each place while you are standing there.</p>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- ================= TESTIMONIALS SECTION ================= -->
-<section class="testimonials-section" id="testimonials">
+<!-- ================= REVIEWS ================= -->
+<section class="testimonials-section home-reviews" id="reviews">
   <div class="section-container">
     <div class="testimonials-heading">
       <div>
@@ -433,32 +312,12 @@
       </a>
     </div>
 
-    <div class="reviews-wall" aria-label="Rahath Tours and Travels Google reviews">
-      <div class="review-column">
-        <div class="review-track">
-          <div class="review-set">
+    <div class="home-reviews-grid">
             <article class="google-review-card">
               <div class="review-stars" aria-label="5 out of 5 stars">★★★★★</div>
               <p>“Everything was exceptionally well organized, from accommodation and transportation to food and day-to-day coordination. We could focus on our worship without worrying about the practical details.”</p>
               <div class="review-author"><span>O</span><div><strong>Omar Azeem</strong><small>Google review · 4 weeks ago</small></div></div>
             </article>
-            <article class="google-review-card">
-              <div class="review-stars" aria-label="5 out of 5 stars">★★★★★</div>
-              <p>“This was my third Umrah, but I truly felt as though it was my first. The experience was completely different and far more meaningful because of the exceptional guidance and care.”</p>
-              <div class="review-author"><span>A</span><div><strong>Adil Ahamed</strong><small>Google review · 3 months ago</small></div></div>
-            </article>
-            <article class="google-review-card">
-              <div class="review-stars" aria-label="5 out of 5 stars">★★★★★</div>
-              <p>“Rahath Tours gave us their maximum support and made every possible effort to accommodate our situation. Their understanding, care, flexibility and personal attention meant a lot to our family.”</p>
-              <div class="review-author"><span>A</span><div><strong>Abdul Hakeem</strong><small>Google review · 2 months ago</small></div></div>
-            </article>
-          </div>
-        </div>
-      </div>
-
-      <div class="review-column">
-        <div class="review-track review-track-offset">
-          <div class="review-set">
             <article class="google-review-card">
               <div class="review-stars" aria-label="5 out of 5 stars">★★★★★</div>
               <p>“The service was excellent and everything was well organized. Maulavi Arshad Furqani was incredibly friendly, helpful and attentive throughout the journey.”</p>
@@ -469,48 +328,20 @@
               <p>“Everything was very well planned. There was no rush at all, and all the rituals were completed in a calm and pleasant manner. Everyone felt comfortable and well taken care of.”</p>
               <div class="review-author"><span>S</span><div><strong>Shamik Mohamed</strong><small>Google review · 9 months ago</small></div></div>
             </article>
-            <article class="google-review-card">
-              <div class="review-stars" aria-label="5 out of 5 stars">★★★★★</div>
-              <p>“Sheikh Arshad’s leadership, knowledge and calm approach made the entire trip easy and meaningful. The Ziyarah visits and daily guidance sessions were very beneficial.”</p>
-              <div class="review-author"><span>F</span><div><strong>Faizal Jifry</strong><small>Google review · 9 months ago</small></div></div>
-            </article>
-          </div>
-        </div>
-      </div>
-
-      <div class="review-column">
-        <div class="review-track">
-          <div class="review-set">
-            <article class="google-review-card">
-              <div class="review-stars" aria-label="5 out of 5 stars">★★★★★</div>
-              <p>“Their service and attention to detail made the entire journey smooth and spiritually enriching. Arshad Moulavi’s deep knowledge of Islamic history brought profound meaning to our tours.”</p>
-              <div class="review-author"><span>M</span><div><strong>Mohamed Safran</strong><small>Google review · a year ago</small></div></div>
-            </article>
-            <article class="google-review-card">
-              <div class="review-stars" aria-label="5 out of 5 stars">★★★★★</div>
-              <p>“Our guide Arshad Moulavi explained each ritual beautifully and made sure everyone felt supported. The journey will always remain a beautiful memory for us. Highly recommended.”</p>
-              <div class="review-author"><span>N</span><div><strong>Nafeesa Misriya</strong><small>Google review · 9 months ago</small></div></div>
-            </article>
-            <article class="google-review-card">
-              <div class="review-stars" aria-label="5 out of 5 stars">★★★★★</div>
-              <p>“This journey was not just a trip. It was a life-changing spiritual experience. We wholeheartedly recommend Rahath Tours &amp; Travels for a meaningful and well-organized Umrah.”</p>
-              <div class="review-author"><span>A</span><div><strong>Ahsab Ilyas</strong><small>Google review · a year ago</small></div></div>
-            </article>
-          </div>
-        </div>
-      </div>
     </div>
+
+    <p class="section-more"><a href="/about#testimonials">Read more reviews <span aria-hidden="true">→</span></a></p>
   </div>
 </section>
 
-<!-- ================= FAQ SECTION ================= -->
+<!-- ================= FAQ ================= -->
 <section class="faq-section" id="faq" aria-labelledby="faq-title">
   <div class="section-container faq-layout">
     <div class="faq-aside">
       <div class="faq-intro">
         <span class="faq-pill">FAQ</span>
-        <h2 id="faq-title">Frequently asked questions</h2>
-        <p>Answers to the questions people ask us most.</p>
+        <h2 id="faq-title">Common questions</h2>
+        <p>What most people want to know before they book.</p>
       </div>
 
       <div class="faq-help">
@@ -530,201 +361,67 @@
       <div class="faq-item active">
         <button class="faq-question" id="faq-q1" type="button" aria-expanded="true" aria-controls="faq-a1">
           <span class="faq-number" aria-hidden="true">01</span>
-          <span class="faq-question-text">What do both packages include?</span>
+          <span class="faq-question-text">What is included in the price?</span>
           <span class="faq-icon" aria-hidden="true"></span>
         </button>
         <div class="faq-answer" id="faq-a1" role="region" aria-labelledby="faq-q1">
-          <div><p>Multilingual guides, all transport, Sri Lankan meals, Ziyarat tours and a hotel close to the Haram.</p></div>
+          <div><p>Multilingual guides, all transport, Sri Lankan meals, Ziyarat tours and a hotel close to the Haram. Standard is LKR 385,000 and Premium is LKR 600,000 per person.</p></div>
         </div>
       </div>
       <div class="faq-item">
         <button class="faq-question" id="faq-q2" type="button" aria-expanded="false" aria-controls="faq-a2">
           <span class="faq-number" aria-hidden="true">02</span>
-          <span class="faq-question-text">What is the difference between Standard and Premium?</span>
+          <span class="faq-question-text">Do you take care of the visa?</span>
           <span class="faq-icon" aria-hidden="true"></span>
         </button>
         <div class="faq-answer" id="faq-a2" role="region" aria-labelledby="faq-q2">
-          <div><p>Standard has shared rooms and costs less. Premium has a five-star hotel, meals arranged to suit you and some special Ziyarat visits.</p></div>
+          <div><p>Yes. We take care of your visa, flights, hotels and transport.</p></div>
         </div>
       </div>
       <div class="faq-item">
         <button class="faq-question" id="faq-q3" type="button" aria-expanded="false" aria-controls="faq-a3">
           <span class="faq-number" aria-hidden="true">03</span>
-          <span class="faq-question-text">When does the November group leave?</span>
+          <span class="faq-question-text">Is this a good choice for a first Umrah?</span>
           <span class="faq-icon" aria-hidden="true"></span>
         </button>
         <div class="faq-answer" id="faq-a3" role="region" aria-labelledby="faq-q3">
-          <div><p>On 24 November 2026. Contact us early to check there is still space.</p></div>
+          <div><p>Yes. Before you leave, we explain the rituals, duas and what to expect. During the trip, your guide is there for any questions.</p></div>
         </div>
       </div>
       <div class="faq-item">
         <button class="faq-question" id="faq-q4" type="button" aria-expanded="false" aria-controls="faq-a4">
           <span class="faq-number" aria-hidden="true">04</span>
-          <span class="faq-question-text">Is this a good choice for a first Umrah?</span>
+          <span class="faq-question-text">Do I have to pay to book a call?</span>
           <span class="faq-icon" aria-hidden="true"></span>
         </button>
         <div class="faq-answer" id="faq-a4" role="region" aria-labelledby="faq-q4">
-          <div><p>Yes. Before you leave, we explain the rituals, duas and what to expect. During the trip, your guide is there for any questions.</p></div>
-        </div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question" id="faq-q5" type="button" aria-expanded="false" aria-controls="faq-a5">
-          <span class="faq-number" aria-hidden="true">05</span>
-          <span class="faq-question-text">Can I join the group from another country?</span>
-          <span class="faq-icon" aria-hidden="true"></span>
-        </button>
-        <div class="faq-answer" id="faq-a5" role="region" aria-labelledby="faq-q5">
-          <div><p>Yes. We will help you plan your arrival and tell you how to meet the group.</p></div>
-        </div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question" id="faq-q6" type="button" aria-expanded="false" aria-controls="faq-a6">
-          <span class="faq-number" aria-hidden="true">06</span>
-          <span class="faq-question-text">Who is the guide?</span>
-          <span class="faq-icon" aria-hidden="true"></span>
-        </button>
-        <div class="faq-answer" id="faq-a6" role="region" aria-labelledby="faq-q6">
-          <div><p>Arshad Athaur Rahman. He guides the group and stays with you for the whole trip.</p></div>
+          <div><p>No. Booking a call is free, and you don't pay anything to talk to us.</p></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ================= BOOK A CALL SECTION ================= -->
-<section class="book-call-section" id="book-call">
-  <div class="section-container">
-    <div class="book-call-layout">
-      <div class="book-call-content">
-        <span class="booking-kicker">Free call</span>
-        <h2>Book a free call with us</h2>
-        <p class="book-call-text">Pick a time that suits you. We will go through the packages, documents and payments, and answer your questions.</p>
+</main>
 
-        <div class="booking-benefits">
-          <p><span aria-hidden="true">✓</span> Get your questions answered</p>
-          <p><span aria-hidden="true">✓</span> Helpful if it is your first Umrah</p>
-          <p><span aria-hidden="true">✓</span> No payment needed to book a call</p>
-        </div>
-
-        <a href="tel:+94725329242" class="booking-phone"><span>Prefer to call now?</span><strong>+94 72 532 9242</strong></a>
-      </div>
-
-      <div class="booking-form-card" id="booking-form">
-        <div class="form-card-header">
-          <div>
-            <span>Free call</span>
-            <h3>When should we call you?</h3>
-          </div>
-
-          <div class="form-status">
-            <span></span>
-            Available
-          </div>
-        </div>
-
-        <form class="booking-form" id="bookingForm" autocomplete="on">
-
-          <div class="form-row">
-            <div class="form-group">
-              <label for="fullName">Your name</label>
-              <input type="text" id="fullName" name="fullName" placeholder="Enter your name" autocomplete="name" minlength="2" maxlength="80" required="">
-            </div>
-
-            <div class="form-group">
-              <label for="phoneNumber">Phone / WhatsApp</label>
-              <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="+94 7X XXX XXXX" autocomplete="tel" inputmode="tel" minlength="7" maxlength="20" pattern="[0-9+() -]{7,20}" required="">
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label for="packageType">Which package?</label>
-              <select id="packageType" name="packageType" required="">
-                <option value="">Choose a package</option>
-                <option value="Standard Package - LKR 385,000">Standard Package - LKR 385,000</option>
-                <option value="Premium Package - LKR 600,000">Premium Package - LKR 600,000</option>
-                <option value="Not sure yet">Not sure yet</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label for="travellerCount">How many people are travelling?</label>
-              <select id="travellerCount" name="travellerCount" required="">
-                <option value="">Choose a number</option>
-                <option value="1">1 (just me)</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10+">10 or more</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label for="callDate">Best day to call</label>
-              <input type="date" id="callDate" name="callDate" required="">
-            </div>
-
-            <div class="form-group">
-              <label>Best time</label>
-              <input type="hidden" id="callTime" name="callTime" required="" value="10:00 AM">
-
-              <div class="time-slots">
-                <button type="button" class="time-slot active" data-time="10:00 AM">10:00 AM</button>
-                <button type="button" class="time-slot" data-time="12:00 PM">12:00 PM</button>
-                <button type="button" class="time-slot" data-time="4:00 PM">4:00 PM</button>
-                <button type="button" class="time-slot" data-time="8:00 PM">8:00 PM</button>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="message">Anything we should know?</label>
-            <textarea id="message" name="message" rows="4" maxlength="500" placeholder="First Umrah, travelling with family, any special needs, etc."></textarea>
-          </div>
-
-          <button type="submit" class="btn submit-booking-btn" id="bookingSubmit">
-            Request a call
-          </button>
-
-          <p class="form-note">
-            You don't pay anything now. This just sends your request to our team on WhatsApp.
-          </p>
-
-        </form>
-      </div>
-
-    </div>
-
-  </div>
-
-  <div class="booking-toast" id="bookingToast">
-    Your request is ready. Opening WhatsApp...
-  </div>
-</section>
-
-<!-- ================= FOOTER ================= -->
 <footer class="sky-footer">
   <div class="sky-footer-media" aria-hidden="true">
-    <img src="./footer-madinah-courtyard.webp" alt="" loading="lazy" decoding="async">
+    <picture>
+      <source media="(max-width: 760px)" srcset="photos/footer-madinah-courtyard-mobile.webp">
+      <img src="photos/footer-madinah-courtyard.webp" alt="" loading="lazy" decoding="async">
+    </picture>
   </div>
 
   <div class="sky-footer-inner">
     <div class="sky-footer-cta">
-      <span class="sky-footer-kicker">Next group leaves 24 November 2026</span>
+      <span class="sky-footer-kicker" data-after-departure="Our next group is being planned">Next group leaves 24 November 2026</span>
       <h2>Planning your Umrah? Talk to us</h2>
     </div>
 
     <div class="sky-footer-content">
       <div class="sky-footer-main">
         <div class="sky-footer-brand">
-          <a href="#home" class="sky-footer-logo">
+          <a href="/" class="sky-footer-logo">
             <span class="sky-footer-logo-mark" aria-hidden="true"></span>
             <span>Rahath Tours &amp; Travels</span>
           </a>
@@ -747,18 +444,19 @@
         <nav class="sky-footer-links" aria-label="Footer">
           <div class="sky-footer-column">
             <h3>Explore</h3>
-            <a href="#home">Home</a>
-            <a href="#packages">Packages</a>
-            <a href="#journey">How it works</a>
-            <a href="#guide">Guide</a>
+            <a href="/">Home</a>
+            <a href="/packages">Packages</a>
+            <a href="/#journey">How it works</a>
+            <a href="/about#guide">Our guide</a>
           </div>
 
           <div class="sky-footer-column">
             <h3>Support</h3>
-            <a href="#testimonials">Reviews</a>
-            <a href="#faq">FAQ</a>
-            <a href="#booking-form">Book a Call</a>
+            <a href="/about#testimonials">Reviews</a>
+            <a href="/contact#faq">FAQ</a>
+            <a href="/contact#booking-form">Book a Call</a>
             <a href="tel:+94725329242">Call us</a>
+            <a href="#privacy">Your privacy</a>
           </div>
 
           <div class="sky-footer-column">
@@ -766,10 +464,41 @@
             <a href="tel:+94725329242">+94 72 532 9242</a>
             <a href="https://wa.me/94725329242" target="_blank" rel="noopener noreferrer">WhatsApp us</a>
             <p>Sri Lanka</p>
-            <p>November 2026 group</p>
+            <p data-after-departure="Next group coming soon">November 2026 group</p>
           </div>
         </nav>
       </div>
+
+      <details class="sky-footer-privacy" id="privacy">
+        <summary>
+          <span class="sky-footer-privacy-text">
+            <strong>Your privacy</strong>
+            <span>How we use your details</span>
+          </span>
+          <span class="sky-footer-privacy-icon" aria-hidden="true"></span>
+        </summary>
+
+        <div class="sky-footer-privacy-body">
+          <div>
+            <h3>What we ask for</h3>
+            <p>Your name, phone number, package, how many people are travelling and a good time to call, plus any note you add.</p>
+          </div>
+          <div>
+            <h3>Where it goes</h3>
+            <p>Your message comes to us on WhatsApp. We keep your details so we can call you back and plan your trip.</p>
+          </div>
+          <div>
+            <h3>Passports and payments</h3>
+            <p>This website never asks for your passport or money. We collect visa documents in person, and you pay in cash or by bank transfer.</p>
+          </div>
+          <div>
+            <h3>Ads and your choices</h3>
+            <p>We may use your phone number to help our Google ads reach people like you. We never sell your details. To change, delete or opt out, call or WhatsApp us on <a href="tel:+94725329242">+94 72 532 9242</a>.</p>
+          </div>
+          <p class="sky-footer-privacy-wide">Like most websites, we use cookies to count visits. They don't tell us who you are.</p>
+          <p class="sky-footer-privacy-updated">Last updated October 2026</p>
+        </div>
+      </details>
 
       <div class="sky-footer-bottom">
         <p>© <span id="footerYear">2026</span> Rahath Tours &amp; Travels. All rights reserved.</p>
@@ -779,21 +508,16 @@
     </div>
   </div>
 </footer>
-  </main>
 
-  <div class="confirmation-overlay" id="leadConfirmation" hidden>
-    <section class="confirmation-dialog" id="leadConfirmationDialog" role="dialog" aria-modal="true" aria-labelledby="leadConfirmationTitle" aria-describedby="leadConfirmationDescription" tabindex="-1">
-      <button class="confirmation-close" id="leadConfirmationClose" type="button" aria-label="Close confirmation">×</button>
-      <div class="confirmation-icon" aria-hidden="true">✓</div>
-      <p class="confirmation-kicker">Almost done</p>
-      <h2 id="leadConfirmationTitle">Now send the WhatsApp message</h2>
-      <p id="leadConfirmationDescription">
-        We have opened WhatsApp with your details filled in. Press send and our team will get back to you.
-      </p>
-      <button class="confirmation-done" id="leadConfirmationDone" type="button">Done</button>
-    </section>
-  </div>
+<nav class="mobile-cta" id="mobileCta" aria-label="Quick contact">
+  <a href="/contact#booking-form" class="mobile-cta-book">Book a free call</a>
+  <a href="https://wa.me/94725329242" class="mobile-cta-whatsapp" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp us">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M4.2 19.8 5.3 16A8.3 8.3 0 1 1 8.4 19l-4.2.8Z"/><path fill="currentColor" d="M9.4 7.9c.2-.4.4-.4.6-.4h.5c.2 0 .4 0 .5.4l.7 1.7c.1.2.1.4 0 .6l-.4.6c-.1.2-.2.3 0 .6.4.7 1.4 1.8 2.6 2.3.3.1.4.1.6-.1l.6-.7c.2-.2.3-.2.6-.1l1.6.8c.2.1.4.2.4.4 0 .5-.2 1.2-.8 1.5-.5.3-1.4.6-3.4-.3-2.2-1-3.7-3.2-3.9-3.5-.2-.3-1-1.3-1-2.5s.6-1.8.8-2.1Z"/></svg>
+    WhatsApp
+  </a>
+</nav>
 
-  <script src="./index.js?v=20261027-copy1" defer></script>
+<script src="index.js?v=20261027-hero22" defer></script>
 
-</body></html>
+</body>
+</html>

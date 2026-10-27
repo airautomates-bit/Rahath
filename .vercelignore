@@ -1,0 +1,8 @@
+# Source files for build.mjs and local tooling; the built pages are what gets served.
+src
+build.mjs
+.claude
+# Original and retired images, kept locally but never deployed.
+_archive
+# Project notes, not for the public site.
+SECURITY.md

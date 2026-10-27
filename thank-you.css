@@ -52,7 +52,7 @@ body {
   width: 28px;
   height: 28px;
   border-radius: 8px;
-  background: var(--navy) url("rahath-brand-mark.png") center / 190% no-repeat;
+  background: var(--navy) url("photos/logo-mark-tile.webp") center / 190% no-repeat;
 }
 
 .thank-you-icon {

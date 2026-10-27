@@ -1,0 +1,183 @@
+<section class="page-hero page-hero--contact" aria-labelledby="page-title">
+  <div class="page-hero-inner">
+    <p class="page-hero-kicker">Contact</p>
+    <h1 id="page-title">Contact us</h1>
+    <p>Call or WhatsApp <a href="tel:+94725329242">+94 72 532 9242</a>, or book a free call below.</p>
+  </div>
+</section>
+
+<!-- ================= BOOK A CALL ================= -->
+<section class="book-call-section" id="book-call">
+  <div class="section-container">
+    <div class="book-call-layout">
+      <div class="book-call-content">
+        <span class="booking-kicker">Free call</span>
+        <h2>Book a free call with us</h2>
+        <p class="book-call-text">Pick a time that suits you. We will go through the packages, documents and payments, and answer your questions.</p>
+
+        <div class="booking-benefits">
+          <p><span aria-hidden="true">✓</span> Get your questions answered</p>
+          <p><span aria-hidden="true">✓</span> Helpful if it is your first Umrah</p>
+          <p><span aria-hidden="true">✓</span> No payment needed to book a call</p>
+        </div>
+
+        <a href="tel:+94725329242" class="booking-phone"><span>Prefer to call now?</span><strong>+94 72 532 9242</strong></a>
+      </div>
+
+      <div class="booking-form-card" id="booking-form">
+        <div class="form-card-header">
+          <div>
+            <span>Free call</span>
+            <h3>When should we call you?</h3>
+          </div>
+
+          <div class="form-status">
+            <span></span>
+            Available
+          </div>
+        </div>
+
+        <form class="booking-form" id="bookingForm" autocomplete="on">
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fullName">Your name</label>
+              <input type="text" id="fullName" name="fullName" placeholder="Enter your name" autocomplete="name" minlength="2" maxlength="80" required="">
+            </div>
+
+            <div class="form-group">
+              <label for="phoneNumber">Phone / WhatsApp</label>
+              <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="+94 7X XXX XXXX" autocomplete="tel" inputmode="tel" minlength="7" maxlength="20" pattern="[0-9+() -]{7,20}" required="">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="packageType">Which package?</label>
+              <select id="packageType" name="packageType" required="">
+                <option value="">Choose a package</option>
+                <option value="Standard Package - LKR 385,000">Standard Package - LKR 385,000</option>
+                <option value="Premium Package - LKR 600,000">Premium Package - LKR 600,000</option>
+                <option value="Not sure yet">Not sure yet</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="travellerCount">How many people are travelling?</label>
+              <select id="travellerCount" name="travellerCount" required="">
+                <option value="">Choose a number</option>
+                <option value="1">1 (just me)</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10+">10 or more</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="callDate">Best day to call</label>
+              <input type="date" id="callDate" name="callDate" required="">
+            </div>
+
+            <div class="form-group">
+              <label>Best time</label>
+              <input type="hidden" id="callTime" name="callTime" required="" value="10:00 AM">
+
+              <div class="time-slots">
+                <button type="button" class="time-slot active" data-time="10:00 AM">10:00 AM</button>
+                <button type="button" class="time-slot" data-time="12:00 PM">12:00 PM</button>
+                <button type="button" class="time-slot" data-time="4:00 PM">4:00 PM</button>
+                <button type="button" class="time-slot" data-time="8:00 PM">8:00 PM</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Anything we should know?</label>
+            <textarea id="message" name="message" rows="4" maxlength="500" placeholder="First Umrah, travelling with family, any special needs, etc."></textarea>
+          </div>
+
+          <button type="submit" class="btn submit-booking-btn" id="bookingSubmit">
+            Request a call
+          </button>
+
+          <p class="form-note">
+            You don't pay anything now. This just sends your request to our team on WhatsApp. <a href="#privacy">How we use your details</a>
+          </p>
+
+        </form>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="booking-toast" id="bookingToast">
+    Your request is ready. Opening WhatsApp...
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section class="faq-section" id="faq" aria-labelledby="faq-title">
+  <div class="section-container faq-layout">
+    <div class="faq-aside">
+      <div class="faq-intro">
+        <span class="faq-pill">FAQ</span>
+        <h2 id="faq-title">Questions about booking</h2>
+        <p>What happens when you get in touch.</p>
+      </div>
+
+      <div class="faq-help">
+        <h3>Still have a question?</h3>
+        <p>Call or WhatsApp us and we will help.</p>
+        <div class="faq-help-actions">
+          <a href="tel:+94725329242" class="faq-help-call">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg>
+            Call the team
+          </a>
+          <a href="https://wa.me/94725329242" class="faq-help-whatsapp" target="_blank" rel="noopener noreferrer">WhatsApp us</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-list">
+      <div class="faq-item active">
+        <button class="faq-question" id="faq-q1" type="button" aria-expanded="true" aria-controls="faq-a1">
+          <span class="faq-number" aria-hidden="true">01</span>
+          <span class="faq-question-text">What happens after I book a call?</span>
+          <span class="faq-icon" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer" id="faq-a1" role="region" aria-labelledby="faq-q1">
+          <div><p>We call you at the time you picked. We go through the packages, documents and payments, and answer your questions.</p></div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" id="faq-q2" type="button" aria-expanded="false" aria-controls="faq-a2">
+          <span class="faq-number" aria-hidden="true">02</span>
+          <span class="faq-question-text">Can I message you on WhatsApp instead?</span>
+          <span class="faq-icon" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer" id="faq-a2" role="region" aria-labelledby="faq-q2">
+          <div><p>Yes. Send a message to +94 72 532 9242 on WhatsApp, or call the same number.</p></div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" id="faq-q3" type="button" aria-expanded="false" aria-controls="faq-a3">
+          <span class="faq-number" aria-hidden="true">03</span>
+          <span class="faq-question-text">Can I book for my whole family?</span>
+          <span class="faq-icon" aria-hidden="true"></span>
+        </button>
+        <div class="faq-answer" id="faq-a3" role="region" aria-labelledby="faq-q3">
+          <div><p>Yes. Choose how many people are travelling in the form, and we will talk it through on the call.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

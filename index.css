@@ -493,7 +493,7 @@ body::after {
   position: relative;
   background:
     linear-gradient(120deg, rgba(10, 10, 10, 0.76), rgba(10, 10, 10, 0.28)),
-    url("mainim.jpg");
+    url("photos/home-hero.webp");
   background-size: cover;
   background-position: center;
   box-shadow: 0 40px 90px rgba(15, 23, 42, 0.18);
@@ -956,16 +956,20 @@ body::after {
     gap: 8px;
 
     opacity: 0;
+    visibility: hidden;
     pointer-events: none;
     transform: translateY(-16px) scale(0.98);
-    transition: 0.3s ease;
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s linear 0.3s;
   }
 
+  /* Hidden, not just transparent, so closed menu links can't be tabbed to. */
   .nav-links.active,
   .nav-actions.active {
     opacity: 1;
+    visibility: visible;
     pointer-events: all;
     transform: translateY(0) scale(1);
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s;
   }
 
   .nav-links a {
@@ -2723,7 +2727,7 @@ body::after {
   border-radius: 8px;
   color: transparent;
   background-color: #10182a;
-  background-image: url("rahath-brand-mark.png");
+  background-image: url("photos/logo-mark-tile.webp");
   background-repeat: no-repeat;
   background-position: center;
   background-size: 190%;
@@ -3513,7 +3517,7 @@ body.confirmation-open {
   margin: 0 auto;
   border-radius: 0 0 42px 42px;
   overflow: visible;
-  background-image: url("rahath-zamzam-hero-v2.png");
+  background-image: url("photos/home-hero.webp");
   background-size: cover;
   background-position: 20% center;
   background-repeat: no-repeat;
@@ -3789,7 +3793,7 @@ body.confirmation-open {
   .hero-bg {
     min-height: 1040px;
     border-radius: 0 0 26px 26px;
-    background-image: url("rahath-zamzam-mobile-v2.png");
+    background-image: url("photos/home-hero-mobile.webp");
     background-position: center center;
   }
 
@@ -3929,7 +3933,7 @@ body.confirmation-open {
   margin: 0;
   overflow: hidden;
   border-radius: 0;
-  background-image: url("rahath-zamzam-hero-v3.png");
+  background-image: url("photos/home-hero.webp");
   background-size: cover;
   background-position: 20% center;
   background-repeat: no-repeat;
@@ -4028,7 +4032,7 @@ body.confirmation-open {
   .hero-bg {
     min-height: 1040px;
     border-radius: 0;
-    background-image: url("rahath-zamzam-mobile-v3.png");
+    background-image: url("photos/home-hero-mobile.webp");
     background-position: center center;
   }
 
@@ -4062,7 +4066,7 @@ body.confirmation-open {
   height: 38px;
   border-radius: 0;
   background-color: transparent;
-  background-image: url("rahath-brand-mark-navy-v2.png");
+  background-image: url("photos/logo-mark.webp");
   background-repeat: no-repeat;
   background-position: center;
   background-size: 190%;
@@ -6844,6 +6848,632 @@ main,
   }
 }
 
+/* ================= PAGE TRANSITIONS ================= */
+
+/* Moving between pages fades the old page out and lifts the new one in,
+   instead of a hard white flash. Browsers without cross-page view
+   transitions simply navigate as before. */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root) {
+  animation: page-leave 0.2s ease-in both;
+}
+
+::view-transition-new(root) {
+  animation: page-enter 0.42s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@keyframes page-leave {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
+/* ================= HOME: TRUST STRIP, GUIDE INTRO ================= */
+
+/* Proof straight after the hero: rating, track record and the guide's name. */
+.trust-strip {
+  padding: 26px 5vw;
+  border-bottom: 1px solid var(--editorial-line);
+  background: #fff;
+}
+
+.trust-strip-inner {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.trust-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 16px;
+  color: var(--brand-navy);
+  text-align: center;
+  text-decoration: none;
+}
+
+.trust-item + .trust-item {
+  border-left: 1px solid var(--editorial-line);
+}
+
+.trust-item strong {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+}
+
+.trust-item strong span {
+  color: #f2a900;
+}
+
+.trust-item > span {
+  color: var(--editorial-muted);
+  font-size: 13px;
+}
+
+a.trust-item:hover strong {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* The guide on the home page, in the About page's card language: his
+   portrait card beside a soft card with the facts and a way to book. */
+.guide-teaser-section {
+  padding: 0 5vw 112px;
+  background: #fff;
+}
+
+.guide-teaser {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 18px;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.guide-teaser-copy {
+  padding: clamp(28px, 4vw, 48px);
+}
+
+.guide-teaser-copy .guide-pill {
+  align-self: flex-start;
+}
+
+.guide-teaser-copy h2 {
+  margin: 24px 0 14px;
+  color: var(--brand-navy);
+  font-size: clamp(28px, 3.2vw, 42px);
+  font-weight: 600;
+  line-height: 1.14;
+  letter-spacing: -1.4px;
+  text-wrap: pretty;
+}
+
+.guide-teaser-copy h2 span {
+  color: #8a98ab;
+}
+
+.guide-teaser-copy p {
+  max-width: 520px;
+}
+
+@media (max-width: 860px) {
+  .guide-teaser {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* On a wide single column "cover" would crop his head; the photo's backdrop
+   matches the card, so "contain" fits it without a seam. Phones keep cover. */
+@media (min-width: 521px) and (max-width: 860px) {
+  .guide-teaser-portrait img {
+    object-fit: contain;
+  }
+}
+
+@media (max-width: 760px) {
+  /* Three numbers in a row; the guide's name gets its own full-width line. */
+  .trust-strip-inner {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    row-gap: 14px;
+  }
+
+  .trust-item {
+    padding: 4px 6px;
+  }
+
+  .trust-item strong {
+    font-size: 20px;
+  }
+
+  .trust-item > span {
+    font-size: 12px;
+  }
+
+  .trust-item:last-child {
+    grid-column: 1 / -1;
+    padding-top: 14px;
+    border-top: 1px solid var(--editorial-line);
+    border-left: 0;
+  }
+
+  .trust-item:last-child strong {
+    font-size: 17px;
+  }
+}
+
+/* ================= COUNTDOWN: AFTER THE GROUP LEAVES ================= */
+
+/* index.js adds .is-finished on the departure date; the timer gives way to a
+   short "next group" message with a way to book. */
+.hero-countdown-card.is-finished {
+  display: block;
+}
+
+.hero-countdown-card.is-finished .countdown-card-top,
+.hero-countdown-card.is-finished .countdown-grid {
+  display: none;
+}
+
+.countdown-next {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px 24px;
+}
+
+.countdown-next[hidden],
+[data-hide-after-departure][hidden] {
+  display: none;
+}
+
+.countdown-next p {
+  margin: 0;
+  color: var(--editorial-muted);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.countdown-next strong {
+  display: block;
+  margin-bottom: 2px;
+  color: var(--brand-navy);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.4px;
+}
+
+.countdown-next-btn {
+  padding: 14px 24px;
+  border-radius: 999px;
+  background: var(--brand-navy);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: transform 0.25s ease;
+}
+
+.countdown-next-btn:hover {
+  transform: translateY(-2px);
+}
+
+@media (max-width: 560px) {
+  .countdown-next {
+    text-align: center;
+    justify-content: center;
+  }
+
+  .countdown-next-btn {
+    flex: 1 1 100%;
+  }
+}
+
+/* ================= 404 PAGE ================= */
+
+.page-hero--notfound::after {
+  background-image: url("photos/hero-packages.webp");
+  background-position: center 55%;
+}
+
+.notfound-section {
+  padding: clamp(56px, 8vw, 96px) 5vw;
+  background: #fff;
+}
+
+.notfound-links {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.notfound-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 28px;
+  border: 1px solid var(--editorial-line);
+  border-radius: 22px;
+  background: var(--editorial-soft);
+  text-decoration: none;
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.notfound-card strong {
+  color: var(--brand-navy);
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.4px;
+}
+
+.notfound-card span {
+  color: var(--editorial-muted);
+  font-size: 14px;
+}
+
+.notfound-card:hover {
+  border-color: var(--brand-navy);
+  transform: translateY(-3px);
+}
+
+@media (max-width: 760px) {
+  .notfound-links {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ================= SCREEN-READER-ONLY TEXT ================= */
+
+/* Read out by screen readers, not shown on screen. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ================= FORM MESSAGES AND TAP SIZES ================= */
+
+.field-error {
+  margin: 8px 0 0;
+  color: #b42318;
+  font-size: 13.5px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.booking-form [aria-invalid="true"] {
+  border-color: #d92d20;
+  box-shadow: 0 0 0 3px rgba(217, 45, 32, 0.12);
+}
+
+/* Text links get a taller hit area on touch screens without changing the look. */
+.story-link,
+.how-step-link {
+  display: inline-block;
+  padding-block: 10px;
+}
+
+@media (max-width: 760px) {
+  .sky-footer-column a {
+    padding-block: 6px;
+    margin-bottom: 4px;
+  }
+}
+
+/* ================= MOBILE BOOKING BAR ================= */
+
+/* On phones a booking bar follows the reader once they are past the hero,
+   and steps aside near the form and the footer. */
+.mobile-cta {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  .mobile-cta {
+    position: fixed;
+    right: 12px;
+    bottom: calc(12px + env(safe-area-inset-bottom));
+    left: 12px;
+    z-index: 60;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px;
+    padding: 8px;
+    border-radius: 999px;
+    background: var(--brand-navy);
+    box-shadow: 0 14px 40px rgba(4, 12, 26, 0.35);
+    visibility: hidden;
+    transform: translateY(150%);
+    transition: transform 0.35s ease, visibility 0s linear 0.35s;
+  }
+
+  .mobile-cta.is-visible {
+    visibility: visible;
+    transform: none;
+    transition: transform 0.35s ease, visibility 0s;
+  }
+
+  .mobile-cta a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 48px;
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .mobile-cta-book {
+    background: #fff;
+    color: var(--brand-navy);
+  }
+
+  .mobile-cta-whatsapp {
+    padding: 0 18px;
+    background: #25d366;
+    color: #fff;
+  }
+
+  .mobile-cta-whatsapp svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-cta {
+    transition: none;
+  }
+}
+
+/* ================= MULTI-PAGE: INNER PAGE HEADER + SHARED BITS ================= */
+
+/* Inner pages open with a photo band; the tint keeps the white navigation
+   and title readable over any image. */
+.page-hero {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  place-items: center;
+  /* Every inner page uses the same height, so switching pages doesn't jump.
+     The floor fits the longest header text (Packages) on short screens. */
+  min-height: max(min(64vh, 580px), 460px);
+  overflow: hidden;
+  padding: 176px 5vw 104px;
+  background: var(--brand-navy);
+  color: #fff;
+  text-align: center;
+}
+
+/* The photo sits on its own layer so it can ease in with a slow zoom. */
+.page-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background: #1277da url("photos/home-hero.webp") center 30% / cover no-repeat;
+  animation: page-hero-zoom 1.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.page-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(to bottom, rgba(6, 24, 52, 0.52) 0%, rgba(6, 24, 52, 0.3) 50%, rgba(6, 24, 52, 0.68) 100%);
+}
+
+.page-hero--packages::after {
+  background-image: url("photos/hero-packages.webp");
+  background-position: center 55%;
+}
+
+.page-hero--about::after {
+  background-image: url("photos/hero-about.webp");
+  background-position: center 30%;
+}
+
+.page-hero--contact::after {
+  background-image: url("photos/hero-contact.webp");
+  background-position: center 60%;
+}
+
+.page-hero-inner {
+  position: relative;
+  max-width: 760px;
+  margin: 0 auto;
+  animation: page-hero-rise 0.8s 0.1s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.page-hero h1,
+.page-hero p {
+  text-shadow: 0 2px 18px rgba(4, 14, 30, 0.35);
+}
+
+@keyframes page-hero-zoom {
+  from {
+    transform: scale(1.08);
+  }
+}
+
+@keyframes page-hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-hero::after,
+  .page-hero-inner {
+    animation: none;
+  }
+}
+
+.page-hero-kicker {
+  margin-bottom: 14px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+}
+
+.page-hero h1 {
+  font-size: clamp(40px, 6vw, 72px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -2.4px;
+  text-wrap: balance;
+}
+
+.page-hero p:not(.page-hero-kicker) {
+  max-width: 580px;
+  margin: 20px auto 0;
+  color: rgba(255, 255, 255, 0.94);
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.page-hero a {
+  color: #fff;
+  font-weight: 700;
+  text-underline-offset: 3px;
+}
+
+/* On pages where the package heading or cards come first, drop the gap
+   that used to separate them from the story block above. */
+.packages-section .section-container > .section-heading:first-child {
+  margin-top: 0;
+}
+
+.section-more {
+  margin-top: 32px;
+  text-align: center;
+}
+
+.section-more a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 22px;
+  border: 1px solid var(--editorial-line);
+  border-radius: 999px;
+  background: var(--editorial-soft);
+  color: var(--brand-navy);
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+.section-more a:hover {
+  border-color: var(--brand-navy);
+  background: var(--brand-navy);
+  color: #fff;
+}
+
+/* Home page: three reviews in a simple grid instead of the scrolling wall. */
+.home-reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 40px;
+}
+
+@media (max-width: 900px) {
+  .home-reviews-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  /* One phone height for every page, tall enough for the Packages text at 320px. */
+  .page-hero {
+    min-height: 430px;
+    padding: 132px 20px 72px;
+  }
+
+  .page-hero::after {
+    background-image: url("photos/home-hero-mobile.webp");
+    background-position: center 20%;
+  }
+
+  .page-hero--packages::after {
+    background-image: url("photos/hero-packages-mobile.webp");
+  }
+
+  .page-hero--notfound::after {
+    background-image: url("photos/hero-packages-mobile.webp");
+  }
+
+  .page-hero--about::after {
+    background-image: url("photos/hero-about-mobile.webp");
+  }
+
+  .page-hero--contact::after {
+    background-image: url("photos/hero-contact-mobile.webp");
+  }
+
+  .page-hero p:not(.page-hero-kicker) {
+    font-size: 15px;
+  }
+}
+
+/* ================= PACKAGE CARDS: EVEN HEIGHTS ================= */
+
+/* Side by side, both cards take the height of the taller one and the price
+   and button sit at the bottom, so they line up even when a title wraps. */
+.package-offers {
+  align-items: stretch;
+}
+
+.package-offers .package-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.package-offers .package-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.package-offers .package-price-panel {
+  margin-top: auto;
+}
+
 /* ================= RESPONSIVE HARDENING ================= */
 
 /* Earlier layers set desktop grids without media queries, which overrode the
@@ -6897,6 +7527,33 @@ main,
 
 .included-item img {
   margin-bottom: 18px;
+}
+
+/* Line icons on navy circles, matching the guide card and FAQ badges.
+   The old raster icons sat on a separate circle drawn behind them. */
+.included-item::before {
+  display: none;
+}
+
+.included-icon {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 18px;
+  border-radius: 50%;
+  background: var(--brand-navy);
+  color: #fff;
+  transition: transform 0.28s ease;
+}
+
+.included-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.included-item:hover .included-icon {
+  transform: translateY(-3px);
 }
 
 @media (max-width: 560px) {
@@ -7045,7 +7702,7 @@ main,
   flex: 0 0 38px;
   width: 38px;
   height: 38px;
-  background: url("rahath-brand-mark-navy-v2.png") center / 190% no-repeat;
+  background: url("photos/logo-mark.webp") center / 190% no-repeat;
   filter: brightness(0) invert(1);
 }
 
@@ -7182,5 +7839,162 @@ main,
   .sky-footer-top {
     width: 100%;
     margin: 8px 0 0;
+  }
+}
+
+/* ================= FOOTER PRIVACY NOTE ================= */
+
+/* One quiet line in the footer that opens into four short answers. */
+.sky-footer-privacy {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  scroll-margin-top: 90px;
+}
+
+.sky-footer-privacy summary {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 0;
+  cursor: pointer;
+  list-style: none;
+}
+
+.sky-footer-privacy summary::-webkit-details-marker {
+  display: none;
+}
+
+.sky-footer-privacy summary:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 4px;
+  border-radius: 8px;
+}
+
+.sky-footer-privacy-text {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 14px;
+}
+
+.sky-footer-privacy-text strong {
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.sky-footer-privacy-text span {
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 14px;
+}
+
+.sky-footer-privacy-icon {
+  position: relative;
+  flex: 0 0 32px;
+  width: 32px;
+  height: 32px;
+  margin-left: auto;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 50%;
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+.sky-footer-privacy-icon::before,
+.sky-footer-privacy-icon::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 12px;
+  height: 1.6px;
+  border-radius: 2px;
+  background: #fff;
+  transform: translate(-50%, -50%);
+  transition: transform 0.25s ease;
+}
+
+.sky-footer-privacy-icon::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.sky-footer-privacy[open] .sky-footer-privacy-icon::after {
+  transform: translate(-50%, -50%);
+}
+
+.sky-footer-privacy summary:hover .sky-footer-privacy-icon {
+  border-color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.sky-footer-privacy-body {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 26px 36px;
+  padding: 6px 0 30px;
+}
+
+.sky-footer-privacy-body h3 {
+  margin-bottom: 10px;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+}
+
+.sky-footer-privacy-body p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.sky-footer-privacy-body a {
+  color: #fff;
+  font-weight: 600;
+  text-underline-offset: 3px;
+  white-space: nowrap;
+}
+
+.sky-footer-privacy-body .sky-footer-privacy-wide {
+  grid-column: 1 / -1;
+}
+
+.sky-footer-privacy-body .sky-footer-privacy-updated {
+  grid-column: 1 / -1;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 12.5px;
+}
+
+.form-note a {
+  color: var(--brand-navy);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  white-space: nowrap;
+}
+
+@media (max-width: 1100px) {
+  .sky-footer-privacy-body {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .sky-footer-privacy-text {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .sky-footer-privacy-body {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sky-footer-privacy-icon,
+  .sky-footer-privacy-icon::before,
+  .sky-footer-privacy-icon::after {
+    transition: none;
   }
 }

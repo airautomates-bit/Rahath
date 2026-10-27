@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 116" role="img" aria-labelledby="title">
+  <title id="title">flydubai</title>
+  <text x="24" y="76" fill="#0077b9" font-family="Arial, Helvetica, sans-serif" font-size="62" font-weight="700" letter-spacing="-3">fly</text>
+  <text x="106" y="76" fill="#f47a22" font-family="Arial, Helvetica, sans-serif" font-size="62" font-weight="700" letter-spacing="-3">dubai</text>
+  <path d="M112 88h226" stroke="#f47a22" stroke-width="5" stroke-linecap="round"/>
+</svg>

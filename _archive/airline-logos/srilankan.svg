@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 124" role="img" aria-labelledby="title">
+  <title id="title">SriLankan Airlines</title>
+  <g transform="translate(18 20)" fill="none" stroke-linecap="round">
+    <path d="M8 54C30 20 56 11 86 17 63 26 47 40 37 61" stroke="#e04b77" stroke-width="8"/>
+    <path d="M20 65C44 35 68 27 98 31 76 40 60 52 49 72" stroke="#8d348f" stroke-width="8"/>
+    <path d="M39 76C61 54 82 48 108 52 89 60 75 69 65 82" stroke="#f4a51c" stroke-width="8"/>
+    <path d="M59 86C78 71 96 68 116 72" stroke="#0b8e9c" stroke-width="8"/>
+  </g>
+  <text x="148" y="72" fill="#24324b" font-family="Arial, Helvetica, sans-serif" font-size="48" font-weight="700" letter-spacing="-2">SriLankan</text>
+  <text x="151" y="96" fill="#6c7690" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" letter-spacing="5">AIRLINES</text>
+</svg>

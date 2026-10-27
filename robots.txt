@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /requested
+
+Sitemap: https://www.rahathtours.com/sitemap.xml

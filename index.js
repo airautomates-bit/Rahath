@@ -1,3 +1,39 @@
+// ================= OLD ONE-PAGE LINKS =================
+
+// Links shared before the site had separate pages (e.g. rahathtours.com/#faq)
+// are sent to the page that now holds that section.
+const movedSections = {
+  "#guide": "/about#guide",
+  "#testimonials": "/about#testimonials",
+  "#faq": "/contact#faq",
+  "#book-call": "/contact",
+  "#booking-form": "/contact#booking-form",
+};
+
+if ((location.pathname === "/" || location.pathname === "/index.html") && movedSections[location.hash]) {
+  location.replace(movedSections[location.hash]);
+}
+
+// ================= OPENED FROM THE FOLDER =================
+
+// A page opened straight from the folder (file://) can't follow clean links
+// like /packages, so point them at the .html files. The live site is unaffected.
+if (location.protocol === "file:") {
+  const pageFiles = {
+    "/": "index.html",
+    "/packages": "packages.html",
+    "/about": "about.html",
+    "/contact": "contact.html",
+  };
+
+  document.querySelectorAll('a[href^="/"]').forEach((link) => {
+    const [, path, rest] = link.getAttribute("href").match(/^(\/[a-z]*)(.*)$/) || [];
+    if (path in pageFiles) {
+      link.setAttribute("href", pageFiles[path] + rest);
+    }
+  });
+}
+
 // ================= MOBILE NAVIGATION =================
 
 const menuBtn = document.getElementById("menuBtn");
@@ -5,27 +41,70 @@ const navLinks = document.getElementById("navLinks");
 const navActions = document.querySelector(".nav-actions");
 const navItems = document.querySelectorAll(".nav-links a");
 
+// The button tells screen readers whether the menu is open; Escape closes it.
+const setMenuOpen = (open) => {
+  menuBtn.classList.toggle("active", open);
+  navLinks.classList.toggle("active", open);
+  navActions.classList.toggle("active", open);
+  menuBtn.setAttribute("aria-expanded", String(open));
+  menuBtn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+};
+
 if (menuBtn && navLinks && navActions) {
   menuBtn.addEventListener("click", () => {
-    menuBtn.classList.toggle("active");
-    navLinks.classList.toggle("active");
-    navActions.classList.toggle("active");
+    setMenuOpen(!navLinks.classList.contains("active"));
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && navLinks.classList.contains("active")) {
+      setMenuOpen(false);
+      menuBtn.focus();
+    }
   });
 }
 
+// Each page marks its own nav link, so a click only needs to close the menu.
 navItems.forEach((item) => {
   item.addEventListener("click", () => {
-    navItems.forEach((link) => link.classList.remove("active"));
-    item.classList.add("active");
-
     if (menuBtn && navLinks && navActions) {
-      menuBtn.classList.remove("active");
-      navLinks.classList.remove("active");
-      navActions.classList.remove("active");
+      setMenuOpen(false);
     }
   });
 });
 
+
+// ================= MOBILE BOOKING BAR =================
+
+// Shows once the reader is past the hero; steps aside while the booking form
+// or the footer is on screen, so it never covers them.
+const mobileCta = document.getElementById("mobileCta");
+
+if (mobileCta) {
+  const nearbyOnScreen = new Set();
+  const updateMobileCta = () => {
+    mobileCta.classList.toggle("is-visible", window.scrollY > 480 && nearbyOnScreen.size === 0);
+  };
+
+  if ("IntersectionObserver" in window) {
+    const nearbyWatcher = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          nearbyOnScreen.add(entry.target);
+        } else {
+          nearbyOnScreen.delete(entry.target);
+        }
+      });
+      updateMobileCta();
+    });
+
+    [document.getElementById("booking-form"), document.querySelector(".sky-footer")]
+      .filter(Boolean)
+      .forEach((element) => nearbyWatcher.observe(element));
+  }
+
+  window.addEventListener("scroll", updateMobileCta, { passive: true });
+  updateMobileCta();
+}
 
 // ================= HERO REAL-TIME COUNTDOWN =================
 
@@ -36,6 +115,8 @@ const heroCountdownMonth = "24 November 2026";
 const heroDepartureDate = "2026-11-24T08:00:00+05:30";
 
 const departureMonth = document.getElementById("departureMonth");
+const heroCountdownCard = document.querySelector(".hero-countdown-card");
+const countdownNext = document.getElementById("countdownNext");
 const countdownDays = document.getElementById("countdownDays");
 const countdownHours = document.getElementById("countdownHours");
 const countdownMinutes = document.getElementById("countdownMinutes");
@@ -45,10 +126,41 @@ if (departureMonth) {
   departureMonth.textContent = heroCountdownMonth;
 }
 
+const hasDeparted = () => new Date().getTime() >= new Date(heroDepartureDate).getTime();
+
+// Once the group has left, date-specific text swaps to a "next group" message
+// until the next departure date is set above.
+let departureHandled = false;
+
+function showNextGroupMessage() {
+  if (departureHandled) {
+    return;
+  }
+
+  departureHandled = true;
+
+  document.querySelectorAll("[data-after-departure]").forEach((el) => {
+    el.textContent = el.dataset.afterDeparture;
+  });
+
+  document.querySelectorAll("[data-hide-after-departure]").forEach((el) => {
+    el.hidden = true;
+  });
+
+  if (heroCountdownCard && countdownNext) {
+    heroCountdownCard.classList.add("is-finished");
+    countdownNext.hidden = false;
+  }
+}
+
 function updateHeroCountdown() {
   const now = new Date().getTime();
   const departureTime = new Date(heroDepartureDate).getTime();
   const timeLeft = departureTime - now;
+
+  if (timeLeft <= 0) {
+    showNextGroupMessage();
+  }
 
   if (
     !countdownDays ||
@@ -344,17 +456,41 @@ if (callDateInput) {
   callDateInput.setAttribute("max", getLocalISODate(latestDate));
 }
 
-// "Reserve Standard" / "Reserve Premium" pre-select that package in the form.
-document.querySelectorAll("[data-package]").forEach((button) => {
-  button.addEventListener("click", () => {
-    const packageSelect = document.getElementById("packageType");
-    const chosenPackage = button.dataset.package;
+// "Reserve Standard" / "Reserve Premium" link to /contact?package=standard
+// (or premium); pre-select that package in the form.
+const packageFromLink = {
+  standard: "Standard Package - LKR 385,000",
+  premium: "Premium Package - LKR 600,000",
+}[new URLSearchParams(location.search).get("package")];
+const packageSelect = document.getElementById("packageType");
 
-    if (packageSelect && allowedPackages.has(chosenPackage)) {
-      packageSelect.value = chosenPackage;
-    }
-  });
-});
+if (packageSelect && packageFromLink && allowedPackages.has(packageFromLink)) {
+  packageSelect.value = packageFromLink;
+}
+
+// Problems are shown under each field instead of in pop-ups, and clear as
+// soon as the field is changed.
+const showFieldError = (field, text) => {
+  let note = document.getElementById(`${field.id}-error`);
+  if (!note) {
+    note = document.createElement("p");
+    note.className = "field-error";
+    note.id = `${field.id}-error`;
+    field.closest(".form-group").appendChild(note);
+  }
+  note.textContent = text;
+  field.setAttribute("aria-invalid", "true");
+  field.setAttribute("aria-describedby", note.id);
+};
+
+const clearFieldError = (field) => {
+  const note = document.getElementById(`${field.id}-error`);
+  if (note) {
+    note.remove();
+  }
+  field.removeAttribute("aria-invalid");
+  field.removeAttribute("aria-describedby");
+};
 
 timeSlots.forEach((slot) => {
   slot.addEventListener("click", () => {
@@ -364,20 +500,27 @@ timeSlots.forEach((slot) => {
     const selectedTime = slot.dataset.time;
     if (callTimeInput && allowedCallTimes.has(selectedTime)) {
       callTimeInput.value = selectedTime;
+      clearFieldError(callTimeInput);
     }
   });
 });
 
 if (bookingForm) {
+  // The form checks itself so every problem gets the same plain message.
+  bookingForm.noValidate = true;
+
+  ["fullName", "phoneNumber", "packageType", "travellerCount", "callDate"].forEach((id) => {
+    const field = document.getElementById(id);
+    if (field) {
+      field.addEventListener("input", () => clearFieldError(field));
+      field.addEventListener("change", () => clearFieldError(field));
+    }
+  });
+
   bookingForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
     if (bookingSubmissionLocked) {
-      return;
-    }
-
-    if (!bookingForm.checkValidity()) {
-      bookingForm.reportValidity();
       return;
     }
 
@@ -390,33 +533,48 @@ if (bookingForm) {
     const message = normalizeMessage(document.getElementById("message").value);
     const today = getLocalISODate();
 
+    const latestCallDate = callDateInput ? callDateInput.max : "";
+    const problems = [];
+
     if (fullName.length < 2) {
-      alert("Please enter a valid name.");
-      return;
+      problems.push(["fullName", "Please type your name."]);
     }
 
     if (!/^[0-9+() -]{7,20}$/.test(phoneNumber)) {
-      alert("Please enter a valid phone or WhatsApp number.");
-      return;
+      problems.push(["phoneNumber", "Please type a phone or WhatsApp number, like +94 77 123 4567."]);
     }
 
-    if (!allowedPackages.has(packageType) || !allowedCallTimes.has(callTime)) {
-      alert("Please choose a valid package and call time.");
-      return;
+    if (!allowedPackages.has(packageType)) {
+      problems.push(["packageType", "Please choose a package, or pick Not sure yet."]);
     }
 
     if (!allowedTravellerCounts.has(travellerCount)) {
-      alert("Please choose how many people are travelling.");
-      return;
+      problems.push(["travellerCount", "Please choose how many people are travelling."]);
     }
 
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(callDate) || callDate < today) {
-      alert("Please choose a valid future call date.");
+    if (!callDate) {
+      problems.push(["callDate", "Please choose a day for our call."]);
+    } else if (!/^\d{4}-\d{2}-\d{2}$/.test(callDate) || callDate < today || (latestCallDate && callDate > latestCallDate)) {
+      problems.push(["callDate", "Please choose a day from today up to a year ahead."]);
+    }
+
+    if (!allowedCallTimes.has(callTime)) {
+      problems.push(["callTime", "Please choose a time for our call."]);
+    }
+
+    bookingForm.querySelectorAll("[aria-invalid]").forEach(clearFieldError);
+
+    if (problems.length) {
+      problems.forEach(([id, text]) => showFieldError(document.getElementById(id), text));
+      const firstField = document.getElementById(problems[0][0]);
+      (firstField.type === "hidden" ? bookingForm.querySelector(".time-slot") : firstField).focus();
       return;
     }
 
     const whatsappMessage = [
-      "Assalamu Alaikum, I would like to book a call for the November Umrah 2026 package.",
+      hasDeparted()
+        ? "Assalamu Alaikum, I would like to book a call about your next Umrah group."
+        : "Assalamu Alaikum, I would like to book a call for the November Umrah 2026 package.",
       "",
       `Name: ${fullName}`,
       `Phone: ${phoneNumber}`,
@@ -490,6 +648,21 @@ if (backToTop) {
     window.scrollTo({
       top: 0,
       behavior: "smooth",
+    });
+  });
+}
+
+// The privacy note is folded away; links to it open it before scrolling.
+const privacyNote = document.getElementById("privacy");
+
+if (privacyNote) {
+  if (window.location.hash === "#privacy") {
+    privacyNote.open = true;
+  }
+
+  document.querySelectorAll('a[href="#privacy"]').forEach((link) => {
+    link.addEventListener("click", () => {
+      privacyNote.open = true;
     });
   });
 }
