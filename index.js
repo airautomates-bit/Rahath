@@ -30,17 +30,16 @@ navItems.forEach((item) => {
 // ================= HERO REAL-TIME COUNTDOWN =================
 
 // Change these two values whenever the next Umrah departure changes.
-const heroCountdownMonth = "11 November 2026";
+const heroCountdownMonth = "24 November 2026";
 
 // Use Sri Lanka time format: YYYY-MM-DDTHH:MM:SS+05:30
-const heroDepartureDate = "2026-11-11T08:00:00+05:30";
+const heroDepartureDate = "2026-11-24T08:00:00+05:30";
 
 const departureMonth = document.getElementById("departureMonth");
 const countdownDays = document.getElementById("countdownDays");
 const countdownHours = document.getElementById("countdownHours");
 const countdownMinutes = document.getElementById("countdownMinutes");
 const countdownSeconds = document.getElementById("countdownSeconds");
-const countdownStatus = document.getElementById("countdownStatus");
 
 if (departureMonth) {
   departureMonth.textContent = heroCountdownMonth;
@@ -66,11 +65,6 @@ function updateHeroCountdown() {
     countdownMinutes.textContent = "00";
     countdownSeconds.textContent = "00";
 
-    if (countdownStatus) {
-      countdownStatus.textContent =
-        "This departure has started. New group details coming soon.";
-    }
-
     return;
   }
 
@@ -93,13 +87,6 @@ function updateHeroCountdown() {
   countdownMinutes.textContent = String(minutes).padStart(2, "0");
   countdownSeconds.textContent = String(seconds).padStart(2, "0");
 
-  if (countdownStatus) {
-    if (days <= 14) {
-      countdownStatus.textContent = "Final days remaining for the upcoming group.";
-    } else {
-      countdownStatus.textContent = "Countdown active for the upcoming group.";
-    }
-  }
 }
 
 updateHeroCountdown();
@@ -183,107 +170,45 @@ journeySteps.forEach((step, index) => {
   });
 });
 
-// ================= GUIDE SECTION INTERACTIONS =================
+// ================= MOMENTS GALLERY VIDEO =================
 
-const guideVisual = document.querySelector(".guide-visual");
-const guideImageWrap = document.querySelector(".guide-image-wrap");
-const guideNotes = document.querySelectorAll(".guide-floating-note");
+// The clip only loads and plays while it is on screen. Visitors who prefer
+// reduced motion get the still frame with controls instead of autoplay.
+const momentVideos = document.querySelectorAll(".moment-video video");
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-if (guideVisual && guideImageWrap) {
-  guideVisual.addEventListener("mousemove", (event) => {
-    const rect = guideVisual.getBoundingClientRect();
-
-    const x = event.clientX - rect.left;
-    const y = event.clientY - rect.top;
-
-    const moveX = (x - rect.width / 2) / 28;
-    const moveY = (y - rect.height / 2) / 28;
-
-    guideImageWrap.style.transform = `translate(${moveX}px, ${moveY}px) rotate(-1deg)`;
-
-    guideNotes.forEach((note, index) => {
-      const speed = index === 0 ? 1.4 : -1.2;
-      note.style.transform = `translate(${moveX * speed}px, ${moveY * speed}px)`;
-    });
+if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+  momentVideos.forEach((video) => {
+    video.controls = true;
   });
-
-  guideVisual.addEventListener("mouseleave", () => {
-    guideImageWrap.style.transform = "";
-    guideNotes.forEach((note) => {
-      note.style.transform = "";
+} else {
+  const momentVideoObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.play().catch(() => {});
+      } else {
+        entry.target.pause();
+      }
     });
-  });
+  }, { threshold: 0.35 });
+
+  momentVideos.forEach((video) => momentVideoObserver.observe(video));
 }
 
-// ================= TESTIMONIAL SECTION INTERACTIONS =================
+// ================= REVIEW WALL =================
 
-const testimonialCards = document.querySelectorAll(".testimonial-card");
-const featuredInitial = document.getElementById("featuredInitial");
-const featuredName = document.getElementById("featuredName");
-const featuredMeta = document.getElementById("featuredMeta");
-const featuredReview = document.getElementById("featuredReview");
-const featuredTag = document.getElementById("featuredTag");
-const featuredCount = document.getElementById("featuredCount");
-const testimonialPrev = document.getElementById("testimonialPrev");
-const testimonialNext = document.getElementById("testimonialNext");
+document.querySelectorAll(".review-track").forEach((track) => {
+  const reviewSet = track.querySelector(".review-set");
+  if (!reviewSet || track.children.length > 1) return;
 
-let currentTestimonial = 0;
-
-function updateTestimonial(index) {
-  const selectedCard = testimonialCards[index];
-
-  if (!selectedCard) return;
-
-  testimonialCards.forEach((card) => card.classList.remove("active"));
-  selectedCard.classList.add("active");
-
-  currentTestimonial = index;
-
-  featuredReview.style.opacity = "0";
-  featuredReview.style.transform = "translateY(12px)";
-
-  setTimeout(() => {
-    featuredInitial.textContent = selectedCard.dataset.initial;
-    featuredName.textContent = selectedCard.dataset.name;
-    featuredMeta.textContent = selectedCard.dataset.meta;
-    featuredReview.textContent = selectedCard.dataset.review;
-    featuredTag.textContent = selectedCard.dataset.tag;
-    featuredCount.textContent = `${String(index + 1).padStart(2, "0")} / ${String(testimonialCards.length).padStart(2, "0")}`;
-
-    featuredReview.style.opacity = "1";
-    featuredReview.style.transform = "translateY(0)";
-  }, 180);
-}
-
-testimonialCards.forEach((card, index) => {
-  card.addEventListener("click", () => {
-    updateTestimonial(index);
-  });
-
-  card.addEventListener("mouseenter", () => {
-    updateTestimonial(index);
-  });
+  const clone = reviewSet.cloneNode(true);
+  clone.setAttribute("aria-hidden", "true");
+  track.appendChild(clone);
 });
-
-if (testimonialNext) {
-  testimonialNext.addEventListener("click", () => {
-    const nextIndex = (currentTestimonial + 1) % testimonialCards.length;
-    updateTestimonial(nextIndex);
-  });
-}
-
-if (testimonialPrev) {
-  testimonialPrev.addEventListener("click", () => {
-    const prevIndex =
-      (currentTestimonial - 1 + testimonialCards.length) % testimonialCards.length;
-    updateTestimonial(prevIndex);
-  });
-}
 
 // ================= FAQ SECTION INTERACTIONS =================
 
 const faqItems = document.querySelectorAll(".faq-item");
-const faqTabs = document.querySelectorAll(".faq-tab");
 
 faqItems.forEach((item) => {
   const question = item.querySelector(".faq-question");
@@ -291,35 +216,15 @@ faqItems.forEach((item) => {
   question.addEventListener("click", () => {
     const isActive = item.classList.contains("active");
 
-    faqItems.forEach((faq) => faq.classList.remove("active"));
+    faqItems.forEach((faq) => {
+      faq.classList.remove("active");
+      const button = faq.querySelector(".faq-question");
+      if (button) button.setAttribute("aria-expanded", "false");
+    });
 
     if (!isActive) {
       item.classList.add("active");
-    }
-  });
-});
-
-faqTabs.forEach((tab) => {
-  tab.addEventListener("click", () => {
-    const category = tab.dataset.category;
-
-    faqTabs.forEach((button) => button.classList.remove("active"));
-    tab.classList.add("active");
-
-    faqItems.forEach((item) => {
-      item.classList.remove("active");
-
-      if (category === "all" || item.dataset.category === category) {
-        item.classList.remove("hide");
-      } else {
-        item.classList.add("hide");
-      }
-    });
-
-    const firstVisibleItem = document.querySelector(".faq-item:not(.hide)");
-
-    if (firstVisibleItem) {
-      firstVisibleItem.classList.add("active");
+      question.setAttribute("aria-expanded", "true");
     }
   });
 });
@@ -344,6 +249,7 @@ const allowedPackages = new Set([
   "Not sure yet",
 ]);
 const allowedCallTimes = new Set(["10:00 AM", "12:00 PM", "4:00 PM", "8:00 PM"]);
+const allowedTravellerCounts = new Set(["1", "2", "3", "4", "5", "6", "7", "8", "9", "10+"]);
 let bookingSubmissionLocked = false;
 let confirmationPreviousFocus = null;
 
@@ -438,6 +344,18 @@ if (callDateInput) {
   callDateInput.setAttribute("max", getLocalISODate(latestDate));
 }
 
+// "Reserve Standard" / "Reserve Premium" pre-select that package in the form.
+document.querySelectorAll("[data-package]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const packageSelect = document.getElementById("packageType");
+    const chosenPackage = button.dataset.package;
+
+    if (packageSelect && allowedPackages.has(chosenPackage)) {
+      packageSelect.value = chosenPackage;
+    }
+  });
+});
+
 timeSlots.forEach((slot) => {
   slot.addEventListener("click", () => {
     timeSlots.forEach((button) => button.classList.remove("active"));
@@ -466,6 +384,7 @@ if (bookingForm) {
     const fullName = normalizeSingleLine(document.getElementById("fullName").value, 80);
     const phoneNumber = normalizeSingleLine(document.getElementById("phoneNumber").value, 20);
     const packageType = document.getElementById("packageType").value;
+    const travellerCount = document.getElementById("travellerCount").value;
     const callDate = document.getElementById("callDate").value;
     const callTime = document.getElementById("callTime").value;
     const message = normalizeMessage(document.getElementById("message").value);
@@ -486,6 +405,11 @@ if (bookingForm) {
       return;
     }
 
+    if (!allowedTravellerCounts.has(travellerCount)) {
+      alert("Please choose how many people are travelling.");
+      return;
+    }
+
     if (!/^\d{4}-\d{2}-\d{2}$/.test(callDate) || callDate < today) {
       alert("Please choose a valid future call date.");
       return;
@@ -497,6 +421,7 @@ if (bookingForm) {
       `Name: ${fullName}`,
       `Phone: ${phoneNumber}`,
       `Interested Package: ${packageType}`,
+      `Number of People: ${travellerCount}`,
       `Preferred Call Date: ${callDate}`,
       `Preferred Call Time: ${callTime}`,
       `Message: ${message || "No additional message"}`,

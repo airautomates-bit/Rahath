@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 116" role="img" aria-labelledby="title">
+  <title id="title">Gulf Air</title>
+  <g fill="none" stroke="#b39044" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M40 62c22-27 48-36 77-26-18 2-33 10-44 24 18-8 37-8 56 1-20 3-36 12-49 28-13-5-26-14-40-27Z"/>
+    <path d="M77 60c12 9 20 19 24 31"/>
+  </g>
+  <text x="146" y="73" fill="#1a2844" font-family="Arial, Helvetica, sans-serif" font-size="43" font-weight="700" letter-spacing="3">GULF AIR</text>
+</svg>
