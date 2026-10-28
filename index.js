@@ -24,6 +24,7 @@ if (location.protocol === "file:") {
     "/packages": "packages.html",
     "/about": "about.html",
     "/contact": "contact.html",
+    "/tamil": "tamil.html",
   };
 
   document.querySelectorAll('a[href^="/"]').forEach((link) => {

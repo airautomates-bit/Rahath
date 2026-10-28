@@ -7190,6 +7190,344 @@ a.trust-item:hover strong {
   }
 }
 
+/* ================= PACKAGES: TRIP AT A GLANCE ================= */
+
+/* The facts people check before paying: length, hotels, rooms, money. */
+.trip-facts {
+  margin-top: 56px;
+}
+
+.trip-facts-head {
+  margin-bottom: 22px;
+}
+
+.trip-facts-head h3 {
+  color: var(--brand-navy);
+  font-size: clamp(26px, 3vw, 36px);
+  font-weight: 700;
+  letter-spacing: -1px;
+  line-height: 1.1;
+}
+
+.trip-facts-head p {
+  margin-top: 8px;
+  color: var(--editorial-muted);
+  font-size: 15px;
+}
+
+.trip-facts-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.trip-fact {
+  min-width: 0;
+  padding: 22px;
+  border: 1px solid var(--editorial-line);
+  border-radius: 20px;
+  background: var(--editorial-soft);
+}
+
+.trip-fact span {
+  display: block;
+  color: var(--editorial-muted);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+.trip-fact strong {
+  display: block;
+  margin: 10px 0 6px;
+  color: var(--brand-navy);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.4px;
+  line-height: 1.2;
+}
+
+.trip-fact p {
+  margin: 0;
+  color: var(--editorial-muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.faq-answer a {
+  color: var(--brand-navy);
+  font-weight: 700;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 1024px) {
+  .trip-facts-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 420px) {
+  .trip-fact {
+    padding: 18px 16px;
+  }
+
+  .trip-fact strong {
+    font-size: 18px;
+  }
+}
+
+/* ================= TAMIL PAGE ================= */
+
+/* Tamil script needs normal letter spacing and more line height than the
+   tight English headings. Phones fall back to their own Tamil font. */
+.lang-ta h1,
+.lang-ta h2,
+.lang-ta h3,
+.lang-ta strong {
+  letter-spacing: normal;
+}
+
+.lang-ta h1 {
+  font-size: clamp(30px, 5vw, 56px);
+  line-height: 1.3;
+  overflow-wrap: break-word;
+}
+
+/* Tamil words run long, so phones get smaller headings and one fact per row. */
+@media (max-width: 560px) {
+  .lang-ta h1 {
+    font-size: 32px;
+  }
+
+  .lang-ta .page-hero-inner {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .lang-ta .faq-intro h2,
+  .lang-ta .ta-section h2 {
+    font-size: 25px;
+  }
+
+  .lang-ta .trip-facts-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lang-ta .trip-fact strong {
+    font-size: 18px;
+  }
+}
+
+.lang-ta p,
+.lang-ta li {
+  line-height: 1.75;
+}
+
+.page-hero--tamil::after {
+  background-image: url("photos/kaaba-through-haram-arches.webp");
+  background-position: center 50%;
+}
+
+.ta-section h2 {
+  color: var(--brand-navy);
+  font-size: clamp(26px, 3.4vw, 40px);
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.ta-lead {
+  max-width: 720px;
+  margin: 12px 0 28px;
+  color: var(--editorial-muted);
+  font-size: 16px;
+}
+
+.ta-prices {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.ta-price {
+  display: flex;
+  flex-direction: column;
+  padding: 28px;
+  border: 1px solid var(--editorial-line);
+  border-radius: 24px;
+  background: var(--editorial-soft);
+}
+
+.ta-price h3 {
+  color: var(--brand-navy);
+  font-size: 22px;
+  line-height: 1.3;
+}
+
+.ta-price > strong {
+  margin-top: 14px;
+  color: var(--brand-navy);
+  font-size: clamp(30px, 3.6vw, 42px);
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.ta-price > span {
+  color: var(--editorial-muted);
+  font-size: 14px;
+}
+
+.ta-price p {
+  margin: 14px 0 22px;
+  color: var(--editorial-muted);
+  font-size: 15px;
+}
+
+.ta-price .ta-btn {
+  margin-top: auto;
+}
+
+.ta-price--premium {
+  border-color: var(--brand-navy);
+  background: var(--brand-navy);
+}
+
+.ta-price--premium h3,
+.ta-price--premium > strong {
+  color: #fff;
+}
+
+.ta-price--premium > span,
+.ta-price--premium p {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.ta-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50px;
+  padding: 12px 22px;
+  border-radius: 999px;
+  background: var(--brand-navy);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  transition: transform 0.25s ease;
+}
+
+.ta-btn:hover {
+  transform: translateY(-2px);
+}
+
+.ta-price--premium .ta-btn {
+  background: #f3dfa6;
+  color: var(--brand-navy);
+}
+
+.ta-btn--whatsapp {
+  background: #25d366;
+}
+
+.ta-btn--light {
+  border: 1px solid var(--editorial-line);
+  background: #fff;
+  color: var(--brand-navy);
+}
+
+.ta-two {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 56px;
+}
+
+.ta-box,
+.ta-contact {
+  padding: 28px;
+  border: 1px solid var(--editorial-line);
+  border-radius: 24px;
+  background: #fff;
+}
+
+.ta-box h3,
+.ta-contact h3 {
+  margin-bottom: 12px;
+  color: var(--brand-navy);
+  font-size: 22px;
+  line-height: 1.3;
+}
+
+.ta-box p,
+.ta-contact p {
+  color: var(--editorial-muted);
+  font-size: 15px;
+}
+
+.ta-box p + p {
+  margin-top: 12px;
+}
+
+.ta-box strong {
+  color: var(--brand-navy);
+}
+
+.ta-list {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ta-list li {
+  position: relative;
+  padding-left: 26px;
+  color: var(--brand-navy);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.ta-list li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #1277da;
+  font-weight: 800;
+}
+
+.ta-contact {
+  margin-top: 18px;
+  background: var(--editorial-soft);
+}
+
+.ta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 20px 0 16px;
+}
+
+.ta-address a,
+.trip-facts-head a {
+  color: var(--brand-navy);
+  font-weight: 700;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 760px) {
+  .ta-prices,
+  .ta-two {
+    grid-template-columns: 1fr;
+  }
+
+  .ta-actions .ta-btn {
+    flex: 1 1 100%;
+  }
+}
+
 /* ================= MOBILE BOOKING BAR ================= */
 
 /* On phones a booking bar follows the reader once they are past the hero,

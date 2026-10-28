@@ -7,7 +7,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 
 // Bump this when index.css or index.js changes so browsers fetch the new files.
-const VERSION = "20261027-hero22";
+const VERSION = "20261028-tamil29";
 
 const pages = [
   {
@@ -46,6 +46,16 @@ const pages = [
     title: "Contact Us | Rahath Tours &amp; Travels",
     description: "Book a free call with Rahath Tours &amp; Travels about Umrah from Sri Lanka, or call and WhatsApp us on +94 72 532 9242.",
     extras: ["confirmation"],
+  },
+  {
+    output: "tamil.html",
+    body: "tamil",
+    nav: "none",
+    path: "/tamil",
+    lang: "ta",
+    ogimage: "photos/og-packages.jpg",
+    title: "உம்ரா பயணம் தமிழில் | Rahath Tours &amp; Travels",
+    description: "இலங்கையிலிருந்து உம்ரா: ஸ்டாண்டர்ட் LKR 385,000, பிரீமியம் LKR 600,000. 10–11 நாட்கள், ஹரமுக்கு அருகில் ஹோட்டல், விமானம் அடங்கும். தெஹிவளை அலுவலகம்.",
   },
   {
     // Vercel serves 404.html for any unknown address, at any depth, so this
@@ -99,7 +109,7 @@ for (const page of pages) {
 
   const html = `<!DOCTYPE html>
 <!-- Built from src/ by build.mjs. Edit the files in src/, then run: node build.mjs -->
-<html lang="en">
+<html lang="${page.lang ?? "en"}">
 <head>
 ${fill(head, values).trimEnd()}
 </head>
