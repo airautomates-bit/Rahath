@@ -56,6 +56,22 @@ const whatsappDigits = (phone) => {
   return digits;
 };
 
+// Mirrors the form's check: a Sri Lankan number has 9 digits after the 0 or
+// +94; a foreign number (starting + or 00) has 8 to 15 digits in all.
+const validPhone = (phone) => {
+  if (!/^[0-9+() -]{7,20}$/.test(phone)) return false;
+  const digits = phone.replace(/\D/g, "");
+  let local;
+  if (phone.startsWith("+94")) local = digits.slice(2);
+  else if (digits.startsWith("0094")) local = digits.slice(4);
+  else if (phone.startsWith("+") || digits.startsWith("00")) return digits.length >= 8 && digits.length <= 15;
+  else if (digits.startsWith("0")) return digits.length === 10;
+  else if (digits.startsWith("94") && digits.length >= 10) local = digits.slice(2);
+  else if (digits.startsWith("7")) local = digits;
+  else return digits.length >= 8 && digits.length <= 15;
+  return local.replace(/^0/, "").length === 9;
+};
+
 const isAllowedOrigin = (req) => {
   const origin = req.headers.origin;
   if (!origin) return false;
@@ -84,7 +100,7 @@ function readLead(body) {
 
   const valid =
     lead.fullName.length >= 2 &&
-    /^[0-9+() -]{7,20}$/.test(lead.phoneNumber) &&
+    validPhone(lead.phoneNumber) &&
     PACKAGES.has(lead.packageType) &&
     TRAVELLERS.has(lead.travellerCount) &&
     CALL_TIMES.has(lead.callTime) &&
@@ -163,9 +179,11 @@ module.exports = async function handler(req, res) {
 
   const body = req.body && typeof req.body === "object" ? req.body : {};
 
-  // Real visitors never see or fill the "website" box; bots fill everything.
+  // Real visitors never see or fill the hidden "extra" box; bots fill everything.
+  // It is deliberately not called "website" or "url", so browser autofill and
+  // password managers leave it alone and real requests are never dropped.
   // They get a normal answer so they don't learn they were caught.
-  if (oneLine(body.website, 200)) {
+  if (oneLine(body.extra, 200)) {
     return res.status(200).json({ ok: true });
   }
 

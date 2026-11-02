@@ -353,7 +353,8 @@ const leadConfirmationDialog = document.getElementById("leadConfirmationDialog")
 const leadConfirmationClose = document.getElementById("leadConfirmationClose");
 const leadConfirmationDone = document.getElementById("leadConfirmationDone");
 const leadConfirmationKicker = document.getElementById("leadConfirmationKicker");
-const leadConfirmationTitle = document.getElementById("leadConfirmationTitle");
+const leadConfirmationGreeting = document.getElementById("leadConfirmationGreeting");
+const leadConfirmationName = document.getElementById("leadConfirmationName");
 const leadConfirmationDescription = document.getElementById("leadConfirmationDescription");
 const leadConfirmationWhatsApp = document.getElementById("leadConfirmationWhatsApp");
 
@@ -386,6 +387,83 @@ const normalizeMessage = (value) =>
     .trim()
     .slice(0, 500);
 
+// Sri Lankan numbers (07X..., +94..., 0094...) must have exactly 10 digits in
+// local form; anything else is treated as a foreign number of 8 to 15 digits.
+// Returns a message to show, or "" when the number looks right.
+const checkPhoneNumber = (phone) => {
+  const raw = phone.trim();
+  const digits = raw.replace(/\D/g, "");
+  const foreign = () => (digits.length >= 8 && digits.length <= 15 ? "" : "That number doesn't look complete. Please check it.");
+
+  if (!/^[0-9+() -]+$/.test(raw) || !digits) {
+    return "Please type a phone or WhatsApp number, like 077 123 4567.";
+  }
+
+  let local;
+  let international = false;
+  if (raw.startsWith("+94")) {
+    local = digits.slice(2);
+    international = true;
+  } else if (digits.startsWith("0094")) {
+    local = digits.slice(4);
+    international = true;
+  } else if (raw.startsWith("+") || digits.startsWith("00")) {
+    return foreign();
+  } else if (digits.startsWith("0")) {
+    local = digits.slice(1);
+  } else if (digits.startsWith("94") && digits.length >= 10) {
+    local = digits.slice(2);
+    international = true;
+  } else if (digits.startsWith("7")) {
+    local = digits;
+  } else {
+    return foreign();
+  }
+
+  // People often write +94 077..., keeping the 0.
+  if (international && local.startsWith("0")) local = local.slice(1);
+  if (local.length === 9) return "";
+
+  const count = international ? local.length : local.length + 1;
+  const expected = international
+    ? "After +94, a Sri Lankan number has 9 digits, like +94 77 123 4567."
+    : "A Sri Lankan number has 10 digits, like 077 123 4567.";
+  return local.length > 9 ? `That's ${count} digits, which is too many. ${expected}` : `That's only ${count} digits. ${expected}`;
+};
+
+// A short two-note chime when a request goes through. Built with Web Audio, so
+// there is no sound file to download. The audio is unlocked on the button
+// press, because browsers only allow sound that starts from a tap or click.
+let chimeContext = null;
+
+const unlockChime = () => {
+  const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+  if (!AudioContextClass || navigator.userActivation?.isActive === false) return;
+  try {
+    chimeContext = chimeContext || new AudioContextClass();
+    if (chimeContext.state === "suspended") chimeContext.resume();
+  } catch {
+    chimeContext = null;
+  }
+};
+
+const playChime = () => {
+  if (!chimeContext) return;
+  const start = chimeContext.currentTime + 0.05;
+  [[659.25, 0], [987.77, 0.13]].forEach(([frequency, delay]) => {
+    const tone = chimeContext.createOscillator();
+    const volume = chimeContext.createGain();
+    tone.type = "sine";
+    tone.frequency.value = frequency;
+    volume.gain.setValueAtTime(0.0001, start + delay);
+    volume.gain.exponentialRampToValueAtTime(0.18, start + delay + 0.02);
+    volume.gain.exponentialRampToValueAtTime(0.0001, start + delay + 0.9);
+    tone.connect(volume).connect(chimeContext.destination);
+    tone.start(start + delay);
+    tone.stop(start + delay + 1);
+  });
+};
+
 const closeLeadConfirmation = () => {
   if (!leadConfirmation) return;
 
@@ -413,25 +491,41 @@ const describeCallTime = (callDate, callTime) => {
   return [day, time].filter(Boolean).join(" ");
 };
 
-// Saved: thank them by name and say when we'll call. Not saved (offline, or
-// the server is down): ask them to send it on WhatsApp instead.
-const fillLeadConfirmation = ({ saved, fullName, phoneNumber, callDate, callTime, whatsappURL }) => {
+// "Tomorrow, 4:00 PM" for the summary on the confirmation card.
+const describeCallSlot = (callDate, callTime) => {
+  if (callDate === "Flexible") return callTime === "Any time" ? "Whenever suits you" : callTime;
+  const when = describeCallTime(callDate, "Any time").replace(/^on /, "");
+  const day = when.charAt(0).toUpperCase() + when.slice(1);
+  return callTime === "Any time" ? `${day}, any time` : `${day}, ${callTime}`;
+};
+
+const describePackage = (packageType) => packageType.replace(" Package - ", ", ");
+
+const describePeople = (count) => (count === "1" ? "1 person" : count === "6+" ? "6 or more people" : `${count} people`);
+
+// Saved: thank them by name and show what we have on record. Not saved
+// (offline, or the server is down): ask them to send it on WhatsApp instead.
+const fillLeadConfirmation = ({ saved, fullName, phoneNumber, packageType, travellerCount, callDate, callTime, whatsappURL }) => {
   if (!leadConfirmation) return;
 
   leadConfirmationDialog.classList.toggle("is-fallback", !saved);
+  leadConfirmationName.textContent = fullName;
+  document.getElementById("leadSummaryPhone").textContent = phoneNumber;
+  document.getElementById("leadSummaryWhen").textContent = describeCallSlot(callDate, callTime);
+  document.getElementById("leadSummaryPackage").textContent = describePackage(packageType);
+  document.getElementById("leadSummaryPeople").textContent = describePeople(travellerCount);
 
   if (saved) {
-    const firstName = fullName.split(" ")[0].slice(0, 20);
     const when = describeCallTime(callDate, callTime);
     leadConfirmationKicker.textContent = "Request received";
-    leadConfirmationTitle.textContent = `Thank you, ${firstName}`;
-    leadConfirmationDescription.textContent = `We'll call you on ${phoneNumber} ${when || "soon"}, in shaa Allah. Keep your phone close. There's nothing else you need to do.`;
+    leadConfirmationGreeting.textContent = "Thank you,";
+    leadConfirmationDescription.textContent = `Our team has your request and will call you ${when || "soon"}, in shaa Allah. Keep your phone close. There's nothing else you need to do.`;
     leadConfirmationWhatsApp.textContent = "Have a question now? WhatsApp us";
     leadConfirmationWhatsApp.href = `https://wa.me/${rahathWhatsAppNumber}`;
     leadConfirmationDone.textContent = "Done";
   } else {
     leadConfirmationKicker.textContent = "One last step";
-    leadConfirmationTitle.textContent = "Send your request on WhatsApp";
+    leadConfirmationGreeting.textContent = "Almost there,";
     leadConfirmationDescription.textContent = "Your details are filled in. Tap the button, then press send in WhatsApp, and our team will arrange your call.";
     leadConfirmationWhatsApp.textContent = "Send on WhatsApp";
     leadConfirmationWhatsApp.href = whatsappURL;
@@ -678,6 +772,14 @@ if (bookingForm && formSteps.length) {
     field.addEventListener("input", () => clearFieldError(field));
   });
 
+  // Point out a wrong digit count as soon as they leave the phone box.
+  const phoneField = document.getElementById("phoneNumber");
+  phoneField.addEventListener("blur", () => {
+    const value = normalizeSingleLine(phoneField.value, 20);
+    const problem = value ? checkPhoneNumber(value) : "";
+    if (problem) showFieldError(phoneField, problem);
+  });
+
   // "Reserve Standard" / "Reserve Premium" link to /contact?package=standard
   // (or premium): the package is already chosen, so start at step 2.
   const packageFromLink = {
@@ -731,8 +833,9 @@ if (bookingForm && formSteps.length) {
       problems.push(["fullName", "Please type your name."]);
     }
 
-    if (!/^[0-9+() -]{7,20}$/.test(phoneNumber)) {
-      problems.push(["phoneNumber", "Please type a phone or WhatsApp number, like +94 77 123 4567."]);
+    const phoneProblem = checkPhoneNumber(phoneNumber);
+    if (phoneProblem) {
+      problems.push(["phoneNumber", phoneProblem]);
     }
 
     bookingForm.querySelectorAll("[aria-invalid]").forEach(clearFieldError);
@@ -768,6 +871,7 @@ if (bookingForm && formSteps.length) {
     whatsappURL.searchParams.set("text", whatsappMessage);
 
     bookingSubmissionLocked = true;
+    unlockChime();
     if (bookingSubmit) {
       bookingSubmit.disabled = true;
       bookingSubmit.setAttribute("aria-busy", "true");
@@ -782,7 +886,7 @@ if (bookingForm && formSteps.length) {
       callDate,
       callTime,
       message,
-      website: document.getElementById("website")?.value || "",
+      extra: document.getElementById("formExtra")?.value || "",
     });
 
     if (bookingSubmit) {
@@ -792,8 +896,9 @@ if (bookingForm && formSteps.length) {
     }
     bookingSubmissionLocked = false;
 
-    fillLeadConfirmation({ saved, fullName, phoneNumber, callDate, callTime, whatsappURL: whatsappURL.toString() });
+    fillLeadConfirmation({ saved, fullName, phoneNumber, packageType, travellerCount, callDate, callTime, whatsappURL: whatsappURL.toString() });
     showLeadConfirmation(packageType, saved ? "Website" : "WhatsApp");
+    if (saved) playChime();
 
     // Start again from the first question for anyone booking a second person.
     bookingForm.reset();

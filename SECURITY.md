@@ -6,7 +6,7 @@ Rahath Tours & Travels treats security and visitor privacy as release requiremen
 
 This site is static apart from one serverless function, `api/lead.js`. It does not maintain accounts or process payments. Call requests are validated in the browser, then validated again by `api/lead.js`, which posts them to the team's Telegram group and appends them to a private Google Sheet through an Apps Script web app (`setup/google-sheet-script.gs`). If neither accepts a request, the page hands it to WhatsApp instead.
 
-The function only accepts POST requests from the site's own origin, drops submissions that fill the hidden `website` field, and keeps the Telegram bot token, chat id, Sheet address and Sheet password in Vercel environment variables. The Apps Script rejects any request without the matching password. Access to the Sheet and the Telegram group should stay limited to the team.
+The function only accepts POST requests from the site's own origin, drops submissions that fill the hidden `extra` field (named so browser autofill never fills it), and keeps the Telegram bot token, chat id, Sheet address and Sheet password in Vercel environment variables. The Apps Script rejects any request without the matching password. Access to the Sheet and the Telegram group should stay limited to the team.
 
 ## Required controls
 

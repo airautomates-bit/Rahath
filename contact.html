@@ -48,7 +48,7 @@
   </script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-LQ2QBYDJ7J" referrerpolicy="strict-origin-when-cross-origin"></script>
   <script src="analytics.js"></script>
-  <link rel="stylesheet" href="index.css?v=20261102-lead36">
+  <link rel="stylesheet" href="index.css?v=20261102-lead39">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="inter.css">
 </head>
@@ -196,8 +196,8 @@
             </div>
 
             <div class="form-trap" aria-hidden="true">
-              <label for="website">Leave this empty</label>
-              <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+              <label for="formExtra">Leave this empty</label>
+              <input type="text" id="formExtra" name="extra" tabindex="-1" autocomplete="off">
             </div>
 
             <button type="submit" class="btn submit-booking-btn" id="bookingSubmit">
@@ -410,18 +410,30 @@
   <div class="confirmation-overlay" id="leadConfirmation" hidden>
     <section class="confirmation-dialog" id="leadConfirmationDialog" role="dialog" aria-modal="true" aria-labelledby="leadConfirmationTitle" aria-describedby="leadConfirmationDescription" tabindex="-1">
       <button class="confirmation-close" id="leadConfirmationClose" type="button" aria-label="Close confirmation">×</button>
-      <div class="confirmation-icon" aria-hidden="true">✓</div>
+      <div class="confirmation-icon" aria-hidden="true">
+        <svg viewBox="0 0 52 52" focusable="false"><circle class="confirmation-icon-ring" cx="26" cy="26" r="24"/><path class="confirmation-icon-tick" d="M15.5 27.5l7 7 14-15"/></svg>
+      </div>
       <p class="confirmation-kicker" id="leadConfirmationKicker">Request received</p>
-      <h2 id="leadConfirmationTitle">Thank you. We'll call you soon</h2>
-      <p id="leadConfirmationDescription">
-        Our team will call you at the time you picked, in shaa Allah. Keep your phone close. There is nothing else you need to do.
+      <h2 id="leadConfirmationTitle"><span id="leadConfirmationGreeting">Thank you,</span> <span class="confirmation-name" id="leadConfirmationName"></span></h2>
+      <p class="confirmation-text" id="leadConfirmationDescription">
+        Our team has your request and will call you at the time you picked, in shaa Allah. Keep your phone close.
       </p>
-      <a class="confirmation-whatsapp" id="leadConfirmationWhatsApp" href="https://wa.me/94725329242" target="_blank" rel="noopener noreferrer">Have a question now? WhatsApp us</a>
-      <button class="confirmation-done" id="leadConfirmationDone" type="button">Done</button>
+
+      <dl class="confirmation-summary">
+        <div><dt>We'll call</dt><dd id="leadSummaryPhone"></dd></div>
+        <div><dt>When</dt><dd id="leadSummaryWhen"></dd></div>
+        <div><dt>Package</dt><dd id="leadSummaryPackage"></dd></div>
+        <div><dt>Travelling</dt><dd id="leadSummaryPeople"></dd></div>
+      </dl>
+
+      <div class="confirmation-actions">
+        <a class="confirmation-whatsapp" id="leadConfirmationWhatsApp" href="https://wa.me/94725329242" target="_blank" rel="noopener noreferrer">Have a question now? WhatsApp us</a>
+        <button class="confirmation-done" id="leadConfirmationDone" type="button">Done</button>
+      </div>
     </section>
   </div>
 
-<script src="index.js?v=20261102-lead36" defer></script>
+<script src="index.js?v=20261102-lead39" defer></script>
 
 </body>
 </html>
