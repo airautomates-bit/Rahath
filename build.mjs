@@ -7,7 +7,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 
 // Bump this when index.css or index.js changes so browsers fetch the new files.
-const VERSION = "20261101-trust30";
+const VERSION = "20261102-lead36";
 
 const pages = [
   {

@@ -345,15 +345,17 @@ faqItems.forEach((item) => {
 // ================= BOOK A CALL SECTION INTERACTIONS =================
 
 const bookingForm = document.getElementById("bookingForm");
-const timeSlots = document.querySelectorAll(".time-slot");
 const callTimeInput = document.getElementById("callTime");
 const callDateInput = document.getElementById("callDate");
-const bookingToast = document.getElementById("bookingToast");
 const bookingSubmit = document.getElementById("bookingSubmit");
 const leadConfirmation = document.getElementById("leadConfirmation");
 const leadConfirmationDialog = document.getElementById("leadConfirmationDialog");
 const leadConfirmationClose = document.getElementById("leadConfirmationClose");
 const leadConfirmationDone = document.getElementById("leadConfirmationDone");
+const leadConfirmationKicker = document.getElementById("leadConfirmationKicker");
+const leadConfirmationTitle = document.getElementById("leadConfirmationTitle");
+const leadConfirmationDescription = document.getElementById("leadConfirmationDescription");
+const leadConfirmationWhatsApp = document.getElementById("leadConfirmationWhatsApp");
 
 const rahathWhatsAppNumber = "94725329242";
 const allowedPackages = new Set([
@@ -361,8 +363,8 @@ const allowedPackages = new Set([
   "Premium Package - LKR 600,000",
   "Not sure yet",
 ]);
-const allowedCallTimes = new Set(["10:00 AM", "12:00 PM", "4:00 PM", "8:00 PM"]);
-const allowedTravellerCounts = new Set(["1", "2", "3", "4", "5", "6", "7", "8", "9", "10+"]);
+const allowedCallTimes = new Set(["10:00 AM", "12:00 PM", "4:00 PM", "8:00 PM", "Any time"]);
+const allowedTravellerCounts = new Set(["1", "2", "3", "4", "5", "6+"]);
 let bookingSubmissionLocked = false;
 let confirmationPreviousFocus = null;
 
@@ -395,7 +397,70 @@ const closeLeadConfirmation = () => {
   }
 };
 
-const showLeadConfirmation = (packageType) => {
+// "today at 4:00 PM", "on Thursday, 5 November", or "" when they left it to us.
+const describeCallTime = (callDate, callTime) => {
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  let day = "";
+  if (callDate === getLocalISODate()) {
+    day = "today";
+  } else if (callDate === getLocalISODate(tomorrow)) {
+    day = "tomorrow";
+  } else if (callDate !== "Flexible") {
+    day = `on ${new Date(`${callDate}T12:00:00`).toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long" })}`;
+  }
+  const time = callTime === "Any time" ? "" : `at ${callTime}`;
+  return [day, time].filter(Boolean).join(" ");
+};
+
+// Saved: thank them by name and say when we'll call. Not saved (offline, or
+// the server is down): ask them to send it on WhatsApp instead.
+const fillLeadConfirmation = ({ saved, fullName, phoneNumber, callDate, callTime, whatsappURL }) => {
+  if (!leadConfirmation) return;
+
+  leadConfirmationDialog.classList.toggle("is-fallback", !saved);
+
+  if (saved) {
+    const firstName = fullName.split(" ")[0].slice(0, 20);
+    const when = describeCallTime(callDate, callTime);
+    leadConfirmationKicker.textContent = "Request received";
+    leadConfirmationTitle.textContent = `Thank you, ${firstName}`;
+    leadConfirmationDescription.textContent = `We'll call you on ${phoneNumber} ${when || "soon"}, in shaa Allah. Keep your phone close. There's nothing else you need to do.`;
+    leadConfirmationWhatsApp.textContent = "Have a question now? WhatsApp us";
+    leadConfirmationWhatsApp.href = `https://wa.me/${rahathWhatsAppNumber}`;
+    leadConfirmationDone.textContent = "Done";
+  } else {
+    leadConfirmationKicker.textContent = "One last step";
+    leadConfirmationTitle.textContent = "Send your request on WhatsApp";
+    leadConfirmationDescription.textContent = "Your details are filled in. Tap the button, then press send in WhatsApp, and our team will arrange your call.";
+    leadConfirmationWhatsApp.textContent = "Send on WhatsApp";
+    leadConfirmationWhatsApp.href = whatsappURL;
+    leadConfirmationDone.textContent = "Close";
+  }
+};
+
+// Posts the request to /api/lead, which passes it to the team. Returns false
+// if it didn't arrive, so the page can offer WhatsApp instead.
+const sendLead = async (lead) => {
+  if (window.location.protocol !== "https:" && window.location.protocol !== "http:") {
+    return false;
+  }
+
+  try {
+    const response = await fetch("/api/lead", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(lead),
+      signal: typeof AbortSignal.timeout === "function" ? AbortSignal.timeout(12000) : undefined,
+    });
+    const result = await response.json();
+    return response.ok && result.ok === true;
+  } catch {
+    return false;
+  }
+};
+
+const showLeadConfirmation = (packageType, method) => {
   if (leadConfirmation) {
     confirmationPreviousFocus = document.activeElement;
     leadConfirmation.hidden = false;
@@ -405,7 +470,7 @@ const showLeadConfirmation = (packageType) => {
 
   if (typeof window.gtag === "function") {
     window.gtag("event", "generate_lead", {
-      method: "WhatsApp",
+      method,
       package_name: packageType,
     });
 
@@ -445,39 +510,25 @@ window.addEventListener("popstate", () => {
   }
 });
 
-if (callTimeInput) {
-  callTimeInput.value = "10:00 AM";
-}
+const callDatePicker = document.getElementById("callDatePicker");
+const callDatePickerWrap = document.getElementById("callDatePickerWrap");
 
-if (callDateInput) {
-  const today = getLocalISODate();
+if (callDatePicker) {
   const latestDate = new Date();
   latestDate.setFullYear(latestDate.getFullYear() + 1);
-  callDateInput.setAttribute("min", today);
-  callDateInput.setAttribute("max", getLocalISODate(latestDate));
+  callDatePicker.min = getLocalISODate();
+  callDatePicker.max = getLocalISODate(latestDate);
 }
 
-// "Reserve Standard" / "Reserve Premium" link to /contact?package=standard
-// (or premium); pre-select that package in the form.
-const packageFromLink = {
-  standard: "Standard Package - LKR 385,000",
-  premium: "Premium Package - LKR 600,000",
-}[new URLSearchParams(location.search).get("package")];
-const packageSelect = document.getElementById("packageType");
-
-if (packageSelect && packageFromLink && allowedPackages.has(packageFromLink)) {
-  packageSelect.value = packageFromLink;
-}
-
-// Problems are shown under each field instead of in pop-ups, and clear as
-// soon as the field is changed.
+// Problems are shown next to the question instead of in pop-ups, and clear as
+// soon as the answer is changed.
 const showFieldError = (field, text) => {
   let note = document.getElementById(`${field.id}-error`);
   if (!note) {
     note = document.createElement("p");
     note.className = "field-error";
     note.id = `${field.id}-error`;
-    field.closest(".form-group").appendChild(note);
+    (field.closest(".form-group") || field.closest(".form-step")).appendChild(note);
   }
   note.textContent = text;
   field.setAttribute("aria-invalid", "true");
@@ -493,32 +544,156 @@ const clearFieldError = (field) => {
   field.removeAttribute("aria-describedby");
 };
 
-timeSlots.forEach((slot) => {
-  slot.addEventListener("click", () => {
-    timeSlots.forEach((button) => button.classList.remove("active"));
-    slot.classList.add("active");
+// ================= STEP-BY-STEP BOOKING FORM =================
 
-    const selectedTime = slot.dataset.time;
-    if (callTimeInput && allowedCallTimes.has(selectedTime)) {
-      callTimeInput.value = selectedTime;
-      clearFieldError(callTimeInput);
-    }
+// One question per screen: package, people, call time, then name and phone.
+// Taps move straight on; only the last step needs typing. Analytics records
+// how far people get, never what they type.
+const formSteps = bookingForm ? [...bookingForm.querySelectorAll(".form-step")] : [];
+const stepBack = document.getElementById("stepBack");
+const stepContinue = document.getElementById("stepContinue");
+const stepCount = document.getElementById("stepCount");
+const stepBar = document.getElementById("stepBar");
+const stepOfField = { packageType: 0, travellerCount: 1, callDate: 2, callTime: 2 };
+let currentStep = 0;
+let bookingStarted = false;
+
+const trackBooking = (name, params = {}) => {
+  if (typeof window.gtag === "function") {
+    window.gtag("event", name, params);
+  }
+};
+
+const showStep = (index, moveFocus = true) => {
+  currentStep = index;
+  formSteps.forEach((step, i) => {
+    step.hidden = i !== index;
   });
-});
+  if (stepCount) stepCount.textContent = `Step ${index + 1} of ${formSteps.length}`;
+  if (stepBar) stepBar.style.width = `${((index + 1) / formSteps.length) * 100}%`;
+  if (stepBack) stepBack.hidden = index === 0;
+  if (moveFocus) formSteps[index].querySelector("legend").focus();
+  trackBooking("booking_step", { step_number: index + 1 });
+};
 
-if (bookingForm) {
+const pressChoice = (group, value) => {
+  group.querySelectorAll("[data-value]").forEach((button) => {
+    button.setAttribute("aria-pressed", String(button.dataset.value === value));
+  });
+};
+
+const dateFieldValue = (choiceValue) => {
+  const day = new Date();
+  if (choiceValue === "tomorrow") day.setDate(day.getDate() + 1);
+  return getLocalISODate(day);
+};
+
+const callTimeChosen = () => allowedCallTimes.has(callTimeInput.value);
+const callDayChosen = () => callDateInput.value !== "";
+
+const goToNextStep = () => {
+  if (currentStep < formSteps.length - 1) {
+    window.setTimeout(() => showStep(currentStep + 1), 220);
+  }
+};
+
+if (bookingForm && formSteps.length) {
   // The form checks itself so every problem gets the same plain message.
   bookingForm.noValidate = true;
 
-  ["fullName", "phoneNumber", "packageType", "travellerCount", "callDate"].forEach((id) => {
-    const field = document.getElementById(id);
-    if (field) {
-      field.addEventListener("input", () => clearFieldError(field));
-      field.addEventListener("change", () => clearFieldError(field));
-    }
+  bookingForm.querySelectorAll("[data-field]").forEach((group) => {
+    group.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-value]");
+      if (!button) return;
+
+      const value = button.dataset.value;
+      const field = group.dataset.field;
+      pressChoice(group, value);
+
+      if (!bookingStarted) {
+        bookingStarted = true;
+        trackBooking("booking_start");
+      }
+
+      if (field === "callDay") {
+        callDatePickerWrap.hidden = value !== "pick";
+        clearFieldError(callDateInput);
+
+        if (value === "pick") {
+          callDateInput.value = callDatePicker.value;
+          callDatePicker.focus();
+          return;
+        }
+
+        if (value === "flexible") {
+          callDateInput.value = "Flexible";
+          callTimeInput.value = "Any time";
+          pressChoice(bookingForm.querySelector('[data-field="callTime"]'), "Any time");
+          clearFieldError(callTimeInput);
+          goToNextStep();
+          return;
+        }
+
+        callDateInput.value = dateFieldValue(value);
+        if (callTimeChosen()) goToNextStep();
+        return;
+      }
+
+      const input = document.getElementById(field);
+      input.value = value;
+      clearFieldError(input);
+
+      if (field === "callTime") {
+        if (callDayChosen()) goToNextStep();
+        return;
+      }
+
+      if (group.hasAttribute("data-advance")) goToNextStep();
+    });
   });
 
-  bookingForm.addEventListener("submit", (event) => {
+  callDatePicker?.addEventListener("change", () => {
+    callDateInput.value = callDatePicker.value;
+    clearFieldError(callDateInput);
+  });
+
+  stepContinue?.addEventListener("click", () => {
+    if (!callDayChosen()) {
+      showFieldError(callDateInput, "Please choose a day, or pick Whenever suits you.");
+      return;
+    }
+    if (!callTimeChosen()) {
+      showFieldError(callTimeInput, "Please choose a time.");
+      return;
+    }
+    showStep(3);
+  });
+
+  stepBack?.addEventListener("click", () => {
+    if (currentStep > 0) showStep(currentStep - 1);
+  });
+
+  ["fullName", "phoneNumber"].forEach((id) => {
+    const field = document.getElementById(id);
+    field.addEventListener("input", () => clearFieldError(field));
+  });
+
+  // "Reserve Standard" / "Reserve Premium" link to /contact?package=standard
+  // (or premium): the package is already chosen, so start at step 2.
+  const packageFromLink = {
+    standard: "Standard Package - LKR 385,000",
+    premium: "Premium Package - LKR 600,000",
+  }[new URLSearchParams(location.search).get("package")];
+
+  if (packageFromLink && allowedPackages.has(packageFromLink)) {
+    document.getElementById("packageType").value = packageFromLink;
+    pressChoice(bookingForm.querySelector('[data-field="packageType"]'), packageFromLink);
+    showStep(1, false);
+  } else {
+    showStep(0, false);
+  }
+
+  bookingForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
     if (bookingSubmissionLocked) {
@@ -529,21 +704,12 @@ if (bookingForm) {
     const phoneNumber = normalizeSingleLine(document.getElementById("phoneNumber").value, 20);
     const packageType = document.getElementById("packageType").value;
     const travellerCount = document.getElementById("travellerCount").value;
-    const callDate = document.getElementById("callDate").value;
-    const callTime = document.getElementById("callTime").value;
+    const callDate = callDateInput.value;
+    const callTime = callTimeInput.value;
     const message = normalizeMessage(document.getElementById("message").value);
     const today = getLocalISODate();
-
-    const latestCallDate = callDateInput ? callDateInput.max : "";
+    const latestCallDate = callDatePicker ? callDatePicker.max : "";
     const problems = [];
-
-    if (fullName.length < 2) {
-      problems.push(["fullName", "Please type your name."]);
-    }
-
-    if (!/^[0-9+() -]{7,20}$/.test(phoneNumber)) {
-      problems.push(["phoneNumber", "Please type a phone or WhatsApp number, like +94 77 123 4567."]);
-    }
 
     if (!allowedPackages.has(packageType)) {
       problems.push(["packageType", "Please choose a package, or pick Not sure yet."]);
@@ -553,9 +719,7 @@ if (bookingForm) {
       problems.push(["travellerCount", "Please choose how many people are travelling."]);
     }
 
-    if (!callDate) {
-      problems.push(["callDate", "Please choose a day for our call."]);
-    } else if (!/^\d{4}-\d{2}-\d{2}$/.test(callDate) || callDate < today || (latestCallDate && callDate > latestCallDate)) {
+    if (callDate !== "Flexible" && (!/^\d{4}-\d{2}-\d{2}$/.test(callDate) || callDate < today || (latestCallDate && callDate > latestCallDate))) {
       problems.push(["callDate", "Please choose a day from today up to a year ahead."]);
     }
 
@@ -563,12 +727,26 @@ if (bookingForm) {
       problems.push(["callTime", "Please choose a time for our call."]);
     }
 
+    if (fullName.length < 2) {
+      problems.push(["fullName", "Please type your name."]);
+    }
+
+    if (!/^[0-9+() -]{7,20}$/.test(phoneNumber)) {
+      problems.push(["phoneNumber", "Please type a phone or WhatsApp number, like +94 77 123 4567."]);
+    }
+
     bookingForm.querySelectorAll("[aria-invalid]").forEach(clearFieldError);
 
     if (problems.length) {
       problems.forEach(([id, text]) => showFieldError(document.getElementById(id), text));
-      const firstField = document.getElementById(problems[0][0]);
-      (firstField.type === "hidden" ? bookingForm.querySelector(".time-slot") : firstField).focus();
+      const firstId = problems[0][0];
+      const firstField = document.getElementById(firstId);
+      if (firstId in stepOfField) {
+        showStep(stepOfField[firstId], false);
+        formSteps[currentStep].querySelector("[data-value]").focus();
+      } else {
+        firstField.focus();
+      }
       return;
     }
 
@@ -581,7 +759,7 @@ if (bookingForm) {
       `Phone: ${phoneNumber}`,
       `Interested Package: ${packageType}`,
       `Number of People: ${travellerCount}`,
-      `Preferred Call Date: ${callDate}`,
+      `Preferred Call Date: ${callDate === "Flexible" ? "Whenever suits you" : callDate}`,
       `Preferred Call Time: ${callTime}`,
       `Message: ${message || "No additional message"}`,
     ].join("\n");
@@ -592,46 +770,36 @@ if (bookingForm) {
     bookingSubmissionLocked = true;
     if (bookingSubmit) {
       bookingSubmit.disabled = true;
-      bookingSubmit.setAttribute("aria-disabled", "true");
+      bookingSubmit.setAttribute("aria-busy", "true");
+      bookingSubmit.textContent = "Sending...";
     }
 
-    const whatsappLink = document.createElement("a");
-    whatsappLink.href = whatsappURL.toString();
-    whatsappLink.target = "_blank";
-    whatsappLink.rel = "noopener noreferrer";
-    whatsappLink.hidden = true;
-    document.body.appendChild(whatsappLink);
-    whatsappLink.click();
-    whatsappLink.remove();
+    const saved = await sendLead({
+      fullName,
+      phoneNumber,
+      packageType,
+      travellerCount,
+      callDate,
+      callTime,
+      message,
+      website: document.getElementById("website")?.value || "",
+    });
 
-    showLeadConfirmation(packageType);
-
-    if (bookingToast) {
-      bookingToast.classList.add("show");
-
-      setTimeout(() => {
-        bookingToast.classList.remove("show");
-      }, 2800);
+    if (bookingSubmit) {
+      bookingSubmit.disabled = false;
+      bookingSubmit.removeAttribute("aria-busy");
+      bookingSubmit.textContent = "Request my call";
     }
+    bookingSubmissionLocked = false;
 
+    fillLeadConfirmation({ saved, fullName, phoneNumber, callDate, callTime, whatsappURL: whatsappURL.toString() });
+    showLeadConfirmation(packageType, saved ? "Website" : "WhatsApp");
+
+    // Start again from the first question for anyone booking a second person.
     bookingForm.reset();
-
-    if (callTimeInput) {
-      callTimeInput.value = "10:00 AM";
-    }
-
-    timeSlots.forEach((button) => button.classList.remove("active"));
-    if (timeSlots[0]) {
-      timeSlots[0].classList.add("active");
-    }
-
-    setTimeout(() => {
-      bookingSubmissionLocked = false;
-      if (bookingSubmit) {
-        bookingSubmit.disabled = false;
-        bookingSubmit.removeAttribute("aria-disabled");
-      }
-    }, 2000);
+    callDatePickerWrap.hidden = true;
+    bookingForm.querySelectorAll("[aria-pressed]").forEach((button) => button.setAttribute("aria-pressed", "false"));
+    showStep(0, false);
   });
 }
 

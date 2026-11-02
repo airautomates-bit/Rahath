@@ -28,7 +28,7 @@
         <div class="form-card-header">
           <div>
             <span>Free call</span>
-            <h3>When should we call you?</h3>
+            <h3>Book your free call</h3>
           </div>
 
           <div class="form-status">
@@ -37,90 +37,102 @@
           </div>
         </div>
 
-        <form class="booking-form" id="bookingForm" autocomplete="on">
+        <form class="booking-form step-form" id="bookingForm" autocomplete="on">
+          <div class="step-progress" aria-hidden="true"><span id="stepBar"></span></div>
+          <p class="step-count" id="stepCount" aria-live="polite">Step 1 of 4</p>
 
-          <div class="form-row">
-            <div class="form-group">
-              <label for="fullName">Your name</label>
-              <input type="text" id="fullName" name="fullName" placeholder="Enter your name" autocomplete="name" minlength="2" maxlength="80" required="">
+          <fieldset class="form-step" data-step="1">
+            <legend tabindex="-1">Which package interests you?</legend>
+            <input type="hidden" id="packageType" name="packageType" value="">
+            <div class="choice-grid" data-field="packageType" data-advance>
+              <button type="button" class="choice" data-value="Standard Package - LKR 385,000" aria-pressed="false"><strong>Standard</strong><span>LKR 385,000 per person</span></button>
+              <button type="button" class="choice" data-value="Premium Package - LKR 600,000" aria-pressed="false"><strong>Premium</strong><span>LKR 600,000 per person</span></button>
+              <button type="button" class="choice" data-value="Not sure yet" aria-pressed="false"><strong>Not sure yet</strong><span>We'll help you choose</span></button>
             </div>
+          </fieldset>
 
-            <div class="form-group">
-              <label for="phoneNumber">Phone / WhatsApp</label>
-              <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="+94 7X XXX XXXX" autocomplete="tel" inputmode="tel" minlength="7" maxlength="20" pattern="[0-9+() -]{7,20}" required="">
+          <fieldset class="form-step" data-step="2" hidden>
+            <legend tabindex="-1">How many people are travelling?</legend>
+            <p class="step-hint">Including you.</p>
+            <input type="hidden" id="travellerCount" name="travellerCount" value="">
+            <div class="chip-row" data-field="travellerCount" data-advance>
+              <button type="button" class="chip" data-value="1" aria-pressed="false">1</button>
+              <button type="button" class="chip" data-value="2" aria-pressed="false">2</button>
+              <button type="button" class="chip" data-value="3" aria-pressed="false">3</button>
+              <button type="button" class="chip" data-value="4" aria-pressed="false">4</button>
+              <button type="button" class="chip" data-value="5" aria-pressed="false">5</button>
+              <button type="button" class="chip" data-value="6+" aria-pressed="false">6 or more</button>
             </div>
-          </div>
+          </fieldset>
 
-          <div class="form-row">
-            <div class="form-group">
-              <label for="packageType">Which package?</label>
-              <select id="packageType" name="packageType" required="">
-                <option value="">Choose a package</option>
-                <option value="Standard Package - LKR 385,000">Standard Package - LKR 385,000</option>
-                <option value="Premium Package - LKR 600,000">Premium Package - LKR 600,000</option>
-                <option value="Not sure yet">Not sure yet</option>
-              </select>
+          <fieldset class="form-step" data-step="3" hidden>
+            <legend tabindex="-1">When should we call you?</legend>
+            <input type="hidden" id="callDate" name="callDate" value="">
+            <input type="hidden" id="callTime" name="callTime" value="">
+            <p class="step-label">Day</p>
+            <div class="chip-row" data-field="callDay">
+              <button type="button" class="chip" data-value="today" aria-pressed="false">Today</button>
+              <button type="button" class="chip" data-value="tomorrow" aria-pressed="false">Tomorrow</button>
+              <button type="button" class="chip" data-value="pick" aria-pressed="false">Pick a day</button>
+              <button type="button" class="chip" data-value="flexible" aria-pressed="false">Whenever suits you</button>
             </div>
-
-            <div class="form-group">
-              <label for="travellerCount">How many people are travelling?</label>
-              <select id="travellerCount" name="travellerCount" required="">
-                <option value="">Choose a number</option>
-                <option value="1">1 (just me)</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10+">10 or more</option>
-              </select>
+            <div class="step-date" id="callDatePickerWrap" hidden>
+              <label for="callDatePicker">Choose a day</label>
+              <input type="date" id="callDatePicker">
             </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label for="callDate">Best day to call</label>
-              <input type="date" id="callDate" name="callDate" required="">
+            <p class="step-label">Time</p>
+            <div class="chip-row" data-field="callTime">
+              <button type="button" class="chip" data-value="10:00 AM" aria-pressed="false">10:00 AM</button>
+              <button type="button" class="chip" data-value="12:00 PM" aria-pressed="false">12:00 PM</button>
+              <button type="button" class="chip" data-value="4:00 PM" aria-pressed="false">4:00 PM</button>
+              <button type="button" class="chip" data-value="8:00 PM" aria-pressed="false">8:00 PM</button>
+              <button type="button" class="chip" data-value="Any time" aria-pressed="false">Any time</button>
             </div>
+            <button type="button" class="step-continue" id="stepContinue">Continue</button>
+          </fieldset>
 
-            <div class="form-group">
-              <label>Best time</label>
-              <input type="hidden" id="callTime" name="callTime" required="" value="10:00 AM">
+          <fieldset class="form-step" data-step="4" hidden>
+            <legend tabindex="-1">Who should we call?</legend>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="fullName">Your name</label>
+                <input type="text" id="fullName" name="fullName" placeholder="Enter your name" autocomplete="name" minlength="2" maxlength="80" required>
+              </div>
 
-              <div class="time-slots">
-                <button type="button" class="time-slot active" data-time="10:00 AM">10:00 AM</button>
-                <button type="button" class="time-slot" data-time="12:00 PM">12:00 PM</button>
-                <button type="button" class="time-slot" data-time="4:00 PM">4:00 PM</button>
-                <button type="button" class="time-slot" data-time="8:00 PM">8:00 PM</button>
+              <div class="form-group">
+                <label for="phoneNumber">Phone / WhatsApp</label>
+                <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="+94 7X XXX XXXX" autocomplete="tel" inputmode="tel" minlength="7" maxlength="20" pattern="[0-9+() -]{7,20}" required>
               </div>
             </div>
+
+            <div class="form-group">
+              <label for="message">Anything we should know? <span class="optional">(optional)</span></label>
+              <textarea id="message" name="message" rows="3" maxlength="500" placeholder="First Umrah, travelling with family, any special needs, etc."></textarea>
+            </div>
+
+            <div class="form-trap" aria-hidden="true">
+              <label for="website">Leave this empty</label>
+              <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+            </div>
+
+            <button type="submit" class="btn submit-booking-btn" id="bookingSubmit">
+              Request my call
+            </button>
+
+            <p class="form-note">
+              You don't pay anything now. Your details only go to our team. <a href="#privacy">How we use your details</a>
+            </p>
+          </fieldset>
+
+          <div class="step-footer">
+            <button type="button" class="step-back" id="stepBack" hidden><span aria-hidden="true">←</span> Back</button>
+            <p class="step-shortcut">Prefer to just message us? <a href="https://wa.me/94725329242?text=Assalamu%20Alaikum%2C%20I%20have%20a%20question%20about%20your%20Umrah%20packages." target="_blank" rel="noopener noreferrer">WhatsApp us</a></p>
           </div>
-
-          <div class="form-group">
-            <label for="message">Anything we should know?</label>
-            <textarea id="message" name="message" rows="4" maxlength="500" placeholder="First Umrah, travelling with family, any special needs, etc."></textarea>
-          </div>
-
-          <button type="submit" class="btn submit-booking-btn" id="bookingSubmit">
-            Request a call
-          </button>
-
-          <p class="form-note">
-            You don't pay anything now. This just sends your request to our team on WhatsApp. <a href="#privacy">How we use your details</a>
-          </p>
-
         </form>
       </div>
 
     </div>
 
-  </div>
-
-  <div class="booking-toast" id="bookingToast">
-    Your request is ready. Opening WhatsApp...
   </div>
 </section>
 

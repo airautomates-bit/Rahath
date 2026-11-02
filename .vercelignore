@@ -6,3 +6,5 @@ build.mjs
 _archive
 # Project notes, not for the public site.
 SECURITY.md
+# Setup notes and the Google Sheet script, pasted into Google by hand.
+setup
