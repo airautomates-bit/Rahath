@@ -666,7 +666,12 @@ const trackBooking = (name, params = {}) => {
   }
 };
 
-const showStep = (index, moveFocus = true) => {
+// The pending auto-advance after a tap, so quick double taps can't skip steps.
+let advanceTimer = 0;
+
+const showStep = (requestedIndex, moveFocus = true) => {
+  window.clearTimeout(advanceTimer);
+  const index = Math.max(0, Math.min(requestedIndex, formSteps.length - 1));
   currentStep = index;
   formSteps.forEach((step, i) => {
     step.hidden = i !== index;
@@ -693,10 +698,15 @@ const dateFieldValue = (choiceValue) => {
 const callTimeChosen = () => allowedCallTimes.has(callTimeInput.value);
 const callDayChosen = () => callDateInput.value !== "";
 
+// Move on one step from the step the tap happened on. Taps within the short
+// delay replace each other instead of adding up, and Back cancels the move.
 const goToNextStep = () => {
-  if (currentStep < formSteps.length - 1) {
-    window.setTimeout(() => showStep(currentStep + 1), 220);
-  }
+  const fromStep = currentStep;
+  if (fromStep >= formSteps.length - 1) return;
+  window.clearTimeout(advanceTimer);
+  advanceTimer = window.setTimeout(() => {
+    if (currentStep === fromStep) showStep(fromStep + 1);
+  }, 220);
 };
 
 if (bookingForm && formSteps.length) {
