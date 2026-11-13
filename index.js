@@ -110,10 +110,10 @@ if (mobileCta) {
 // ================= HERO REAL-TIME COUNTDOWN =================
 
 // Change these two values whenever the next Umrah departure changes.
-const heroCountdownMonth = "24 November 2026";
+const heroCountdownMonth = "16 December 2026";
 
 // Use Sri Lanka time format: YYYY-MM-DDTHH:MM:SS+05:30
-const heroDepartureDate = "2026-11-24T08:00:00+05:30";
+const heroDepartureDate = "2026-12-16T08:00:00+05:30";
 
 const departureMonth = document.getElementById("departureMonth");
 const heroCountdownCard = document.querySelector(".hero-countdown-card");
@@ -578,6 +578,14 @@ const showLeadConfirmation = (packageType, method) => {
     }
   }
 
+  // Meta Pixel (meta-pixel.js): count the booking request as a Lead for Facebook ads.
+  if (typeof window.fbq === "function") {
+    window.fbq("track", "Lead", {
+      content_name: packageType,
+      content_category: method,
+    });
+  }
+
   if (window.location.protocol === "https:" || window.location.protocol === "http:") {
     window.history.pushState({ leadConfirmation: true }, "", "/requested");
   }
@@ -856,7 +864,7 @@ if (bookingForm && formSteps.length) {
     const whatsappMessage = [
       hasDeparted()
         ? "Assalamu Alaikum, I would like to book a call about your next Umrah group."
-        : "Assalamu Alaikum, I would like to book a call for the November Umrah 2026 package.",
+        : "Assalamu Alaikum, I would like to book a call for the December Umrah 2026 package.",
       "",
       `Name: ${fullName}`,
       `Phone: ${phoneNumber}`,

@@ -7,7 +7,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 
 // Bump this when index.css or index.js changes so browsers fetch the new files.
-const VERSION = "20261102-lead39";
+const VERSION = "20261113-pixel";
 
 const pages = [
   {
@@ -17,7 +17,7 @@ const pages = [
     path: "/",
     ogimage: "photos/og-home.jpg",
     title: "Umrah Tours from Sri Lanka | Rahath Tours &amp; Travels",
-    description: "Umrah group tours from Sri Lanka. Our next group leaves on 24 November 2026. Standard and Premium packages with a guide, hotels, transport and meals.",
+    description: "Umrah group tours from Sri Lanka. Our next group leaves on 16 December 2026. Standard and Premium packages with a guide, hotels, transport and meals.",
   },
   {
     output: "packages.html",
@@ -26,7 +26,7 @@ const pages = [
     path: "/packages",
     ogimage: "photos/og-packages.jpg",
     title: "Umrah Packages 2026 | Rahath Tours &amp; Travels",
-    description: "Standard (LKR 385,000) and Premium (LKR 600,000) Umrah packages from Sri Lanka. The group leaves 24 November 2026 with hotels, transport, meals and a guide.",
+    description: "Standard (LKR 385,000) and Premium (LKR 600,000) Umrah packages from Sri Lanka. The group leaves 16 December 2026 with hotels, transport, meals and a guide.",
   },
   {
     output: "about.html",
