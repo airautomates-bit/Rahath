@@ -469,6 +469,7 @@ const closeLeadConfirmation = () => {
 
   leadConfirmation.hidden = true;
   document.body.classList.remove("confirmation-open");
+  window.rahathLenis?.start();
 
   if (confirmationPreviousFocus instanceof HTMLElement) {
     confirmationPreviousFocus.focus();
@@ -559,6 +560,7 @@ const showLeadConfirmation = (packageType, method) => {
     confirmationPreviousFocus = document.activeElement;
     leadConfirmation.hidden = false;
     document.body.classList.add("confirmation-open");
+    window.rahathLenis?.stop();
     leadConfirmationDialog?.focus();
   }
 
@@ -937,6 +939,10 @@ if (footerYear) {
 
 if (backToTop) {
   backToTop.addEventListener("click", () => {
+    if (window.rahathLenis) {
+      window.rahathLenis.scrollTo(0);
+      return;
+    }
     window.scrollTo({
       top: 0,
       behavior: "smooth",

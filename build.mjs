@@ -7,7 +7,10 @@
 import { readFileSync, writeFileSync } from "node:fs";
 
 // Bump this when index.css or index.js changes so browsers fetch the new files.
-const VERSION = "20261113-steps";
+const VERSION = "20261117-lenis";
+
+// The smooth-scrolling library in vendor/lenis/. Change this if you replace it.
+const LENIS_VERSION = "1.3.27";
 
 const pages = [
   {
@@ -126,6 +129,8 @@ ${read(`./src/pages/${page.body}.html`).trimEnd()}
 
 ${footer.trimEnd()}
 ${extras ? `\n${extras.trimEnd()}\n` : ""}
+<script src="vendor/lenis/lenis.min.js?v=${LENIS_VERSION}" defer></script>
+<script src="smooth-scroll.js?v=${VERSION}" defer></script>
 <script src="index.js?v=${VERSION}" defer></script>
 
 </body>

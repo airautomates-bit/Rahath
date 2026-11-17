@@ -237,6 +237,30 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Smooth scrolling on desktop (smooth-scroll.js). Lenis does the easing, so the
+   browser's own smooth scrolling is switched off to stop the two fighting.
+   The rest is Lenis's recommended CSS (vendor/lenis, MIT licence). */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+html.lenis {
+  scroll-behavior: auto;
+}
+
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+
+.lenis [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
 body {
   font-family: "Inter", sans-serif;
   background: #f7f4ee;

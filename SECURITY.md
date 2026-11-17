@@ -18,6 +18,7 @@ The function only accepts POST requests from the site's own origin, drops submis
 - Use `rel="noopener noreferrer"` for every external link opened in a new tab.
 - Review new dependencies for maintenance status, provenance, known vulnerabilities, and minimum necessary permissions.
 - Keep Google Analytics restricted to the allowlisted endpoints in the Content Security Policy. Do not add Google Tag Manager container scripts or arbitrary third-party tags without a separate security and privacy review.
+- The only third-party code served from this site is Lenis 1.3.27 (MIT), copied unmodified from the npm package into `vendor/lenis/` apart from its source-map comment. It makes no network requests. Replace it only with a reviewed release, and bump `LENIS_VERSION` in `build.mjs`.
 - Process payments only through a reputable hosted payment provider. Never collect or store card details directly in this site.
 - Apply least privilege to GitHub, Vercel, domains, DNS, and third-party accounts; require MFA for maintainers.
 
